@@ -5,7 +5,9 @@
 </template>
 
 <script>
-  export default {
-    name: 'App',
-  }
+import store from "../vuex/Store.vue";
+export default {
+  store,
+  name: "App"
+};
 </script>
