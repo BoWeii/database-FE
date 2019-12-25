@@ -44,7 +44,7 @@ export const routes = [
     }
   },
   {
-    path: "/cart",
+    path: "/cart/:cartid",
     name: "cart",
     component: Cart,
     meta: {
@@ -53,7 +53,7 @@ export const routes = [
     }
   },
   {
-    path: "/product/:p_id",
+    path: "/product/:id",
     name: "product",
     component: Product,
     meta: {

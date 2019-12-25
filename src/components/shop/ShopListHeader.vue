@@ -1,7 +1,7 @@
 <template>
 	<div id="shop-list-header">
 		<div class="home-page"><a v-bind:href="homeUrl">Home</a></div>
-		<div class="home-result"><span>Showing 1–9 of 26 results</span></div>
+		<div class="home-result"><span>Showing 1–{{end}} of {{total}} results</span></div>
 		<div class="home-result">
 			<el-dropdown>
 				<span class="el-dropdown-link">
@@ -19,6 +19,10 @@
 	const dropdownOptions = ["Default sorting", "sort by newness", "sort by price:low to high", "sort by price:high to low"];
 	export default {
 		name: "ShopListHeader",
+		props:{
+			end: String,
+			total: String
+		},
 		data: () => {
 			return {
 				homeUrl: "https://www.gamer.com.tw/",

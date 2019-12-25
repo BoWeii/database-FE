@@ -1,14 +1,14 @@
 <template>
 	<div id="shop-list-products-In-row">
 		<el-row :gutter="20">
-			<el-col :span="7" v-for="(o, index) in 3" :key="o" :offset="index >= 0 ? 1 : 0">
+			<el-col :span="7" v-for="(productInfo, index) in productsInfo" :key="productInfo" :offset="index >= 0 ? 1 : 0">
 				<el-card :body-style="{ padding: '0px' }">
-					<img :src="productsInfo[index].imageSrc" class="shpo-list-card-image">
+					<img :src="productInfo.ImageSrc" class="shpo-list-card-image" @click="GoToProduct(productInfo.Id)">
 					<div style="padding: 12px;">
 						<div class="shpo-list-card-content">
 							<div class="shpo-list-card-text">
-								<h3 style="margin: 0px;">{{productsInfo[index].name}}</h3>
-								<h4 style="margin: 3px;">{{productsInfo[index].describtion}}</h4>
+								<h3 style="margin: 0px;">{{productInfo.PName}}</h3>
+								<h4 style="margin: 3px;">{{productInfo.Price}}</h4>
 							</div>
 							<div class="shpo-list-card-button">
 								<el-button v-bind:icon="iconNameList[index]" @mouseover.native="ChangeIconOfButton(index)" @mouseout.native="ChangeIconOfButton(index)" plain></el-button>
@@ -42,18 +42,28 @@
 				if (this.iconNameList[index] === iconNameShopingCart) {
 					this.iconNameList[index] = iconNameGoods;
 					console.log(iconNameGoods);
+					console.log(this.productsInfo);
 				} else {
 					this.iconNameList[index] = iconNameShopingCart;
 					console.log(iconNameShopingCart);
 				}
 
+			},
+			GoToProduct(Id) {
+				console.log(Id);
+				this.$router.push({
+					name: 'product',
+					params: {
+						id: Id
+					}
+				})
 			}
 		}
 	}
 </script>
 
 <style>
-	.shpo-list-card-content{
+	.shpo-list-card-content {
 		display: flex;
 	}
 

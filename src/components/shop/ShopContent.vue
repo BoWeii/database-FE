@@ -12,7 +12,7 @@
 			</el-col>
 			<el-col :span="12">
 				<div class="shop-content-grid-content">
-					<ShopListHeader></ShopListHeader>
+					<ShopListHeader :end="quantity" :total="this.products.length"></ShopListHeader>
 					<div v-for="(productInfo, index) in productsInfo" :key="index">
 						<ShopListProductsInRow :products-info="productInfo"></ShopListProductsInRow>
 					</div>
@@ -30,25 +30,29 @@
 	import ShopFilterByPrice from './ShopFilterByPrice.vue';
 	import ShopListProductsInRow from './ShopListProductsInRow.vue';
 	import ShopListHeader from './ShopListHeader'
-	const productInfo = {
-		"0": {
-			"name": "Banana",
-			"describtion": "Test",
-			"imageSrc": "https://5.imimg.com/data5/LM/DU/MY-22954806/apple-fruit-500x500.jpg"
+	import ApiHelper from '../../Api/base.js';
+	const productInfo = [
+		{
+			"Id": "1",
+			"PName": "Banana",
+			"Price": "Test",
+			"ImageSrc": "https://5.imimg.com/data5/LM/DU/MY-22954806/apple-fruit-500x500.jpg"
 		},
-		"1": {
-			"name": "Apple",
-			"describtion": "Test",
-			"imageSrc": "https://www.insideedition.com/sites/default/files/images/2019-07/073119-banana-1280x720-recovered.jpg"
+		{
+			"Id": "2",
+			"PName": "Apple",
+			"Price": "Test",
+			"ImageSrc": "https://www.insideedition.com/sites/default/files/images/2019-07/073119-banana-1280x720-recovered.jpg"
 		},
-		"2": {
-			"name": "Watermelon",
-			"describtion": "Test",
-			"imageSrc": "https://images.unsplash.com/photo-1563114773-84221bd62daa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjF9&auto=format&fit=crop&w=1350&q=80"
+		{	
+			"Id": "3",
+			"PName": "Watermelon",
+			"Price": "Test",
+			"ImageSrc": "https://images.unsplash.com/photo-1563114773-84221bd62daa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjF9&auto=format&fit=crop&w=1350&q=80"
 		}
-	}
+	]
 	const productsInfo = [productInfo, productInfo, productInfo]
-
+	let apiHelper = new ApiHelper();
 	export default {
 		name: "ShopContent",
 		components: {
@@ -59,18 +63,22 @@
 		},
 		data: () => {
 			return {
+				products: "",
 				productsInfo: productsInfo,
-				isLoading: false
+				isLoading: false,
+				quantity: 0
 			}
 		},
 		methods: {
 			AddPorductsInfo() {
 				this.isLoading = true;
-				this.$http.get('http://104.199.190.234:80/queryproduct/p_name=&s_username=jeff').then(res => {
-					console.log(res);
-				}, () => {
-					console.log("404 error")
-				})
+				let productInfo = [];				
+				let count = 0
+				while(this.quantity < this.products.item.length && count<3){
+					productInfo.push(this.products.item[this.quantity]);
+					count +=1;
+					this.quantity += 1;
+				}				
 				this.productsInfo.push(productInfo);
 			},
 			handleScroll() {
@@ -84,6 +92,16 @@
 				}
 			}
 		},
+		mounted(){
+			try{
+				this.products = apiHelper.GetProducts({
+					"p_name": this.$route.query.p_name,
+					"s_username": ""
+				})
+			}catch(e){
+				console.log(e);
+			}
+		}
 	}
 </script>
 

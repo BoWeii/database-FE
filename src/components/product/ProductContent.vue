@@ -2,43 +2,43 @@
 	<div id="product-content">
 		<el-row :gutter="20">
 			<el-col :span="3">
-				<div class='sell-grid'></div>
+				<div class='product-sell-grid'></div>
 			</el-col>
 			<el-col :span="9">
-				<div class='sell-grid'>
-					<img :src="productInfo.imageSrc" width="50%" style="margin-top: 100px;">
+				<div class='product-sell-grid'>
+					<img :src="productInfo.ImageSrc" width="50%" style="margin-top: 100px;">
 				</div>
 			</el-col>
 			<el-col :span="2">
-				<div class='sell-grid'>
+				<div class='product-sell-grid'>
 					<div class='row-text' v-for="(label) in labels" :key="label">{{label}}</div>
 				</div>
 			</el-col>
 			<el-col :span="4">
-				<div class='sell-grid'>
+				<div class='product-sell-grid'>
 					<div class="row-size">
-						<h3>{{productInfo.name}}</h3>
+						<h3>{{productInfo.Pname}}</h3>
 					</div>
 					<div class="row-size">
-						<h3>{{productInfo.cate}}</h3>
+						<h3>{{productInfo.Category}}</h3>
 					</div>
 					<div class="row-size">
-						<h3>{{productInfo.source}}</h3>
+						<h3>{{productInfo.Source}}</h3>
 					</div>
 					<div class="row-size">
 						<h3>{{priceText}}</h3>
 					</div>
 					<div class="row-size">
-						<el-input-number v-model="productInfo.quantity" :min="1" :max="productInfo.inventory"></el-input-number>
+						<el-input-number v-model="productInfo.Quantity" :min="1" :max="productInfo.Inventory"></el-input-number>
 					</div>
 					<div class="row-size">
-						<h3>{{productInfo.inventory}}</h3>
+						<h3>{{productInfo.Inventory}}</h3>
 					</div>
 					<div class="row-size">
-						<h3>{{productInfo.saleDate}}</h3>
+						<h3>{{productInfo.SaleDate}}</h3>
 					</div>
 					<div class="row-size">
-						<h3>{{productInfo.describtion}}</h3>
+						<h3>{{productInfo.Description}}</h3>
 					</div>
 				</div>
 			</el-col>
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+	import ApiHelper from "../../Api/base.js";
 	const labels = ["Name:", "Category:", "Source", "Price:", "Quantity", "Inventory:", "SaleDate:", "Description:"];
 	const product = {
 		"Pname": "Gold apple",
@@ -72,22 +73,12 @@
 			"status": true
 		}]
 	}
+	let apiHelper = new ApiHelper();
 	export default {
 		name: "ProductContent",
 		data: () => {
 			return {
-				productInfo: {
-					name: product.Pname,
-					cate: product.Category,
-					describtion: product.Description,
-					source: product.Source,
-					price: product.Price,
-					quantity: product.Quantity,
-					inventory: product.Inventory,
-					saleDate: product.SaleDate,
-					imageSrc: product.ImageSrc,
-					discount: product.Discount
-				},
+				productInfo: product,
 				priceText: "",
 				isOrder: false,
 				labels: labels,
@@ -96,17 +87,20 @@
 		methods: {
 			OrderProduct() {
 				if (this.isOrder == false) {
-					this.isOrder = true;
-					this.$message('成功加入訂單');
-					this.$http.post("http://104.199.190.234/addorderitemtocart", {
-						ProductId: this.$route.params.id,
-						CartId: 'xxx',
-						Quantity: this.quantity
-					}).then((res) => {
-						console.log(res);
-					}, () => {
-						console.log('Error');
-					})
+					let res = apiHelper.login(
+						{
+							"ProductId": "1",
+							"CartId": "xxx",
+							"Quantity": this.productInfo.quantity
+						}
+					);
+					if(res === true){
+						this.isOrder = true
+						this.$message('成功將商品加入購物車')
+					}
+					else{
+						this.$("錯誤!清重新登入後再試");
+					}
 				} else {
 					this.$message('商品已存在於訂單');
 				}
@@ -120,11 +114,15 @@
 			}
 		},
 		mounted() {
-			this.$http.get("http://104.199.190.234:80/users").then((res) => {
-				console.log(res);
-			}, () => {
-				console.log("Error");
-			})
+			try{
+				this.productInfo = apiHelper.GetProducts({
+					"p_name": "",
+					"s_username": "jeff"
+				});
+				console.log(this.productInfo);
+			}catch(e){
+				console.log(e);
+			}
 			this.GetProductText();
 		}
 	}
@@ -136,7 +134,7 @@
 		padding: 30px;
 	}
 
-	.sell-grid {
+	.product-sell-grid {
 		height: 700px;
 		background-color: white;
 	}
@@ -156,8 +154,7 @@
 	}
 
 	.row-button {
-		width: 100%;
+		width: 53%;
 		margin-top: 100px;
-		text-align: center;
 	}
 </style>
