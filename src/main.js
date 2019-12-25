@@ -21,10 +21,10 @@ router.beforeEach((to, from, next) => {
     store.dispatch("setUser");
     store.state.isLogin = true;
     next();
-    if (!to.meta.isLogin) {
-      this.$message.success("請先退出登入");
+    if (to.name==="login") {
+      alert("請先登出")
       next({
-        path: "/home"
+        path: "/"
       });
     }
   } else {
