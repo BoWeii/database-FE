@@ -89,10 +89,15 @@
 			},
 			ChangeQuantity(quantity, index) {
 				this.orderItems[index].Quantity = quantity
+				apiHelper.ModifyOrderItem({
+					"ProductId": this.orderItems[index].ProductId,
+					"CartId": "2",
+					"Quantity": this.orderItems[index].Quantity
+				})
 				this.CalcTotalPrice()
 			},
 			ClickDelete(index) {
-				apiHelper.DeleteOderItem({"ProductId": this.orderItems[index].p_Id,
+				apiHelper.DeleteOderItem({"ProductId": this.orderItems[index].ProductId,
 				"CartId": "xxxx"});
 				this.orderItems.remove(index);
 			}

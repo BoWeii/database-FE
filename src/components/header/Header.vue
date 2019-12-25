@@ -1,166 +1,142 @@
 <template>
-  <div id="header">
-    <el-row :gutter="20">
-      <el-col :span="4">
-        <div class="header grid-content"></div>
-      </el-col>
-      <el-col :span="16">
-        <div class="header grid-content">
-          <div class="header-wrap-up">
-            <div class="header-wrap-up-hotline">
-              <p @click="logOut" style="cursor: pointer;">log out</p>
-            </div>
-            <div class="header-wrap-up-social" id="menu">
-              <el-menu
-                class="el-menu-demo"
-                mode="horizontal"
-                @select="handleSelect"
-                background-color="#f4f3f1"
-                text-color="#050804"
-              >
-                <el-menu-item index="1">
-                  <img src="../../icon/fb_icon.png" />
-                </el-menu-item>
-                <el-menu-item index="2">
-                  <img src="../../icon/twitter_icon.png" />
-                </el-menu-item>
-                <el-menu-item index="3">
-                  <img src="../../icon/youtube_icon.png" />
-                </el-menu-item>
-                <el-menu-item index="4">
-                  <img src="../../icon/ig_icon.png" />
-                </el-menu-item>
-                <el-menu-item index="5">
-                  <img src="../../icon/more_icon.png" />
-                </el-menu-item>
-              </el-menu>
-            </div>
-            <div class="header-wrap-up-account">
-              <el-menu
-                class="el-menu-demo"
-                mode="horizontal"
-                @select="handleSelect"
-                background-color="#f4f3f1"
-                text-color="#050804"
-              >
-                <el-menu-item index="1">
-                  <a>MyAccount</a>
-                </el-menu-item>
-                <el-menu-item index="2">
-                  <a>Char</a>
-                </el-menu-item>
-                <el-menu-item index="3">
-                  <a>{{model.mail}}</a>
-                </el-menu-item>
-              </el-menu>
-            </div>
-            <div class="header-wrap-up-sign">
-              <el-menu
-                class="el-menu-demo"
-                mode="horizontal"
-                @select="handleSelect"
-                background-color="#f4f3f1"
-                text-color="#050804"
-              >
-                <el-menu-item index="1">
-                  <a>Sign up</a>
-                </el-menu-item>
-                <el-menu-item index="2">
-                  <a>Login</a>
-                </el-menu-item>
-              </el-menu>
-            </div>
-          </div>
-          <div class="line"></div>
-          <div class="header-wrap-bottom">
-            <el-col :span="8" class>
-              <div class="header-wrap-bottom-logo">
-                <img src="../../icon/logo.png" />
-              </div>
-            </el-col>
-            <el-col :span="9">
-              <div class="header-wrap-bottom-navList">
-                <el-menu
-                  class="el-menu-demo"
-                  mode="horizontal"
-                  @select="handleSelect"
-                  background-color="#f4f3f1"
-                  text-color="#050804"
-                >
-                  <el-menu-item index="1">
-                    <a>Home</a>
-                  </el-menu-item>
-                  <el-submenu index="2">
-                    <template slot="title">Portfolio</template>
-                    <el-menu-item>Portfolio with filter</el-menu-item>
-                    <el-menu-item>Portfolio without filter</el-menu-item>
-                  </el-submenu>
-                  <el-menu-item index="3">
-                    <a>Blog</a>
-                  </el-menu-item>
-                  <el-menu-item index="4">
-                    <a>Shop</a>
-                  </el-menu-item>
-                  <el-menu-item index="5">
-                    <a>Purchase</a>
-                  </el-menu-item>
-                </el-menu>
-              </div>
-            </el-col>
-            <el-col :span="7" class>
-              <div class="header-wrap-bottom-search">
-                <div class="header-wrap-bottom-search-input">
-                  <el-input v-model="input" placeholder="enter searchterm & hit enter"></el-input>
-                </div>
-                <div class="header-wrap-bottom-search-button">
-                  <el-button icon="el-icon-search" @click="search()"></el-button>
-                </div>
-              </div>
-            </el-col>
-          </div>
-        </div>
-      </el-col>
-      <el-col :span="4">
-        <div class="header grid-content bg-purple"></div>
-      </el-col>
-    </el-row>
-  </div>
+	<div id="header">
+		<el-row :gutter="20">
+			<el-col :span="4">
+				<div class="header grid-content"></div>
+			</el-col>
+			<el-col :span="16">
+				<div class="header grid-content">
+					<div class="header-wrap-up">
+						<div class="header-wrap-up-hotline">
+							<p @click="logOut" style="cursor: pointer;">log out</p>
+						</div>
+						<div class="header-wrap-up-social" id="menu">
+							<el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#f4f3f1" text-color="#050804">
+								<el-menu-item index="1">
+									<img src="../../icon/fb_icon.png" />
+								</el-menu-item>
+								<el-menu-item index="2">
+									<img src="../../icon/twitter_icon.png" />
+								</el-menu-item>
+								<el-menu-item index="3">
+									<img src="../../icon/youtube_icon.png" />
+								</el-menu-item>
+								<el-menu-item index="4">
+									<img src="../../icon/ig_icon.png" />
+								</el-menu-item>
+								<el-menu-item index="5">
+									<img src="../../icon/more_icon.png" />
+								</el-menu-item>
+							</el-menu>
+						</div>
+						<div class="header-wrap-up-account">
+							<el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#f4f3f1" text-color="#050804">
+								<el-menu-item index="1">
+									<a>MyAccount</a>
+								</el-menu-item>
+								<el-menu-item index="2">
+									<a>Char</a>
+								</el-menu-item>
+								<el-menu-item index="3">
+									<a>{{model.mail}}</a>
+								</el-menu-item>
+							</el-menu>
+						</div>
+						<div class="header-wrap-up-sign">
+							<el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#f4f3f1" text-color="#050804">
+								<el-menu-item index="1">
+									<a>Sign up</a>
+								</el-menu-item>
+								<el-menu-item index="2">
+									<a>Login</a>
+								</el-menu-item>
+							</el-menu>
+						</div>
+					</div>
+					<div class="line"></div>
+					<div class="header-wrap-bottom">
+						<el-col :span="8" class>
+							<div class="header-wrap-bottom-logo">
+								<img src="../../icon/logo.png" />
+							</div>
+						</el-col>
+						<el-col :span="9">
+							<div class="header-wrap-bottom-navList">
+								<el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#f4f3f1" text-color="#050804">
+									<el-menu-item index="1">
+										<a>Home</a>
+									</el-menu-item>
+									<el-submenu index="2">
+										<template slot="title">Portfolio</template>
+										<el-menu-item>Portfolio with filter</el-menu-item>
+										<el-menu-item>Portfolio without filter</el-menu-item>
+									</el-submenu>
+									<el-menu-item index="3">
+										<a>Blog</a>
+									</el-menu-item>
+									<el-menu-item index="4">
+										<a>Shop</a>
+									</el-menu-item>
+									<el-menu-item index="5">
+										<a>Purchase</a>
+									</el-menu-item>
+								</el-menu>
+							</div>
+						</el-col>
+						<el-col :span="7" class>
+							<div class="header-wrap-bottom-search">
+								<div class="header-wrap-bottom-search-input">
+									<el-input v-model="input" placeholder="enter searchterm & hit enter"></el-input>
+								</div>
+								<div class="header-wrap-bottom-search-button">
+									<el-button icon="el-icon-search" @click="search()"></el-button>
+								</div>
+							</div>
+						</el-col>
+					</div>
+				</div>
+			</el-col>
+			<el-col :span="4">
+				<div class="header grid-content bg-purple"></div>
+			</el-col>
+		</el-row>
+	</div>
 </template>
 
 <script>
-//import store from "../vuex/Store.vue";
-export default {
-  name: "Header",
-  props: {
-    msg: String,
-    Index: String,
-    input: String
-  },
-  data() {
-    return {
-      model: {
-        mail: this.$store.getters.username
-      }
-    };
-  },
-  methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    async logOut(){
-      alert("already log out ")
-      localStorage.clear();
-    },			
-	search() {
-	  this.$router.push({
-	  name: "shop",
-	  query: {
-	      p_name: this.input
+	//import store from "../vuex/Store.vue";
+	export default {
+		name: "Header",
+		props: {
+			msg: String,
+			Index: String,
+			input: String
+		},
+		data() {
+			return {
+				model: {
+					mail: this.$store.getters.username
+				}
+			};
+		},
+		methods: {
+			handleSelect(key, keyPath) {
+				console.log(key, keyPath);
+			},
+			async logOut() {
+				alert("already log out ")
+				localStorage.clear();
+			},
+			search() {
+				this.$router.push({
+					name: "shop",
+					query: {
+						p_name: this.input
+					}
+				});
+			}
 		}
-	  });
-	}
-  }
-};
+	};
 </script>
 
 
