@@ -10,6 +10,7 @@ async function post(path, data, header) {
       data: data,
       headers: header
     });
+    localStorage.setItem("email", data.mail);
     console.log("in post", resp);
     return resp;
   } catch (e) {
@@ -20,11 +21,24 @@ async function post(path, data, header) {
   }
 }
 
+async function get(path, header) {
+  try {
+    let resp = await axios({
+      method: "GET",
+      url: baseURL + path,
+      headers: header
+    });
+    console.log("in get :", resp);
+    return resp;
+  } catch (e) {
+    alert("fail in get", e);
+  }
+}
+
 /*             others function                   */
-function check(resp) {
+function checkLogin(resp) {
   try {
     if (resp.status == 200) {
-      localStorage.setItem("Flag", "isLogin");
       localStorage.setItem("token", resp.data.token);
       alert("Login successfull");
       return true;
@@ -33,23 +47,58 @@ function check(resp) {
       return false;
     }
   } catch (e) {
-    console.log(e);
+    console.log("false in checkPublic : ", e);
   }
 }
-
-/*             class to every function           */
+function checkPublic(resp) {
+  try {
+    if (resp.status == 200) {
+      alert("Publish successfull");
+      return true;
+    } else {
+      console.log(resp.data);
+      return false;
+    }
+  } catch (e) {
+    console.log("false in checkPublic : ", e);
+  }
+}
+/*          class to every function  for component using         */
 class ApiHelper {
   constructor() {
-    this.header=""
+    this.header = "";
+    this.path = "";
   }
   async login(data) {
-    if ((await localStorage.getItem("Flag")) === "isLogin") {
+    if (await localStorage.getItem("token")) {
       this.header = {
         Authorization: "Bearer" + " " + localStorage.getItem("token")
       };
     }
     let res = await post("login", data, this.header);
-    return check(res);
+    return checkLogin(res);
+  }
+  async publishProduct(isStaff, data) {
+    if (await localStorage.getItem("token")) {
+      this.header = {
+        Authorization: "Bearer" + " " + localStorage.getItem("token")
+      };
+    }
+    if (await isStaff) {
+      let res = await post("sell", data, this.header);
+      return checkPublic(res);
+    }
+  }
+  async getUserName(email) {
+    if (await localStorage.getItem("token")) {
+      this.header = {
+        Authorization: "Bearer" + " " + localStorage.getItem("token")
+      };
+    }
+    this.path = "user?Mail=" + email;
+    let res = await get(this.path, this.header);
+    console.log("in getUserName: ", res.data.userName);
+    return res.data.userName;
   }
 }
 
