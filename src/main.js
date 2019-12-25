@@ -10,11 +10,12 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueRouter);
 Vue.use(VueResource);
-let token = localStorage.getItem("token");
+
 const router = new VueRouter({
   routes
 });
 router.beforeEach((to, from, next) => {
+  let token = localStorage.getItem("token");
   if (token) {
     console.log("in be");
     store.dispatch("setUser");
@@ -28,10 +29,11 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     if (to.meta.isLogin) {
+      alert("請先登入")
       next({
         path: "/login"
       });
-      this.$message.success("請先登入");
+
     } else {
       next();
     }
