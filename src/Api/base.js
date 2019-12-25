@@ -39,15 +39,16 @@ function check(resp) {
 
 /*             class to every function           */
 class ApiHelper {
-  constructor() {}
+  constructor() {
+    this.header=""
+  }
   async login(data) {
-    var header = "";
     if ((await localStorage.getItem("Flag")) === "isLogin") {
-      header = {
+      this.header = {
         Authorization: "Bearer" + " " + localStorage.getItem("token")
       };
     }
-    let res = await post("login", data, header);
+    let res = await post("login", data, this.header);
     return check(res);
   }
 }

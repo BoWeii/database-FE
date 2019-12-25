@@ -206,7 +206,7 @@
 				} else {
 					this.carouselBackgorundcolor = colors.lightGreen;
 				}
-				console.log(this.carouselTitle);
+				//console.log(this.carouselTitle);
 			},
 			ChangeIconOfButton(index) {
 				if (this.iconNameLists[index] === iconNameShopingCart) {
