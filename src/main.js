@@ -19,7 +19,6 @@ router.beforeEach((to, from, next) => {
   if (token) {
     console.log("in be");
     store.dispatch("setUser");
-    store.dispatch("getUserName");
     next();
     /*if (to.name === "login") {
       alert("請先登出");

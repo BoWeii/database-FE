@@ -31,7 +31,7 @@ async function get(path, header) {
     console.log("in get :", resp);
     return resp;
   } catch (e) {
-    alert("fail in get", e);
+    console.log("fail in get", e);
   }
 }
 
@@ -99,6 +99,17 @@ class ApiHelper {
     let res = await get(this.path, this.header);
     console.log("in getUserName: ", res.data.userName);
     return res.data.userName;
+  }
+  async getCartId(userName) {
+    if (await localStorage.getItem("token")) {
+      this.header = {
+        Authorization: "Bearer" + " " + localStorage.getItem("token")
+      };
+    }
+    this.path = "url/getcartidwithusername?UserName="+userName;
+    let res = await get(this.path, this.header);
+    console.log("in getCartid ", res.data.cartid);
+    return res.data.cartid;
   }
 }
 

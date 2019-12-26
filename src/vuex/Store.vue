@@ -7,14 +7,15 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     token: "",
-    cartNumber: 0,
     email: "not_login",
-    username: "no_user"
+    username: "no_user",
+    cartId:"no_cartId",
   },
   getters: {
     token: state => state.token,
     email: state => state.email,
-    username: state => state.username
+    username: state => state.username,
+    cartId:state => state.cartId,
   },
   mutations: {
     async setUser(state) {
@@ -24,7 +25,8 @@ const store = new Vuex.Store({
       state.username = await apiHelper.getUserName(
         localStorage.getItem("email")
       );
-      console.log("in store setUser:", state.username);
+      state.cartId=await apiHelper.getCartId(state.username);
+      //console.log("in store setUser:", state.username);
     }
   },
   actions: {

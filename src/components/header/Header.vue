@@ -8,7 +8,7 @@
         <div class="header grid-content">
           <div class="header-wrap-up">
             <div class="header-wrap-up-hotline">
-              <p>24/7 Hotline: 555 13123123</p>
+              <p @click="logOut" style="cursor: pointer;">log out</p>
             </div>
             <div class="header-wrap-up-social" id="menu">
               <el-menu
@@ -139,13 +139,17 @@ export default {
   data() {
     return {
       model: {
-        mail: this.$store.getters.email
+        mail: this.$store.getters.username
       }
     };
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    async logOut(){
+      alert("already log out ")
+      localStorage.clear();
     }
   }
 };
