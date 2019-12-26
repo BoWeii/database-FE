@@ -12,9 +12,9 @@
 			</el-col>
 			<el-col :span="12">
 				<div class="shop-content-grid-content">
-					<ShopListHeader></ShopListHeader>
-					<div v-for="(productInfo, index) in productsInfo" :key="index">
-						<ShopListProductsInRow :products-info="productInfo"></ShopListProductsInRow>
+					<ShopListHeader :end="quantityInList" :total="products.length"></ShopListHeader>
+					<div v-for="(productInList, index) in productsInList" :key="index">
+						<ShopListProductsInRow :products-info="productInList"></ShopListProductsInRow>
 					</div>
 				</div>
 			</el-col>
@@ -31,24 +31,24 @@
 	import ShopListProductsInRow from './ShopListProductsInRow.vue';
 	import ShopListHeader from './ShopListHeader'
 	import ApiHelper from '../../Api/base.js';
-	const productInfo = {
-		"0": {
-			"name": "Banana",
-			"describtion": "Test",
-			"imageSrc": "https://5.imimg.com/data5/LM/DU/MY-22954806/apple-fruit-500x500.jpg"
+	const productInfo = [
+		{
+			"PName": "Banana",
+			"Price": "Test",
+			"ImageSrc": "https://5.imimg.com/data5/LM/DU/MY-22954806/apple-fruit-500x500.jpg"
 		},
-		"1": {
-			"name": "Apple",
-			"describtion": "Test",
-			"imageSrc": "https://www.insideedition.com/sites/default/files/images/2019-07/073119-banana-1280x720-recovered.jpg"
+		{
+			"PName": "Apple",
+			"Price": "Test",
+			"ImageSrc": "https://www.insideedition.com/sites/default/files/images/2019-07/073119-banana-1280x720-recovered.jpg"
 		},
-		"2": {
-			"name": "Watermelon",
-			"describtion": "Test",
-			"imageSrc": "https://images.unsplash.com/photo-1563114773-84221bd62daa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjF9&auto=format&fit=crop&w=1350&q=80"
+		{
+			"PName": "Watermelon",
+			"Price": "Test",
+			"ImageSrc": "https://images.unsplash.com/photo-1563114773-84221bd62daa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjF9&auto=format&fit=crop&w=1350&q=80"
 		}
-	}
-	const productsInfo = [productInfo, productInfo, productInfo]
+	]
+	const productsInList = [productInfo, productInfo, productInfo]
 	const apiHelper = new ApiHelper();
 	export default {
 		name: "ShopContent",
@@ -60,34 +60,49 @@
 		},
 		data: () => {
 			return {
-				productsInfo: productsInfo,
-				isLoading: false
+				products: "",
+				productsInList: productsInList,
+				isLoading: false,
+				quantityInList: 0
 			}
 		},
 		methods: {
-			AddPorductsInfo() {
+			addPorductsToList() {
+				this.isLoading = true;
+				let count = 0;
+				let productInfo = []
+				while(this.quantityInList < this.products.length && count < 3){
+					productInfo.push(this.products[this.quantityInList]);
+					count += 1;
+					this.quantityInList += 1;
+				}
+			},
+			getProductFromBackend() {
 				this.isLoading = true;
 				let res = apiHelper.getProducts({
 					"p_name": this.$route.query.p_name,
-					"s_username":""
+					"s_username": ""
 				})
-				if(res){
+				if (res) {
 					console.log("get Prodcuts", res);
-					this.productsInfo.push(res);
-				}else{
+					this.products = res.items;
+				} else {
 					console.log("get product fail");
-				}			
+				}
 			},
 			handleScroll() {
 				const list = this.$refs.list;
 				if (this.isLoading) return;
 
-				if (list.scrollTop + list.offsetHeight >= list.scrollHeight && productsInfo.length < 6) {
-					this.AddPorductsInfo();
+				if (list.scrollTop + list.offsetHeight >= list.scrollHeight && productsInList.length < 6) {
+					this.addPorductsToList();
 					this.isLoading = false;
 				}
 			}
 		},
+		mounted(){
+			this.getProductFromBackend();
+		}
 	}
 </script>
 
