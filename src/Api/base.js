@@ -162,7 +162,7 @@ class ApiHelper {
 	
 	async deleteUser(data){
 		this.checkHeader()
-		let res = await post("modifyorderitemquantity", data, this.header);
+		let res = await post("user", data, this.header);
 		console.log("modifyOrderItem:", res);
 		return res;
 	}
