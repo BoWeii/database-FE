@@ -92,10 +92,10 @@ class ApiHelper {
 	
 	async getCartId(userName) {
 		this.checkHeader()
-		this.path = "url/getcartidwithusername?UserName=" + userName;
+		this.path = "getcartidwithusername?UserName=" + userName;
 		let res = await get(this.path, this.header);
-		console.log("in getCartid ", res.data.cartid);
-		return res.data.cartid;
+		console.log("in getCartid ", res.data.CartId);
+		return res.data.CartId;
 	}
 	//-------------Product-----------------------------//
 	async publishProduct(isStaff, data) {
@@ -111,7 +111,7 @@ class ApiHelper {
 		return res;
 	}
 	//---------------Cart---------------------------/
-	async getOrderItem(data){
+	async getOrderItems(data){
 		this.checkHeader()
 		let res = await post("modifyorderitemincart", data, this.header);
 		return res;

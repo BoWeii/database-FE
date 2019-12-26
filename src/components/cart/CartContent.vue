@@ -18,7 +18,7 @@
 						<h2>Price</h2>
 					</el-col>
 				</div>
-				<div v-for="(orderItem, index) in orderItems" :key="orderItem">
+				<div v-for="(orderItem, index) in orderItems" :key="index">
 					<OrderItem @click-delete="ClickDelete(index)" @change-quantity="ChangeQuantity" :order="index" :name="orderItem.Pname" :price="orderItem.Price" :quantity="orderItem.Quantity" :discountType="orderItem.DiscountType" :discountNumber="orderItem.DiscountNumber"></OrderItem>
 				</div>
 				<div>
@@ -89,28 +89,28 @@
 			},
 			ChangeQuantity(quantity, index) {
 				this.orderItems[index].Quantity = quantity;
-				apiHelper.modifyOrderItem({
+				/*apiHelper.modify OrderItem({
 					"ProductId": this.orderItems[index].ProductId,
-					"CartId": this.$rotuer.params.cartid,
+					"CartId": this.$route.params.cartid,
 					"Quantity": this.orderItems[index].Quantity
-				});				
+				});		*/		
 				this.CalcTotalPrice()
 			},
 			ClickDelete(index) {
 				apiHelper.dmeleteOderItem({
 					"ProductId": this.orderItems[index].ProductId,
-					"CartId": this.$rotuer.params.cartid
+					"CartId": this.$route.params.cartid
 				});
 				delete this.orderItems[index];
 				this.$root.reload();
 			}
 		},
 		mounted() {
+			console.log(this.$route.params.cartid);
 			let res = apiHelper.getOrderItems({
-				"CartId": this.$rotuer.params.cartid
+				"CartId": this.$route.params.cartid
 			});
-			this.orderItems = res.items;
-			console.log("test:", this.$rotuer.params.cartid);
+			this.orderItems = res.items;			
 			if (this.orderItems === undefined)
 				this.noProducts = true;
 			this.CalcTotalPrice()

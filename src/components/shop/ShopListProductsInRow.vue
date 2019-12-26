@@ -1,7 +1,7 @@
 <template>
 	<div id="shop-list-products-In-row">
 		<el-row :gutter="20">
-			<el-col :span="7" v-for="(productInfo, index) in productsInfo" :key="productInfo" :offset="index >= 0 ? 1 : 0">
+			<el-col :span="7" v-for="(productInfo, index) in productsInfo" :key="index" :offset="index >= 0 ? 1 : 0">
 				<el-card :body-style="{ padding: '0px' }">
 					<img :src="productInfo.ImageSrc" class="shpo-list-card-image" @click="GoToProduct(productInfo.Id)">
 					<div style="padding: 12px;">

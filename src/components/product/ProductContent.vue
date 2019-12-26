@@ -88,7 +88,7 @@
 			OrderProduct() {
 				if (this.isOrder) {
 					this.$message('商品已存在於訂單');
-				} else {
+				} else {					
 					let res = apiHelper.login({
 						"ProductId": "1",
 						"CartId": "xxx",
@@ -112,11 +112,11 @@
 		},
 		mounted() {
 			try {
+				console.log(this.$route.params.id);
 				this.productInfo = apiHelper.getProducts({
 					"p_name": "",
 					"s_username": "jeff"
 				});
-				console.log(this.productInfo);
 			} catch (e) {
 				console.log(e);
 			}
