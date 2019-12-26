@@ -79,16 +79,10 @@
 			},
 			async getProductFromBackend() {
 				this.isLoading = true;
-				let res = await apiHelper.getProducts({
+				this.products  = await apiHelper.getProducts({
 					"p_name": this.$route.query.p_name,
 					"s_username": ""
 				})
-				if (res) {
-					console.log("get Prodcuts", res);
-					this.products = res.items;
-				} else {
-					console.log("get product fail");
-				}
 			},
 			handleScroll() {
 				const list = this.$refs.list;
@@ -101,7 +95,7 @@
 			}
 		},
 		async mounted(){
-			await apiHelper.getProductFromBackend();
+			await this.getProductFromBackend();
 		}
 	}
 </script>

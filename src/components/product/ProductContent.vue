@@ -73,7 +73,7 @@
 			"status": true
 		}]
 	}
-	let apiHelper = new ApiHelper();
+	const apiHelper = new ApiHelper();
 	export default {
 		name: "ProductContent",
 		data: () => {

@@ -36,7 +36,7 @@
 	import OrderItem from './OrderItem.vue'
 	import ApiHelper from "../../Api/base.js";
 
-	let apiHelper = new ApiHelper();
+	const apiHelper = new ApiHelper();
 
 	export default {
 		name: "CartContent",
@@ -80,7 +80,6 @@
 					"CartId": this.$route.params.cartid,
 					"Quantity": this.orderItems[index].Quantity
 				});
-				console.log(this.orderItems);
 				this.calcTotalPrice()
 			},
 			async clickDelete(index) {
@@ -92,7 +91,7 @@
 				this.$root.reload();
 			},
 			async getOrderItemsFromBackEnd() {
-				let res = await apiHelper.getOrderItems("?CartId=" + this.$route.params.cartid);
+				const res = await apiHelper.getOrderItems("?CartId=" + this.$route.params.cartid);
 				if (res) {
 					this.orderItems = res.items;
 					if (this.orderItems === undefined)
