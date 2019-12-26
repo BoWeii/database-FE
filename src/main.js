@@ -19,21 +19,19 @@ router.beforeEach((to, from, next) => {
   if (token) {
     console.log("in be");
     store.dispatch("setUser");
-    store.state.isLogin = true;
     next();
-    if (to.name==="login") {
-      alert("請先登出")
+    /*if (to.name === "login") {
+      alert("請先登出");
       next({
         path: "/"
       });
-    }
+    }*/
   } else {
     if (to.meta.isLogin) {
-      alert("請先登入")
+      alert("請先登入");
       next({
         path: "/login"
       });
-
     } else {
       next();
     }

@@ -1,26 +1,32 @@
 <script>
 import Vuex from "vuex";
 import Vue from "vue";
-//import ApiHelper from "../Api/base.js";
+import ApiHelper from "../Api/base.js";
+
 Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
-    isLogin: false,
     token: "",
-    cartNumber: 0,
-    email: "not_login"
+    email: "not_login",
+    username: "no_user",
+    cartId:"no_cartId",
   },
   getters: {
-    isLogin: state => state.isLogin,
     token: state => state.token,
-    email: state => state.email
+    email: state => state.email,
+    username: state => state.username,
+    cartId:state => state.cartId,
   },
   mutations: {
-    setUser(state) {
-      console.log("in store");
-      state.isLogin = localStorage.getItem("Flag");
+    async setUser(state) {
+      let apiHelper = new ApiHelper();
       state.token = localStorage.getItem("token");
-      state.email = "Im login !!";
+      state.email = localStorage.getItem("email");
+      state.username = await apiHelper.getUserName(
+        localStorage.getItem("email")
+      );
+      state.cartId=await apiHelper.getCartId(state.username);
+      //console.log("in store setUser:", state.username);
     }
   },
   actions: {
