@@ -2,7 +2,7 @@
 	<div id = 'ManageUser'>
 		<Header/>
 		<div class="manage-user-body">
-			<ManageUserContent/>
+			<ManageUserContent></ManageUserContent>
 		</div>
 		<Footer/>
 	</div>
