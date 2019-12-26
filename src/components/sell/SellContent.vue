@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div id="sell-content">
     <el-row :gutter="20">
       <el-col :span="3">

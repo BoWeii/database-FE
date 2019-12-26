@@ -6,6 +6,7 @@ import Cart from "../components/cart/Cart.vue";
 import Product from "../components/product/Product.vue";
 import Sell from "../components/sell/Sell.vue";
 import ManageUser from "../components/manage_user/ManageUser.vue";
+import Order from "../components/order/Order.vue";
 export const routes = [
   {
     path: "/",
@@ -76,7 +77,16 @@ export const routes = [
 	component: ManageUser,
 	meta: { 
       isLogin: false,
-      fail: "/"		
+      fail: "/",
+	}
+  },
+  {
+	path: "/order",
+	name: "order",
+	component: Order,
+	meta:{
+		isLogin: false,
+		fail: "/"
 	}
   }
 ];

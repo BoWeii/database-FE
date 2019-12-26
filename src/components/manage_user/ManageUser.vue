@@ -1,5 +1,5 @@
 <template>
-	<div id = 'ManageUser'>
+	<div id = 'manage-user'>
 		<Header/>
 		<div class="manage-user-body">
 			<ManageUserContent></ManageUserContent>
