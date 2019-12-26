@@ -88,18 +88,18 @@
 				}
 			},
 			ChangeQuantity(quantity, index) {
-				this.orderItems[index].Quantity = quantity
+				this.orderItems[index].Quantity = quantity;
 				apiHelper.modifyOrderItem({
 					"ProductId": this.orderItems[index].ProductId,
-					"CartId": "2",
+					"CartId": this.$rotuer.params.cartid,
 					"Quantity": this.orderItems[index].Quantity
-				})
+				});				
 				this.CalcTotalPrice()
 			},
 			ClickDelete(index) {
 				apiHelper.dmeleteOderItem({
 					"ProductId": this.orderItems[index].ProductId,
-					"CartId": "xxxx"
+					"CartId": this.$rotuer.params.cartid
 				});
 				delete this.orderItems[index];
 				this.$root.reload();
