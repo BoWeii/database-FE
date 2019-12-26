@@ -35,6 +35,21 @@ async function get(path, header) {
 	}
 }
 
+async function put(path, data,header) {
+	try {
+		let resp = await axios({
+			method: "Post",
+			url: baseURL + path,
+			data: data,
+			headers: header
+		});
+		console.log("in post:", resp);
+		return resp;
+	} catch (e) {
+		console.log("fail in post", e);
+	}
+}
+
 /*             others function                   */
 function checkLogin(resp) {
 	try {
@@ -105,27 +120,31 @@ class ApiHelper {
 			return checkPublic(res);
 		}	
 	}
-	async getProducts(data){
+	async getProducts(query){
 		this.checkHeader()
-		let res = await post("queryproduct", data, this.header);
-		return res;
+		let res = await get("queryproduct"+query, this.header);
+		console.log("getProducts:", res.data);
+		return res.data;
 	}
 	//---------------Cart---------------------------/
-	async getOrderItems(data){
+	async getOrderItems(query){
 		this.checkHeader()
-		let res = await post("modifyorderitemincart", data, this.header);
-		return res;
+		let res = await get("getorderitemsincart"+ query, this.header);
+		console.log("get OrderItems:", res.data);
+		return res.data;
 	}
 
 	async deleteOderItem(data){
 		this.checkHeader()
 		let res = await post("deleteorderitemincart", data, this.header);
+		console.log("deleteOderItem:", res);
 		return res;
 	}
 	
 	async modifyOrderItem(data){
 		this.checkHeader()
-		let res = await post("modifyorderitemquantity", data, this.header);
+		let res = await put("modifyorderitemquantity", data, this.header);
+		console.log("modifyOrderItem:", res);
 		return res;
 	}
 }

@@ -3,7 +3,7 @@
 		<el-row :gutter="20">
 			<el-col :span="7" v-for="(productInfo, index) in productsInfo" :key="index" :offset="index >= 0 ? 1 : 0">
 				<el-card :body-style="{ padding: '0px' }">
-					<img :src="productInfo.ImageSrc" class="shpo-list-card-image" @click="GoToProduct(productInfo.Id)">
+					<img :src="productInfo.ImageSrc" class="shpo-list-card-image" @click="goToProduct(productInfo.ProductId)">
 					<div style="padding: 12px;">
 						<div class="shpo-list-card-content">
 							<div class="shpo-list-card-text">
@@ -11,7 +11,7 @@
 								<h4 style="margin: 3px;">{{productInfo.Price}}</h4>
 							</div>
 							<div class="shpo-list-card-button">
-								<el-button v-bind:icon="iconNameList[index]" @mouseover.native="ChangeIconOfButton(index)" @mouseout.native="ChangeIconOfButton(index)" plain></el-button>
+								<el-button v-bind:icon="iconNameList[index]" @mouseover.native="changeIconOfButton(index)" @mouseout.native="changeIconOfButton(index)" plain></el-button>
 							</div>
 						</div>
 					</div>
@@ -38,7 +38,7 @@
 			}
 		},
 		methods: {
-			ChangeIconOfButton(index) {
+			changeIconOfButton(index) {
 				if (this.iconNameList[index] === iconNameShopingCart) {
 					this.iconNameList[index] = iconNameGoods;
 					console.log(iconNameGoods);
@@ -49,12 +49,12 @@
 				}
 
 			},
-			GoToProduct(Id) {
-				console.log(Id);
+			goToProduct(productId) {
+				console.log(productId);
 				this.$router.push({
 					name: 'product',
 					params: {
-						id: Id
+						id: productId
 					}
 				})
 			}

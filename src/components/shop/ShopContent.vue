@@ -77,9 +77,9 @@
 					this.quantityInList += 1;
 				}
 			},
-			getProductFromBackend() {
+			async getProductFromBackend() {
 				this.isLoading = true;
-				let res = apiHelper.getProducts({
+				let res = await apiHelper.getProducts({
 					"p_name": this.$route.query.p_name,
 					"s_username": ""
 				})
@@ -100,8 +100,8 @@
 				}
 			}
 		},
-		mounted(){
-			this.getProductFromBackend();
+		async mounted(){
+			await apiHelper.getProductFromBackend();
 		}
 	}
 </script>

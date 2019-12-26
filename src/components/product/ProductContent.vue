@@ -44,7 +44,7 @@
 			</el-col>
 		</el-row>
 		<div class="row-button">
-			<el-button type="primary" :plain="true" @click="OrderProduct()">
+			<el-button type="primary" :plain="true" @click="orderProduct()">
 				加入購物車
 			</el-button>
 		</div>
@@ -85,11 +85,11 @@
 			}
 		},
 		methods: {
-			OrderProduct() {
+			async orderProduct() {
 				if (this.isOrder) {
 					this.$message('商品已存在於訂單');
 				} else {					
-					let res = apiHelper.login({
+					let res = await apiHelper.login({
 						"ProductId": "1",
 						"CartId": "xxx",
 						"Quantity": this.productInfo.quantity
@@ -102,7 +102,18 @@
 					}
 				}
 			},
-			GetProductText() {
+			async getProductFromBackEnd(){
+				try {
+					console.log(this.$route.params.id);
+					this.products = await apiHelper.getProducts({
+						"p_name": "",
+						"s_username": "jeff"
+					});
+				} catch (e) {
+					console.log(e);
+				}
+			},
+			getProductText() {
 				let text = " ( ";
 				this.productInfo.discount.forEach((element) => {
 					text += element.name + " ";
@@ -110,17 +121,9 @@
 				this.priceText = this.productInfo.price + text + ")";
 			}
 		},
-		mounted() {
-			try {
-				console.log(this.$route.params.id);
-				this.productInfo = apiHelper.getProducts({
-					"p_name": "",
-					"s_username": "jeff"
-				});
-			} catch (e) {
-				console.log(e);
-			}
-			this.GetProductText();
+		async mounted() {
+			await this.getProductFromBackEnd();
+			this.getProductText();
 		}
 	}
 </script>
