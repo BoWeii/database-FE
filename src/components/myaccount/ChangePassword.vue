@@ -10,8 +10,7 @@
         <label class="prfile-lab">passwordagain</label>
         <el-input class="ChangePassword-input" type="password" style v-model="model.newpassword2"></el-input>
       </div>
-      
-      
+
       <el-button
         :loading="loading"
         style="align-items: center;"
@@ -30,8 +29,7 @@ export default {
     return {
       model: {
         neewpassword1: "",
-        newpassword12: "",
-        
+        newpassword12: ""
       }
     };
   }

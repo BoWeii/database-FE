@@ -1,33 +1,29 @@
 <template>
-  <div id="Register">
-    <el-container>
-      <el-header height="180px">
-        <Header />
-      </el-header>
-      <div class="my-account" style="background-color:#f8fbfb">
-        <div id="sibar" class="sibar" style="max-width: 320px;">
-          <h2>name</h2>
-          <div style="margin-bottom: 25px;">__________________</div>
-          <div class="tab" @click="sibarValue='Profile'">Profile</div>
-          <div class="tab" @click="sibarValue='transactionLog'">Transaction log</div>
-          <div class="tab" @click="sibarValue='change-password'">Change password</div>
-          <el-button
-            :loading="loading"
-            style="justify-content: flex-start;display:flex;"
-            type="primary"
-            native-type="submit"
-            block
-          >log out</el-button>
-        </div>
-        <div class="sibar" style="max-width: 700px;">
-          <div>
-            <component v-bind:is="sibarValue"></component>
-          </div>
-        </div>
+  <div id="MyAccount" class>
+    <el-header height="180px">
+      <Header />
+    </el-header>
+    <div class="my-account" style="background-color:#f8fbfb">
+      <div id="sibar" class="sibar" style="max-width: 320px;">
+        <h2>{{model.username}}</h2>
+        <div style="margin-bottom: 25px;">__________________</div>
+        <div class="tab" @click="sibarValue='Profile'">Profile</div>
+        <div class="tab" @click="sibarValue='transactionLog'">Transaction log</div>
+        <div class="tab" @click="sibarValue='change-password'">Change password</div>
+        <div class="tab" @click="sibarValue='manage-product'">Manage product</div>
+        <el-button
+          style="justify-content: flex-start;display:flex;"
+          type="primary"
+          native-type="submit"
+          block
+        >log out</el-button>
       </div>
+      <div class="sibar2" style="max-width: 700px;">
+        <component v-bind:is="sibarValue"></component>
+      </div>
+    </div>
 
-      <Footer />
-    </el-container>
+    <Footer />
   </div>
 </template>
 
@@ -37,6 +33,7 @@ import Footer from "../footer/Footer.vue";
 import Profile from "./Profile.vue";
 import transactionLog from "./TransationLog.vue";
 import ChangePassword from "./ChangePassword.vue";
+import ManageProduct from "./ManageProduct.vue";
 export default {
   name: "MyAccount",
   components: {
@@ -44,11 +41,15 @@ export default {
     Footer,
     Profile,
     transactionLog,
-    ChangePassword
+    ChangePassword,
+    ManageProduct
   },
   data() {
     return {
-      sibarValue: "Profile"
+      sibarValue: "Profile",
+      model: {
+        username: this.$store.getters.username
+      }
     };
   }
 };
@@ -62,6 +63,19 @@ export default {
   min-height: calc(100vh - 386px);
 }
 .sibar {
+  margin-right: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-right: 50px;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(225, 225, 225);
+}
+.sibar2 {
   margin-right: 10px;
   position: relative;
   display: flex;

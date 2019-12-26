@@ -18,13 +18,7 @@
         <label class="prfile-lab">Phone</label>
         <el-input class="profile-input" style v-model="model.phone"></el-input>
       </div>
-      <el-button
-        :loading="loading"
-        style="align-items: center;"
-        type="primary"
-        native-type="submit"
-        block
-      >save</el-button>
+      <el-button style="align-items: center;" type="primary" native-type="submit" block>save</el-button>
     </el-form>
   </div>
 </template>
