@@ -86,23 +86,20 @@
 		},
 		methods: {
 			OrderProduct() {
-				if (this.isOrder == false) {
-					let res = apiHelper.login(
-						{
-							"ProductId": "1",
-							"CartId": "xxx",
-							"Quantity": this.productInfo.quantity
-						}
-					);
-					if(res === true){
+				if (this.isOrder) {
+					this.$message('商品已存在於訂單');
+				} else {
+					let res = apiHelper.login({
+						"ProductId": "1",
+						"CartId": "xxx",
+						"Quantity": this.productInfo.quantity
+					});
+					if (res) {
 						this.isOrder = true
 						this.$message('成功將商品加入購物車')
-					}
-					else{
+					} else {
 						this.$("錯誤!清重新登入後再試");
 					}
-				} else {
-					this.$message('商品已存在於訂單');
 				}
 			},
 			GetProductText() {
@@ -114,13 +111,13 @@
 			}
 		},
 		mounted() {
-			try{
-				this.productInfo = apiHelper.GetProducts({
+			try {
+				this.productInfo = apiHelper.getProducts({
 					"p_name": "",
 					"s_username": "jeff"
 				});
 				console.log(this.productInfo);
-			}catch(e){
+			} catch (e) {
 				console.log(e);
 			}
 			this.GetProductText();

@@ -67,25 +67,21 @@ class ApiHelper {
 		this.header = "";
 		this.path = "";
 	}
+	
 	async checkHeader() {
 		if (await localStorage.getItem("token")) {
 			this.header = {
 				Authorization: "Bearer" + " " + localStorage.getItem("token")
 			};
 		}
-	}
+	}	
+	
 	async login(data) {
 		this.checkHeader()
 		let res = await post("login", data, this.header);
 		return checkLogin(res);
 	}
-	async publishProduct(isStaff, data) {
-		this.checkHeader()
-		if (await isStaff) {
-			let res = await post("sell", data, this.header);
-			return checkPublic(res);
-		}
-	}
+	
 	async getUserName(email) {
 		this.checkHeader()
 		this.path = "user?Mail=" + email;
@@ -93,12 +89,44 @@ class ApiHelper {
 		console.log("in getUserName: ", res.data.userName);
 		return res.data.userName;
 	}
+	
 	async getCartId(userName) {
 		this.checkHeader()
 		this.path = "url/getcartidwithusername?UserName=" + userName;
 		let res = await get(this.path, this.header);
 		console.log("in getCartid ", res.data.cartid);
 		return res.data.cartid;
+	}
+	//-------------Product-----------------------------//
+	async publishProduct(isStaff, data) {
+		this.checkHeader()
+		if (await isStaff) {
+			let res = await post("sell", data, this.header);
+			return checkPublic(res);
+		}	
+	}
+	async getProducts(data){
+		this.checkHeader()
+		let res = await post("queryproduct", data, this.header);
+		return res;
+	}
+	//---------------Cart---------------------------/
+	async getOrderItem(data){
+		this.checkHeader()
+		let res = await post("modifyorderitemincart", data, this.header);
+		return res;
+	}
+
+	async deleteOderItem(data){
+		this.checkHeader()
+		let res = await post("deleteorderitemincart", data, this.header);
+		return res;
+	}
+	
+	async modifyOrderItem(data){
+		this.checkHeader()
+		let res = await post("modifyorderitemquantity", data, this.header);
+		return res;
 	}
 }
 export {

@@ -19,7 +19,7 @@
 					</el-col>
 				</div>
 				<div v-for="(orderItem, index) in orderItems" :key="orderItem">
-					<OrderItem @click-delete="ClickDelete" @change-quantity="ChangeQuantity" :order="index" :name="orderItem.Pname" :price="orderItem.Price" :quantity="orderItem.Quantity" :discountType="orderItem.DiscountType" :discountNumber="orderItem.DiscountNumber"></OrderItem>
+					<OrderItem @click-delete="ClickDelete(index)" @change-quantity="ChangeQuantity" :order="index" :name="orderItem.Pname" :price="orderItem.Price" :quantity="orderItem.Quantity" :discountType="orderItem.DiscountType" :discountNumber="orderItem.DiscountNumber"></OrderItem>
 				</div>
 				<div>
 					<el-col span="20" class="total-price-horizontal">
@@ -62,19 +62,19 @@
 				orderItems: orderItems.items,
 				totalPrice: 0,
 				ship: 60,
-				noProducts: true
+				noProducts: false
 			}
 		},
 		methods: {
 			GetOrderItemPrice(orderItem) {
 				let price = orderItem.Price * orderItem.Quantity
-				if (orderItem.DiscountType == "Shipping") {
+				if (orderItem.DiscountType === "Shipping") {
 					if (price < orderItem.DiscountNumber) {
 						price += this.ship
 					}
-				} else if (orderItem.DiscountType == "Special") {
+				} else if (orderItem.DiscountType === "Special") {
 					price = price * orderItem.DiscountNumber / 100 + this.ship
-				} else if (orderItem.DiscountType == "Seasoning") {
+				} else if (orderItem.DiscountType === "Seasoning") {
 					price = price * orderItem.DiscountNumber / 100 + this.ship
 				}
 				return Math.ceil(price)
@@ -89,7 +89,7 @@
 			},
 			ChangeQuantity(quantity, index) {
 				this.orderItems[index].Quantity = quantity
-				apiHelper.ModifyOrderItem({
+				apiHelper.modifyOrderItem({
 					"ProductId": this.orderItems[index].ProductId,
 					"CartId": "2",
 					"Quantity": this.orderItems[index].Quantity
@@ -97,19 +97,22 @@
 				this.CalcTotalPrice()
 			},
 			ClickDelete(index) {
-				apiHelper.DeleteOderItem({"ProductId": this.orderItems[index].ProductId,
-				"CartId": "xxxx"});
-				this.orderItems.remove(index);
+				apiHelper.dmeleteOderItem({
+					"ProductId": this.orderItems[index].ProductId,
+					"CartId": "xxxx"
+				});
+				delete this.orderItems[index];
+				this.$root.reload();
 			}
 		},
 		mounted() {
-			let res = apiHelper.GetOrderItems({
+			let res = apiHelper.getOrderItems({
 				"CartId": this.$rotuer.params.cartid
 			});
 			this.orderItems = res.items;
 			console.log("test:", this.$rotuer.params.cartid);
-			if(this.orderItems != undefined)
-				this.noProducts = false; 
+			if (this.orderItems === undefined)
+				this.noProducts = true;
 			this.CalcTotalPrice()
 		}
 	}

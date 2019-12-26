@@ -31,8 +31,7 @@
 	import ShopListProductsInRow from './ShopListProductsInRow.vue';
 	import ShopListHeader from './ShopListHeader'
 	import ApiHelper from '../../Api/base.js';
-	const productInfo = [
-		{
+	const productInfo = [{
 			"Id": "1",
 			"PName": "Banana",
 			"Price": "Test",
@@ -44,7 +43,7 @@
 			"Price": "Test",
 			"ImageSrc": "https://www.insideedition.com/sites/default/files/images/2019-07/073119-banana-1280x720-recovered.jpg"
 		},
-		{	
+		{
 			"Id": "3",
 			"PName": "Watermelon",
 			"Price": "Test",
@@ -72,18 +71,18 @@
 		methods: {
 			AddPorductsInfo() {
 				this.isLoading = true;
-				let productInfo = [];				
+				let productInfo = [];
 				let count = 0
-				while(this.quantity < this.products.item.length && count<3){
+				while (this.quantity < this.products.item.length && count < 3) {
 					productInfo.push(this.products.item[this.quantity]);
-					count +=1;
+					count += 1;
 					this.quantity += 1;
-				}				
+				}
 				this.productsInfo.push(productInfo);
 			},
-			handleScroll() {
+			HandleScroll() {
 				const list = this.$refs.list;
-				console.log(list.scrollTop, list.offsetHeight, list.scrollHeight)
+				
 				if (this.isLoading) return;
 
 				if (list.scrollTop + list.offsetHeight >= list.scrollHeight && productsInfo.length < 6) {
@@ -92,13 +91,13 @@
 				}
 			}
 		},
-		mounted(){
-			try{
-				this.products = apiHelper.GetProducts({
+		mounted() {
+			try {
+				this.products = apiHelper.getProducts({
 					"p_name": this.$route.query.p_name,
 					"s_username": ""
 				})
-			}catch(e){
+			} catch (e) {
 				console.log(e);
 			}
 		}
