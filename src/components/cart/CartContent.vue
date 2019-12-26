@@ -8,13 +8,13 @@
 			</div>
 			<div v-else>
 				<div vertical-align="center" class="row-height">
-					<el-col span="14" class="row-height">
+					<el-col :span="14" class="row-height">
 						<h2>Name</h2>
 					</el-col>
-					<el-col span="3" class="right-align row-height">
+					<el-col :span="3" class="right-align row-height">
 						<h2>Quantity</h2>
 					</el-col>
-					<el-col span="3" class="right-align row-height">
+					<el-col :span="3" class="right-align row-height">
 						<h2>Price</h2>
 					</el-col>
 				</div>
@@ -22,7 +22,7 @@
 					<OrderItem @click-delete="ClickDelete(index)" @change-quantity="ChangeQuantity" :order="index" :name="orderItem.Pname" :price="orderItem.Price" :quantity="orderItem.Quantity" :discountType="orderItem.DiscountType" :discountNumber="orderItem.DiscountNumber"></OrderItem>
 				</div>
 				<div>
-					<el-col span="20" class="total-price-horizontal">
+					<el-col :span="20" class="total-price-horizontal">
 						<h2>Total price : &nbsp;</h2>
 						<h2 v-text="totalPrice"></h2>
 					</el-col>
