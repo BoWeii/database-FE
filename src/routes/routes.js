@@ -5,6 +5,7 @@ import Register from "../components/register/Register.vue";
 import Cart from "../components/cart/Cart.vue";
 import Product from "../components/product/Product.vue";
 import Sell from "../components/sell/Sell.vue";
+import ManageUser from "../components/manage_user/ManageUser.vue";
 export const routes = [
   {
     path: "/",
@@ -68,5 +69,14 @@ export const routes = [
       isLogin: false,
       fail: "/"
     }
+  },
+  {
+	path: "/manageuser",
+	name: "manageuser",
+	component: ManageUser,
+	meta: { 
+      isLogin: false,
+      fail: "/"		
+	}
   }
 ];
