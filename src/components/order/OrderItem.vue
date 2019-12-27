@@ -21,7 +21,7 @@
 	export default {
 		name: "OrderItem",
 		props: {
-			orderItem: Object
+			ordersInfo: Object
 		},
 		methods: {
 		}

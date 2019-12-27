@@ -6,7 +6,7 @@
 				</el-col>
 				<el-col :span="4" class="row-height">
 					<h2>Name</h2>
-				</el-col>				
+				</el-col>
 				<el-col :span="4" class="right-align row-height">
 					<h2>Price</h2>
 				</el-col>
@@ -16,10 +16,10 @@
 				<el-col :span="4" class="right-align row-height">
 					<h2>Quantity</h2>
 				</el-col>
-
+		
 			</div>
 			<div v-for="(orderItem, index) in orderItems" :key="index">
-				<OrderItem :orderItem="orderItem"/>
+				<OrderItem :ordersInfo="orderItem" />
 			</div>
 			<div>
 				<el-col :span="16" class="total-price-horizontal">
@@ -62,14 +62,14 @@
 				total: 0
 			}
 		},
-		methods:{
-			CountTotal(){
-				this.orderItems.forEach((element)=>{
+		methods: {
+			CountTotal() {
+				this.orderItems.forEach((element) => {
 					this.total += element.DiscountNumber;
 				})
 			}
 		},
-		mounted(){
+		mounted() {
 			this.CountTotal();
 		}
 	}
@@ -77,7 +77,7 @@
 
 <style>
 	#order-content {
-		height:700px;
+		height: 700px;
 		padding: 10px 0px;
 		text-align: left;
 	}
@@ -87,12 +87,13 @@
 	}
 
 	.total-price-horizontal {
-		margin-top:100px;
+		margin-top: 100px;
 		text-align: left;
 		display: flex;
 		justify-content: flex-end;
 	}
-	.total-price-left{
+
+	.total-price-left {
 		margin-top: 100px;
 		text-align: right;
 		font-size: 25px;

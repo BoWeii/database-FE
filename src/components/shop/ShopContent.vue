@@ -31,8 +31,7 @@
 	import ShopListProductsInRow from './ShopListProductsInRow.vue';
 	import ShopListHeader from './ShopListHeader'
 	import ApiHelper from '../../Api/base.js';
-	const productInfo = [
-		{
+	const productInfo = [{
 			"PName": "Banana",
 			"Price": "Test",
 			"ImageSrc": "https://5.imimg.com/data5/LM/DU/MY-22954806/apple-fruit-500x500.jpg"
@@ -71,7 +70,7 @@
 				this.isLoading = true;
 				let count = 0;
 				let productInfo = []
-				while(this.quantityInList < this.products.length && count < 3){
+				while (this.quantityInList < this.products.length && count < 3) {
 					productInfo.push(this.products[this.quantityInList]);
 					count += 1;
 					this.quantityInList += 1;
@@ -79,7 +78,7 @@
 			},
 			async getProductFromBackend() {
 				this.isLoading = true;
-				this.products  = await apiHelper.getProducts({
+				this.products = await apiHelper.getProducts({
 					"p_name": this.$route.query.p_name,
 					"s_username": ""
 				})
@@ -94,7 +93,7 @@
 				}
 			}
 		},
-		async mounted(){
+		async mounted() {
 			await this.getProductFromBackend();
 		}
 	}

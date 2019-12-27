@@ -163,7 +163,7 @@ class ApiHelper {
 
 	//---------------User----------------------//
 	async getUsers(query) {
-		const res;
+		let res;
 		if (query === "") {
 			res = await get("users", this.header);
 		} else {
