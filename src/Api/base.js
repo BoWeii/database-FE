@@ -1,23 +1,34 @@
 const baseURL = "http://104.199.190.234:80/";
+import $ from "jquery"
 import axios from "axios";
 /*             base function                   */
 async function post(path, data, header) {
 	try {
-		console.log("header=", header);
-		const resp = await axios({
+		let resp = await axios({
 			method: "POST",
 			url: baseURL + path,
 			data: data,
 			headers: header
 		});
-		localStorage.setItem("email", data.mail);
 		console.log("in post", resp);
 		return resp;
 	} catch (e) {
-		if (e.response.status === 400) alert("password is wrong!");
-		else {
-			alert("email wrong!");
-		}
+		console.log(e)
+	}
+}
+
+async function paramPost(path, data, header) {
+	try {
+
+		let resp = await axios({
+			method: "POST",
+			url: baseURL + path + data,
+			headers: header
+		});
+		console.log("in post", resp);
+		return resp;
+	} catch (e) {
+		console.log(e)
 	}
 }
 
@@ -72,7 +83,10 @@ function checkLogin(resp) {
 			return true;
 		}
 	} catch (e) {
-		console.log("false in checkPublic : ", e.response.data);
+		if (e.response.status === 400) alert("password is wrong!");
+		else {
+			alert("email wrong!");
+		}
 		return false;
 	}
 }
@@ -103,8 +117,15 @@ class ApiHelper {
 			};
 		}
 	}
-
 	//---------------User----------------------//
+	async login(data) {
+		this.checkHeader()
+		let res = await post("login", data, this.header);
+		if (res) {
+			localStorage.setItem("email", data.mail);
+		}
+		return checkLogin(res);
+	}
 	async getUsers(query) {
 		let res;
 		if (query === "") {
@@ -115,24 +136,11 @@ class ApiHelper {
 		console.log("get Users:", res.data);
 		return res.data;
 	}
-
 	async deleteUser(data) {
 		this.checkHeader()
 		const res = await deleteRequest("user", data, this.header);
 		console.log("modifyOrderItem:", res);
 		return res;
-	}
-	async login(data) {
-		this.checkHeader()
-		let res = await post("login", data, this.header);
-		return checkLogin(res);
-	}
-	async publishProduct(isStaff, data) {
-		this.checkHeader()
-		if (await isStaff) {
-			let res = await post("sell", data, this.header);
-			return checkPublic(res);
-		}
 	}
 	async getUserName(email) {
 		this.checkHeader()
@@ -149,6 +157,19 @@ class ApiHelper {
 		return res.data.CartId;
 	}
 	//-------------Product-----------------------------//
+	async publishProduct(isStaff, data) {
+		this.checkHeader()
+		if (await isStaff) {
+			let res = await post("sell", data, this.header);
+			return checkPublic(res);
+		}
+	}
+	async public(data) {
+		this.checkHeader()
+		let result = $.param(data);
+		let res = await paramPost("addproduct?", result.toString(), this.header);
+		if (res) return true;
+	}
 	async getProducts(query) {
 		this.checkHeader()
 		const res = await get("queryproduct" + query, this.header);

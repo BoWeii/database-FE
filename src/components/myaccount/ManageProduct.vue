@@ -2,22 +2,22 @@
   <div id="Manage" class="manage" style="text-align-center;">
     <h2 style="font-size:30px;">Your public</h2>
 
-    <div class="manage-column">
+    <div class="manage-column" v-for="(item, index) in model.jsons.items" :key=index >
       <label class="prfile-lab">
         <h3>Product</h3>
-        <h5>{{model.PName}}</h5>
+        <h5>{{item.PName}}</h5>
       </label>
       <label class="prfile-lab">
         <h3>Category</h3>
-        <h5>{{model.Category}}</h5>
+        <h5>{{item.Category}}</h5>
       </label>
       <label class="prfile-lab">
         <h3>Description</h3>
-        <h5>{{model.Description}}</h5>
+        <h5>{{item.Description}}</h5>
       </label>
       <label class="prfile-lab">
         <h3>Price</h3>
-        <h5>{{model.Price}}</h5>
+        <h5>{{item.Price}}</h5>
       </label>
       <div class="prfile-lab" style="flex-direction:column;display:flex;">
         <div style="margin-bottom:5px">
@@ -32,6 +32,37 @@
 </template>
 
 <script>
+const jsons={
+  
+   items:[
+     {
+       StaffUserName:"boweii",
+       PName: "name1",
+        Price: "100",
+        Category:"qpp",
+        ImageSrc: "https://www.penghu-nsa.gov.tw/FileDownload/Album/Big/20161012162551758864338.jpg",
+        Source:"japan",
+        Inventory:10,
+        Description: "ya",
+        SoldQuantity: "yee",
+        OnSaleDate: 10,
+        typeOptions: "typeOptions",
+        labels: "labels"
+   },{
+      StaffUserName:"weii",
+       PName: "name1",
+        Price: "100",
+        Category:"qpp",
+        ImageSrc: "https://www.penghu-nsa.gov.tw/FileDownload/Album/Big/20161012162551758864338.jpg",
+        Source:"japan",
+        Inventory:10,
+        Description: "ya",
+        SoldQuantity: "yee",
+        OnSaleDate: 10,
+        typeOptions: "typeOptions",
+        labels: "labels"
+   }] 
+}
 export default {
   name: "manage-product",
   data() {
@@ -42,7 +73,9 @@ export default {
         Description: "Very good apple!",
         Source: "Taiwan",
         Price: 100,
-        Inventory: 20
+        Inventory: 20,
+        jsons:jsons
+
       }
     };
   },
@@ -54,6 +87,7 @@ export default {
       });
     }
   }
+  
 };
 </script>
 <style header>

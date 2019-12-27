@@ -61,7 +61,7 @@ export default {
     async login() {
       let data = { mail: this.model.mail, password: this.model.password };
       if (await apiHelper.login(data)) {
-        this.$store.dispatch("setUser");
+       // this.$store.dispatch("setUser");
         this.$router.push("/");
       }
     }

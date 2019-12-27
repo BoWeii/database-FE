@@ -14,19 +14,19 @@
           <div class="row-size">
             <el-input
               placeholder="請輸入商品名稱"
-              v-model="model.productName"
+              v-model="model.Pname"
               maxlength="10"
               show-word-limit
             />
           </div>
           <div class="row-size" style="width: 30%;">
-            <el-input placeholder="請輸入商品價錢" v-model="model.productPrice" />
+            <el-input placeholder="請輸入商品價錢" v-model="model.Price" />
           </div>
           <div class="row-size">
-            <el-input placeholder="請輸入商品庫存數量" v-model="model.productInventory" />
+            <el-input placeholder="請輸入商品庫存數量" v-model="model.Inventory" />
           </div>
           <div class="row-size" style="width: 30%;">
-            <el-select v-model="model.productType" placeholder="選擇商品種類">
+            <el-select value-key="name" v-model="model.Category" placeholder="選擇商品種類">
               <el-option
                 option
                 v-for="option in model.typeOptions"
@@ -37,7 +37,7 @@
             </el-select>
           </div>
           <div class="row-size" style="width: 30%;">
-            <el-select v-model="model.productDiscount" placeholder="選擇優惠">
+            <el-select  v-model="model.productDiscount" placeholder="選擇優惠">
               <el-option
                 option
                 v-for="option in model.typeDiscount "
@@ -48,14 +48,14 @@
             </el-select>
           </div>
           <div class="row-size">
-            <el-input placeholder="輸入圖片Url" v-model="model.productUrl">
+            <el-input placeholder="輸入圖片Url" v-model="model.ImageSrc">
               <template slot="prepend">Http://</template>
             </el-input>
           </div>
           <div class="row-size">
             <el-input
               placeholder="請簡單描述"
-              v-model="model.productDescribtion"
+              v-model="model.Description"
               type="textarea"
               maxlength="50"
               :rows="4"
@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import ApiHelper from "../../Api/base.js"
 const typeOptions = [
   {
     name: "西瓜"
@@ -117,31 +118,37 @@ export default {
   data: () => {
     return {
       model: {
-        productName: "name",
-        productPrice: "100",
-        productUrl: "",
-        productType: "",
-        productDiscount: "",
-        productDescribtion: "ya",
+        Pname:"" ,
+        Price: "",
+        ImageSrc: "https://www.penghu-nsa.gov.tw/FileDownload/Album/Big/20161012162551758864338.jpg",
+        Source:"",
+        inventory:10,
+        Description: "",
+        Category:"",
         typeDiscount: typeDiscount,
-        productInventory: "",
+        Inventory: 10,
         typeOptions: typeOptions,
         labels: labels
       }
     };
   },
   methods: {
+    
     async send() {
-      /*let data = {
-        s_username: "boweii",
-        description: this.description.productDescribtion,
-        p_name: this.model.productName,
-        category: this.model.typeOptions,
-        source: this.model.productUrl,
-        price: this.model.productPrice,
-        inventory: "",
-        onsale_date: ""
-      };*/
+      let apiHelper= new ApiHelper();
+      let data = {
+        StaffUserName:this.$store.getters.username,
+        Description: this.model.Description,
+        Pname: this.model.Pname,
+        Category: this.model.Category,
+        Source: this.model.Source,
+        Price: this.model.Price,
+        Inventory:this.model.Inventory,
+        SoldQuantity: "11",
+        OnSaleDate: "1999-01-11",
+        ImageSrc:this.model.ImageSrc
+      };
+      apiHelper.public(data)
       console.log(this.model);
     }
   }
