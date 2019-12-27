@@ -89,9 +89,9 @@
 				if (this.isOrder) {
 					this.$message('商品已存在於訂單');
 				} else {					
-					let res = await apiHelper.login({
-						"ProductId": "1",
-						"CartId": "xxx",
+					const res = await apiHelper.login({
+						"ProductId": this.$route.params.id,
+						"CartId": this.$store.getters.cartId;,
 						"Quantity": this.productInfo.quantity
 					});
 					if (res) {
@@ -106,8 +106,8 @@
 				try {
 					console.log(this.$route.params.id);
 					this.products = await apiHelper.getProducts({
-						"p_name": "",
-						"s_username": "jeff"
+						"p_name": this.productInfo.Pname,
+						"s_username": this.$store.getters.username
 					});
 				} catch (e) {
 					console.log(e);
