@@ -91,7 +91,7 @@
 				} else {					
 					const res = await apiHelper.login({
 						"ProductId": this.$route.params.id,
-						"CartId": this.$store.getters.cartId;,
+						"CartId": this.$store.getters.cartId,
 						"Quantity": this.productInfo.quantity
 					});
 					if (res) {
