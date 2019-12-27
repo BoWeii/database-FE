@@ -184,8 +184,8 @@ class ApiHelper {
 	async getProducts(query) {
 		this.checkHeader()
 		const res = await get("queryproduct" + query, this.header);
-		console.log("getProducts:", res.data);
-		return res.data;
+		console.log("getProducts:", res.data.items);
+		return res.data.items;
 	}
 	async getProductByName(staffUserName) {
 		this.checkHeader()
@@ -212,9 +212,16 @@ class ApiHelper {
 		this.checkHeader()
 		const res = await get("getorderitemsincart" + query, this.header);
 		console.log("get OrderItems:", res.data);
-		return res.data;
+		return res.data.items;
 	}
-
+	
+	async addOrderItem(query){
+		this.checkHeader();
+		const res = await get("addorderitemtocart" + query, this.header);
+		console.log("add OrderItems:", res);
+		return res;
+	}
+	
 	async deleteOderItem(data) {
 		this.checkHeader()
 		const res = await post("deleteorderitemincart", data, this.header);
