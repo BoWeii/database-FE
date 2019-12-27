@@ -72,7 +72,11 @@
 				if (this.isOrder) {
 					this.$message('商品已存在於訂單');
 				} else {
-					const res = await apiHelper.addOrderItem(this.getAddProdcutQuery());
+					const res = await apiHelper.addOrderItem({
+						"ProductId": this.$route.params.id,
+						"CardId": this.$store.getters.cartId,
+						"Quantity": this.quantity
+					});
 					if (res) {
 						this.isOrder = true
 						this.$message('成功將商品加入購物車')
@@ -84,9 +88,10 @@
 			async getProductFromBackEnd() {
 				try {
 					console.log(this.$route.params.id);
-					let res = await apiHelper.getProducts("?Pname=name");
+					let res = await apiHelper.getProductById(this.$route.params.id);
 					res = JSON.parse(res);
 					this.productInfo = res[0];
+					console.log(res);
 				} catch (e) {
 					console.log(e);
 				}
@@ -100,11 +105,6 @@
 
 				this.inventoryText = this.productInfo.Inventory + "( 已售: " + this.productInfo.SoldQuantity + ")"
 			},
-			getAddProdcutQuery() {
-				return "?ProductId=" + this.$route.params.id + "&" +
-					"CartId=" + this.$store.getters.cartId + "&" +
-					"Quantity=" + this.quantity;
-			}
 		},
 		async mounted() {
 			await this.getProductFromBackEnd();

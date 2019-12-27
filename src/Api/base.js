@@ -18,20 +18,19 @@ async function post(path, data, header) {
 }
 
 async function paramPost(path, data, header) {
-	try {
+  try {
 
-		const resp = await axios({
-			method: "POST",
-			url: baseURL + path,
-			params: data,
-			headers: header
-		});
-		console.log("in post", resp);
-		return resp;
-	} catch (e) {
-		console.log("fail in paramPost", e)
-	}
-}
+    let resp = await axios({
+      method: "POST",
+      url: baseURL + path + data,
+      headers: header
+    });
+    console.log("in post", resp);
+    return resp;
+  } catch (e) {
+    console.log(e)
+  }
+}	
 
 async function put(path, data, header) {
 	try {
@@ -181,9 +180,9 @@ class ApiHelper {
 		let res = await put(this.path, data, this.header);
 		if (checkPublic(res)) return true;
 	}
-	async getProducts(query) {
+	async getProductById(id) {
 		this.checkHeader()
-		const res = await get("queryproduct" + query, this.header);
+		const res = await get("queryproduct?ProductId=" + id, this.header);
 		console.log("getProducts:", res.data.items);
 		return res.data.items;
 	}
@@ -208,16 +207,16 @@ class ApiHelper {
 		return res.data;
 	}
 	//---------------Cart---------------------------/
-	async getOrderItems(query) {
+	async getOrderItemsByCartId(id) {
 		this.checkHeader()
-		const res = await get("getorderitemsincart" + query, this.header);
+		const res = await get("getorderitemsincart?CartId=" + id, this.header);
 		console.log("get OrderItems:", res.data);
 		return res.data.items;
 	}
 	
-	async addOrderItem(query){
+	async addOrderItem(data){
 		this.checkHeader();
-		const res = await get("addorderitemtocart" + query, this.header);
+		const res = await post("addorderitemtocart", data, this.header);
 		console.log("add OrderItems:", res);
 		return res;
 	}

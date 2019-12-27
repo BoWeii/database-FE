@@ -77,7 +77,7 @@
 				this.orderItems[index].Quantity = quantity;
 				await apiHelper.modifyOrderItem({
 					"ProductId": this.orderItems[index].ProductId,
-					"CartId": this.$route.params.cartid,
+					"CartId": this.$store.getters.cartId,
 					"Quantity": this.orderItems[index].Quantity
 				});
 				this.calcTotalPrice()
@@ -85,13 +85,13 @@
 			async clickDelete(index) {
 				await apiHelper.dmeleteOderItem({
 					"ProductId": this.orderItems[index].ProductId,
-					"CartId": this.$route.params.cartid
+					"CartId": this.$store.getters.cartId
 				});
 				delete this.orderItems[index];
 				this.$root.reload();
 			},
 			async getOrderItemsFromBackEnd() {
-				const res = await apiHelper.getOrderItems("?CartId=" + this.$route.params.cartid);
+				const res = await apiHelper.getOrderItemsByCartId(this.$store.getters.cartId);
 				if (res) {
 					this.orderItems = res.items;
 					if (this.orderItems === undefined)

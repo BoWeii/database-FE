@@ -46,7 +46,7 @@ export const routes = [{
 		}
 	},
 	{
-		path: "/cart/:cartid",
+		path: "/cart",
 		name: "cart",
 		component: Cart,
 		meta: {
