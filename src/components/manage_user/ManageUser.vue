@@ -1,7 +1,8 @@
 <template>
-	<div id = 'manage-user'>
+	<div id = 'ManageUser'>
 		<Header/>
 		<div class="manage-user-body">
+			<ManageUserContent/>
 		</div>
 		<Footer/>
 	</div>
@@ -10,11 +11,13 @@
 <script>
 	import Header from "../header/Header.vue";
 	import Footer from "../footer/Footer.vue";
+	import ManageUserContent from './ManageUserContent';
 	export default{
 		name: "ManageUser",
 		components:{
 			Header,
 			Footer,
+			ManageUserContent
 		}
 	}
 </script>

@@ -1,6 +1,5 @@
 <template>
 	<div id="manage-user-content">
-<<<<<<< HEAD
 		<el-row :gutter="20">
 			<el-col :span="2" class="el-col-content">
 			</el-col>
@@ -41,7 +40,6 @@
 </template>
 
 <script>
-
 	import ApiHelper from '../../Api/base.js';
 
 	const apiHelper = new ApiHelper();
