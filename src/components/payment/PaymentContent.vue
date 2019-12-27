@@ -1,6 +1,6 @@
 <template>
-	<div id="order-content">
-		<div class='order-cotent-text'>
+	<div id="payment-content">
+		<div class='payment-cotent-text'>
 			<div vertical-align="center" class="row-height">
 				<el-col :span="4" class="row-height">
 				</el-col>
@@ -18,8 +18,8 @@
 				</el-col>
 		
 			</div>
-			<div v-for="(orderItem, index) in orderItems" :key="index">
-				<OrderItem :ordersInfo="orderItem" />
+			<div v-for="(paymentItem, index) in paymentItems" :key="index">
+				<PaymentItem :paymentsInfo="paymentItem" />
 			</div>
 			<div>
 				<el-col :span="16" class="total-price-horizontal">
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-	const orderItems = {
+	const paymentItems = {
 		"items": [{
 			"Pname": "Gold apple",
 			"Price": 100,
@@ -50,21 +50,21 @@
 		}]
 	}
 
-	import OrderItem from './OrderItem.vue'
+	import PaymentItem from './PaymentItem.vue'
 	export default {
-		name: "OrderContent",
+		name: "PaymentContent",
 		components: {
-			OrderItem
+			PaymentItem
 		},
 		data: () => {
 			return {
-				orderItems: orderItems.items,
+				paymentItems: paymentItems.items,
 				total: 0
 			}
 		},
 		methods: {
 			CountTotal() {
-				this.orderItems.forEach((element) => {
+				this.paymentItems.forEach((element) => {
 					this.total += element.DiscountNumber;
 				})
 			}
@@ -76,13 +76,13 @@
 </script>
 
 <style>
-	#order-content {
+	#payment-content {
 		height: 700px;
 		padding: 10px 0px;
 		text-align: left;
 	}
 
-	.order-cotent-text {
+	.payment-cotent-text {
 		padding: 50px 100px;
 	}
 

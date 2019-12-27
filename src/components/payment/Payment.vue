@@ -1,29 +1,29 @@
 <template>
-	<div id='order'>
+	<div id='Payment'>
 		<Header/>
-		<div class="order-body">
-			<OrderContent/>			
+		<div class="payment-body">
+			<PaymentContent/>			
 		</div>
 		<Footer/>
 	</div>
 </template>
 
 <script>
-	import OrderContent from './OrderContent.vue'
+	import PaymentContent from './PaymentContent.vue'
 	import Header from '../header/Header.vue';
 	import Footer from "../footer/Footer.vue";
 	export default{
-		name: "Order",
+		name: "Payment",
 		components:{
 			Header,
 			Footer,
-			OrderContent
+			PaymentContent
 		}
 	}
 </script>
 
 <style>
-	.order-body{
+	.payment-body{
 		height: 700px;
 		background-color: #f8fbfb;
 	}

@@ -1,27 +1,27 @@
 <template>
-	<div id="orderItem" vertical-align="center" class="row-height">
+	<div id="paymentItem" vertical-align="center" class="row-height">
 		<el-col :span="4" class="row-height">	
 		</el-col>
 		<el-col :span="4" class="row-height">
-			<h2>{{orderItem.Pname}}</h2>
+			<h2>{{paymentItem.Pname}}</h2>
 		</el-col>
 		<el-col :span="4" class="right-align row-height">
-			<h2>{{orderItem.Price}}</h2>
+			<h2>{{paymentItem.Price}}</h2>
 		</el-col>
 		<el-col :span="4" class="right-align row-height">
-			<h2>{{orderItem.DiscountNumber}}</h2>
+			<h2>{{paymentItem.DiscountNumber}}</h2>
 		</el-col>
 		<el-col :span="4" class="right-align row-height">
-			<h2>{{orderItem.Quantity}}</h2>
+			<h2>{{paymentItem.Quantity}}</h2>
 		</el-col>
 	</div>
 </template>
 
 <script>
 	export default {
-		name: "OrderItem",
+		name: "PaymentItem",
 		props: {
-			ordersInfo: Object
+			paymentsInfo: Object
 		},
 		methods: {
 		}
