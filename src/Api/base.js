@@ -43,13 +43,26 @@ async function put(path, data, header) {
 			data: data,
 			headers: header
 		});
-		console.log("in post:", resp);
+		console.log("in put:", resp);
 		return resp;
 	} catch (e) {
-		console.log("fail in post", e);
+		console.log("fail in put", e);
 	}
 }
 
+async function deleteRequest(path, data, header) {
+	try {
+		let resp = await axios({
+			method: "Delete",
+			url: baseURL + path,
+			headers: header
+		});
+		console.log("in delete:", resp);
+		return resp;
+	} catch (e) {
+		console.log("fail in delete", e);
+	}
+}
 /*             others function                   */
 function checkLogin(resp) {
 	try {
@@ -162,7 +175,7 @@ class ApiHelper {
 	
 	async deleteUser(data){
 		this.checkHeader()
-		let res = await post("user", data, this.header);
+		let res = await deleteRequest("user", data, this.header);
 		console.log("modifyOrderItem:", res);
 		return res;
 	}
