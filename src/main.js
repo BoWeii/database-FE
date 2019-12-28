@@ -16,9 +16,9 @@ const router = new VueRouter({
 });
 router.beforeEach((to, from, next) => {
   let token = localStorage.getItem("token");
+  store.dispatch("setUser");
   if (token) {
     console.log("in be");
-    store.dispatch("setUser");
     next();
     if (to.name === "login") {
       alert("請先登出");

@@ -12,12 +12,10 @@
       <el-col :span="8">
         <el-form class="sell-grid" v-model="model" @submit.native.prevent="send">
           <div class="row-size">
-            <el-input
-              placeholder="請輸入商品名稱"
-              v-model="model.Pname"
-              maxlength="10"
-              show-word-limit
-            />
+            <el-input placeholder="請輸入商品名稱" v-model="model.Pname" maxlength="10" show-word-limit />
+          </div>
+          <div class="row-size">
+            <el-input placeholder="請輸入產地來源" v-model="model.Source" maxlength="10" show-word-limit />
           </div>
           <div class="row-size" style="width: 30%;">
             <el-input placeholder="請輸入商品價錢" v-model="model.Price" />
@@ -37,7 +35,7 @@
             </el-select>
           </div>
           <div class="row-size" style="width: 30%;">
-            <el-select  v-model="model.productDiscount" placeholder="選擇優惠">
+            <el-select v-model="model.productDiscount" placeholder="選擇優惠">
               <el-option
                 option
                 v-for="option in model.typeDiscount "
@@ -76,7 +74,7 @@
 </template>
 
 <script>
-import ApiHelper from "../../Api/base.js"
+import ApiHelper from "../../Api/base.js";
 const typeOptions = [
   {
     name: "西瓜"
@@ -115,16 +113,17 @@ const labels = [
 
 export default {
   name: "SellContent",
-  data: () => {
+  data() {
     return {
       model: {
-        Pname:"" ,
-        Price: "",
-        ImageSrc: "https://www.penghu-nsa.gov.tw/FileDownload/Album/Big/20161012162551758864338.jpg",
-        Source:"",
-        inventory:10,
-        Description: "",
-        Category:"",
+        Pname: "大蘋果",
+        Price: "99",
+        ImageSrc:
+          "https://www.penghu-nsa.gov.tw/FileDownload/Album/Big/20161012162551758864338.jpg",
+        Source: "我家",
+        inventory: 10,
+        Description: "有毒",
+        Category: "",
         typeDiscount: typeDiscount,
         Inventory: 10,
         typeOptions: typeOptions,
@@ -133,22 +132,25 @@ export default {
     };
   },
   methods: {
-    
     async send() {
-      let apiHelper= new ApiHelper();
+      let apiHelper = new ApiHelper();
       let data = {
-        StaffUserName:this.$store.getters.username,
+        StaffUserName: this.$store.getters.username,
         Description: this.model.Description,
         Pname: this.model.Pname,
         Category: this.model.Category,
         Source: this.model.Source,
         Price: this.model.Price,
-        Inventory:this.model.Inventory,
+        Inventory: this.model.Inventory,
         SoldQuantity: "11",
         OnSaleDate: "1999-01-11",
-        ImageSrc:this.model.ImageSrc
+        ImageSrc: this.model.ImageSrc
       };
-      apiHelper.public(data)
+      let res = await apiHelper.productPublic(data);
+      if (res) {
+        alert("successful public the product");
+        this.$router.push("/");
+      }
       console.log(this.model);
     }
   }

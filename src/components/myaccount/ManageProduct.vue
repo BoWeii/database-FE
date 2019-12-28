@@ -2,14 +2,10 @@
   <div id="Manage" class="manage" style="text-align-center;">
     <h2 style="font-size:30px;">Your public</h2>
 
-    <div class="manage-column" v-for="(item, index) in model.jsons.items" :key=index >
+    <div class="manage-column" v-for="(item, index) in model.jsons" :key="index">
       <label class="prfile-lab">
         <h3>Product</h3>
-        <h5>{{item.PName}}</h5>
-      </label>
-      <label class="prfile-lab">
-        <h3>Category</h3>
-        <h5>{{item.Category}}</h5>
+        <h5>{{item.Pname}}</h5>
       </label>
       <label class="prfile-lab">
         <h3>Description</h3>
@@ -19,12 +15,16 @@
         <h3>Price</h3>
         <h5>{{item.Price}}</h5>
       </label>
+      <label class="prfile-lab">
+        <h3>P_id</h3>
+        <h5>{{item.ProductId}}</h5>
+      </label>
       <div class="prfile-lab" style="flex-direction:column;display:flex;">
         <div style="margin-bottom:5px">
-          <el-button type="success" @click="update">update</el-button>
+          <el-button type="success" @click="update(item.ProductId)">update</el-button>
         </div>
         <div>
-          <el-button type="danger" native-type="submit">delete</el-button>
+          <el-button type="danger" @click="_delete(item.ProductId)">delete</el-button>
         </div>
       </div>
     </div>
@@ -32,62 +32,71 @@
 </template>
 
 <script>
-const jsons={
-  
-   items:[
-     {
-       StaffUserName:"boweii",
-       PName: "name1",
-        Price: "100",
-        Category:"qpp",
-        ImageSrc: "https://www.penghu-nsa.gov.tw/FileDownload/Album/Big/20161012162551758864338.jpg",
-        Source:"japan",
-        Inventory:10,
-        Description: "ya",
-        SoldQuantity: "yee",
-        OnSaleDate: 10,
-        typeOptions: "typeOptions",
-        labels: "labels"
-   },{
-      StaffUserName:"weii",
-       PName: "name1",
-        Price: "100",
-        Category:"qpp",
-        ImageSrc: "https://www.penghu-nsa.gov.tw/FileDownload/Album/Big/20161012162551758864338.jpg",
-        Source:"japan",
-        Inventory:10,
-        Description: "ya",
-        SoldQuantity: "yee",
-        OnSaleDate: 10,
-        typeOptions: "typeOptions",
-        labels: "labels"
-   }] 
-}
+/*const jsons = {
+  items: [
+    {
+      StaffUserName: "boweii",
+      PName: "name1",
+      Price: "100",
+      Category: "qpp",
+      ImageSrc:
+        "https://www.penghu-nsa.gov.tw/FileDownload/Album/Big/20161012162551758864338.jpg",
+      Source: "japan",
+      Inventory: 10,
+      Description: "ya",
+      SoldQuantity: "yee",
+      OnSaleDate: 10,
+      typeOptions: "typeOptions",
+      labels: "labels"
+    },
+    {
+      StaffUserName: "weii",
+      PName: "name1",
+      Price: "100",
+      Category: "qpp",
+      ImageSrc:
+        "https://www.penghu-nsa.gov.tw/FileDownload/Album/Big/20161012162551758864338.jpg",
+      Source: "japan",
+      Inventory: 10,
+      Description: "ya",
+      SoldQuantity: "yee",
+      OnSaleDate: 10,
+      typeOptions: "typeOptions",
+      labels: "labels"
+    }
+  ]
+};*/
+import ApiHelper from "../../Api/base.js";
+const apiHelper = new ApiHelper();
 export default {
   name: "manage-product",
   data() {
     return {
       model: {
-        PName: "Gold apple",
-        Category: "Apple",
-        Description: "Very good apple!",
-        Source: "Taiwan",
-        Price: 100,
-        Inventory: 20,
-        jsons:jsons
-
+        jsons: ""
       }
     };
   },
   methods: {
-    async update() {
+    async update(index) {
       this.$router.push({
         name: "modify",
-        params: { id: 1 }
+        params: { id: index }
+      });
+    },
+    async _delete(index) {
+      if (await apiHelper.deleteProduct(index)) alert("successful delete");
+      alert("in delete");
+      this.$router.push({
+        name: "myAccount"
       });
     }
+  },
+
+  async mounted() {
+    const res = await apiHelper.getProductByName(this.$store.getters.username);
+    this.model.jsons = JSON.parse(res.items);
   }
-  
 };
 </script>
 <style header>

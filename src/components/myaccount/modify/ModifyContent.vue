@@ -12,21 +12,16 @@
       <el-col :span="8">
         <el-form class="sell-grid" v-model="model" @submit.native.prevent="send">
           <div class="row-size">
-            <el-input
-              placeholder="請輸入商品名稱"
-              v-model="model.productName"
-              maxlength="10"
-              show-word-limit
-            />
+            <el-input placeholder="請輸入商品名稱" v-model="model.jsons[0].Pname" show-word-limit />
           </div>
           <div class="row-size" style="width: 30%;">
-            <el-input placeholder="請輸入商品價錢" v-model="model.productPrice" />
+            <el-input placeholder="請輸入商品價錢" v-model="model.jsons[0].Price" />
           </div>
           <div class="row-size">
-            <el-input placeholder="請輸入商品庫存數量" v-model="model.productInventory" />
+            <el-input placeholder="請輸入商品庫存數量" v-model="model.jsons[0].Inventory" />
           </div>
           <div class="row-size" style="width: 30%;">
-            <el-select v-model="model.productType" placeholder="選擇商品種類">
+            <el-select v-model="model.jsons[0].Category" placeholder="選擇商品種類">
               <el-option
                 option
                 v-for="option in model.typeOptions"
@@ -36,26 +31,15 @@
               ></el-option>
             </el-select>
           </div>
-          <div class="row-size" style="width: 30%;">
-            <el-select v-model="model.productDiscount" placeholder="選擇優惠">
-              <el-option
-                option
-                v-for="option in model.typeDiscount "
-                :key="option.name"
-                :label="option.name"
-                :value="option.name"
-              ></el-option>
-            </el-select>
-          </div>
           <div class="row-size">
-            <el-input placeholder="輸入圖片Url" v-model="model.productUrl">
+            <el-input placeholder="輸入圖片Url" v-model="model.jsons[0].ImageSrc">
               <template slot="prepend">Http://</template>
             </el-input>
           </div>
           <div class="row-size">
             <el-input
               placeholder="請簡單描述"
-              v-model="model.productDescribtion"
+              v-model="model.jsons[0].Description"
               type="textarea"
               maxlength="50"
               :rows="4"
@@ -90,60 +74,44 @@ const typeOptions = [
     name: "其他"
   }
 ];
-const typeDiscount = [
-  {
-    name: "11/11 光棍大拍賣"
-  },
-  {
-    name: "老闆破產了"
-  },
-  {
-    name: "感謝祭"
-  },
-  {
-    name: "我爽"
-  }
-];
-const labels = [
-  "商品名稱:",
-  "商品價格:",
-  "商品種類:",
-  "圖片網址:",
-  "商品描述:"
-];
 
+import ApiHelper from "../../../Api/base.js";
+const apiHelper = new ApiHelper();
 export default {
   name: "ModifyContent",
   data() {
     return {
       model: {
-        productName: this.$route.params.id,
-        productPrice: "100",
-        productUrl: "",
-        productType: "",
-        productDiscount: "",
-        productDescribtion: "ya",
-        typeDiscount: typeDiscount,
-        productInventory: "",
-        typeOptions: typeOptions,
-        labels: labels
+        jsons: "",
+        typeOptions: typeOptions
       }
     };
   },
   methods: {
     async send() {
-      /*let data = {
-        s_username: "boweii",
-        description: this.description.productDescribtion,
-        p_name: this.model.productName,
-        category: this.model.typeOptions,
-        source: this.model.productUrl,
-        price: this.model.productPrice,
-        inventory: "",
-        onsale_date: ""
-      };*/
-      console.log(this.model);
+      let apiHelper = new ApiHelper();
+      let data = {
+        ProductId: this.$route.params.id,
+        StaffUserName: this.model.jsons[0].StaffUserName,
+        Description: this.model.jsons[0].Description,
+        Pname: this.model.jsons[0].Pname,
+        Category: this.model.jsons[0].Category,
+        Source: this.model.jsons[0].Source,
+        Price: this.model.jsons[0].Price,
+        Inventory: this.model.jsons[0].Inventory,
+        OnSaleDate: this.model.jsons[0].OnSaleDate,
+        ImageSrc: this.model.jsons[0].ImageSrc
+      };
+      let res = apiHelper.productModify(data);
+      if (res) {
+        alert("Modify the product successful");
+        this.$router.push("/");
+      }
     }
+  },
+  async mounted() {
+    const res = await apiHelper.getProductByID(this.$route.params.id);
+    this.model.jsons = JSON.parse(res.items);
   }
 };
 </script>

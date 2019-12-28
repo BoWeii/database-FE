@@ -1,4 +1,4 @@
-const baseURL = "http://104.199.190.234:80/";
+const baseURL = "https://jamfly.ninja/api/";
 import $ from "jquery"
 import axios from "axios";
 /*             base function                   */
@@ -17,9 +17,8 @@ async function post(path, data, header) {
 	}
 }
 
-async function paramPost(path, data, header) {
+/*async function paramPost(path, data, header) {
 	try {
-
 		let resp = await axios({
 			method: "POST",
 			url: baseURL + path + data,
@@ -28,7 +27,22 @@ async function paramPost(path, data, header) {
 		console.log("in post", resp);
 		return resp;
 	} catch (e) {
-		console.log(e)
+		console.log("fail in paramPost", e)
+	}
+}*/
+
+async function _put(path, data, header) {
+	try {
+		console.log("in put", baseURL + path + data)
+		let resp = await axios({
+			method: "PUT",
+			url: baseURL + path + data,
+			headers: header
+		});
+		console.log("in put", resp);
+		return resp;
+	} catch (e) {
+		console.log("fail in put", e)
 	}
 }
 
@@ -61,19 +75,20 @@ async function put(path, data, header) {
 	}
 }
 
-async function deleteRequest(path, data, header) {
+async function _delete(path, header) {
 	try {
-		const resp = await axios({
-			method: "Delete",
+		let resp = await axios({
+			method: "DELETE",
 			url: baseURL + path,
 			headers: header
 		});
-		console.log("in delete:", resp);
+		console.log("in delete :", resp);
 		return resp;
 	} catch (e) {
 		console.log("fail in delete", e);
 	}
 }
+
 /*             others function                   */
 function checkLogin(resp) {
 	try {
@@ -138,7 +153,7 @@ class ApiHelper {
 	}
 	async deleteUser(data) {
 		this.checkHeader()
-		const res = await deleteRequest("user", data, this.header);
+		const res = await _delete("user", data, this.header);
 		console.log("modifyOrderItem:", res);
 		return res;
 	}
@@ -157,23 +172,51 @@ class ApiHelper {
 		return res.data.CartId;
 	}
 	//-------------Product-----------------------------//
-	async publishProduct(isStaff, data) {
+	async productPublic(isStaff, data) {
 		this.checkHeader()
 		if (await isStaff) {
 			let res = await post("sell", data, this.header);
 			return checkPublic(res);
 		}
 	}
-	async public(data) {
+	/*async productPublic(data) {
 		this.checkHeader()
 		let result = $.param(data);
-		let res = await paramPost("addproduct?", result.toString(), this.header);
+		this.path = "addproduct?" + result;
+		let res = await paramPost(this.path, result.toString(), this.header);
+		if (res) return true;
+	}*/
+	async productModify(data) {
+		this.checkHeader()
+		let result = $.param(data);
+		this.path = "modifyproduct?" + result;
+		let res = await _put(this.path, result.toString(), this.header);
 		if (res) return true;
 	}
 	async getProducts(query) {
 		this.checkHeader()
 		const res = await get("queryproduct" + query, this.header);
 		console.log("getProducts:", res.data);
+		return res.data;
+	}
+	async getProductByName(staffUserName) {
+		this.checkHeader()
+		this.path = "queryproduct?StaffUserName=" + staffUserName
+		let res = await get(this.path, this.header);
+		console.log("in getProductByName ", res.data);
+		return res.data;
+	}
+	async deleteProduct(p_id) {
+		this.checkHeader()
+		this.path = "deleteproduct?ProductId=" + p_id
+		let res = await _delete(this.path, this.header);
+		console.log("in delete ", res.data);
+	}
+	async getProductByID(p_id) {
+		this.checkHeader()
+		this.path = "queryproduct?ProductId=" + p_id;
+		let res = await get(this.path, this.header);
+		console.log("in getProductByID", res.data);
 		return res.data;
 	}
 	//---------------Cart---------------------------/
@@ -197,7 +240,6 @@ class ApiHelper {
 		console.log("modifyOrderItem:", res);
 		return res;
 	}
-
 
 }
 export {
