@@ -38,7 +38,7 @@ export const routes = [{
 },
 {
 	path: "/register",
-	name: "resgister",
+	name: "register",
 	component: Register,
 	meta: {
 		isLogin: false,

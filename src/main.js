@@ -20,7 +20,7 @@ router.beforeEach((to, from, next) => {
   if (token) {
     console.log("in be");
     next();
-    if (to.name === "login") {
+    if (to.name === "login" || to.name === "register") {
       alert("請先登出");
       next({
         path: "/"
