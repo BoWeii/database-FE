@@ -7,7 +7,7 @@
         <el-input class="ChangePassword-input" type="password" style v-model="model.newpassword1"></el-input>
       </div>
       <div class="ChangePassword-column">
-        <label class="prfile-lab">passwordagain</label>
+        <label class="prfile-lab">password again</label>
         <el-input class="ChangePassword-input" type="password" style v-model="model.newpassword2"></el-input>
       </div>
 
@@ -60,7 +60,7 @@ export default {
   justify-content: start;
   display: flex;
   padding: 12px 5px;
-  width: 120px;
+  width: 140px;
 }
 .ChangePassword .ChangePassword-input {
   border: 1px solid #323232 !important;

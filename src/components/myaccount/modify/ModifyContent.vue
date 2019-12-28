@@ -6,7 +6,7 @@
       </el-col>
       <el-col :span="4">
         <div class="sell-grid">
-          <div class="row-text" v-for="(label) in labels" :key="label">{{label}}</div>
+          <div class="row-text"></div>
         </div>
       </el-col>
       <el-col :span="8">

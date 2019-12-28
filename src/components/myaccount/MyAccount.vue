@@ -14,7 +14,7 @@
         <el-button
           style="justify-content: flex-start;display:flex;"
           type="primary"
-          native-type="submit"
+          @click="logOut"
           block
         >log out</el-button>
       </div>
@@ -51,6 +51,13 @@ export default {
         username: this.$store.getters.username
       }
     };
+  },
+  methods: {
+    async logOut() {
+      alert("already log out ");
+      localStorage.clear();
+      location.reload();
+    }
   }
 };
 </script>

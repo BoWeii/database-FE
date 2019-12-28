@@ -32,40 +32,6 @@
 </template>
 
 <script>
-/*const jsons = {
-  items: [
-    {
-      StaffUserName: "boweii",
-      PName: "name1",
-      Price: "100",
-      Category: "qpp",
-      ImageSrc:
-        "https://www.penghu-nsa.gov.tw/FileDownload/Album/Big/20161012162551758864338.jpg",
-      Source: "japan",
-      Inventory: 10,
-      Description: "ya",
-      SoldQuantity: "yee",
-      OnSaleDate: 10,
-      typeOptions: "typeOptions",
-      labels: "labels"
-    },
-    {
-      StaffUserName: "weii",
-      PName: "name1",
-      Price: "100",
-      Category: "qpp",
-      ImageSrc:
-        "https://www.penghu-nsa.gov.tw/FileDownload/Album/Big/20161012162551758864338.jpg",
-      Source: "japan",
-      Inventory: 10,
-      Description: "ya",
-      SoldQuantity: "yee",
-      OnSaleDate: 10,
-      typeOptions: "typeOptions",
-      labels: "labels"
-    }
-  ]
-};*/
 import ApiHelper from "../../Api/base.js";
 const apiHelper = new ApiHelper();
 export default {
@@ -86,10 +52,8 @@ export default {
     },
     async _delete(index) {
       if (await apiHelper.deleteProduct(index)) alert("successful delete");
-      alert("in delete");
-      this.$router.push({
-        name: "myAccount"
-      });
+      alert("Delete successful");
+      location.reload();
     }
   },
 

@@ -1,97 +1,54 @@
 <template>
-  <div id="TransactionLog" class="TransactionLog">
-    <h2>TransactionLog</h2>
-    <div id="TransactionLog">
-    <table id="transactiontable" border="1">
-      <tr>
-        <td>
-        seller
-        </td>
-        <td>
-        buyer
-        </td>
-        <td>
-        product name
-        </td>
-        <td>
-        date
-        </td>
-      </tr>
-      <tr  v-for="(item, index) in member" :key="index">
-        <td>
-        {{ item.seller }}
-        </td>
-        <td>
-        {{ item.buyer }}
-        </td>
-        <td>
-        {{ item.product_name }}
-        </td>
-        <td>
-        {{ item.date }}
-        </td>
-      </tr>
-
-    </table>
-  </div>
+  <div id="Manage" class="manage" style="text-align-center;">
+    <h2 style="font-size:30px;">Transaction log</h2>
+    <div class="manage-column" v-for="(item, index) in model.jsons.items" :key="index">
+      <label class="prfile-lab">
+        <h3>DateTime</h3>
+        <h5>{{item.DateTime}}</h5>
+      </label>
+      <label class="prfile-lab">
+        <h3>Pname</h3>
+        <h5>{{item.Pname}}</h5>
+      </label>
+      <label class="prfile-lab">
+        <h3>Price</h3>
+        <h5>{{item.Price}}</h5>
+      </label>
+    </div>
   </div>
 </template>
 
 <script>
+const jsons = {
+  items: [
+    {
+      DateTime: "2019-12-24 14:44:00",
+      Pname: "apple",
+      Price: 10
+    },
+    {
+      DateTime: "2019-12-24 14:44:00",
+      Pname: "banana",
+      Price: 100
+    }
+  ]
+};
+
 export default {
   name: "TransactionLog",
   data() {
-      return {
-        member:[
-          {
-            buyer:'mm',
-            seller:'pussy',
-            product_name:'Adam',
-            date:'2019.10.10'
-          },
-          {
-            buyer:'mm',
-            seller:'dog',
-            product_name:'Jack',
-            date:'2019.8.10'
-          },
-          {
-            buyer:'mm',
-            seller:'pussy',
-            product_name:'Candy',
-            date:'2019.8.10'
-          },
-          {
-            buyer:'mm',
-            seller:'pussy',
-            product_name:'Louis',
-            date:'2019.8.10'
-          },
-          {
-            buyer:'mm',
-            seller:'pussy',
-            product_name:'Lurry',
-            date:'2019.8.10'
-          }
-        ]
+    return {
+      model: {
+        jsons: jsons
       }
-    }
+    };
+  }
 };
 </script>
 <style header>
-.Profile {
-  margin-right: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin-right: 50px;
-  max-width: 320px;
-  width: 100%;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(225, 225, 225);
-  padding: 50px 30px;
+.manage {
+  -webkit-flex: 1;
+  flex: 1;
 }
 .forget:hover {
   color: #379e15;
@@ -101,8 +58,30 @@ export default {
   flex-direction: row;
   display: flex;
 }
-#transactiontable
-{
-  color: #379e15;
+.manage .prfile-lab {
+  flex-direction: column;
+  margin: 0px;
+  display: flex;
+  padding: 12px 5px;
+  width: 120px;
+  align-items: center;
+}
+.manage .prfile-lab h2 {
+  font-size: 14px;
+  align-items: center;
+}
+.manage .profile-input {
+  border: 1px solid #323232 !important;
+  border-radius: 5px;
+}
+
+.manage-column {
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
+  align-items: center;
+  flex-direction: row;
+  display: flex;
+  margin-bottom: 50px;
 }
 </style>

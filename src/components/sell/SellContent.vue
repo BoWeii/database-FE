@@ -6,7 +6,7 @@
       </el-col>
       <el-col :span="4">
         <div class="sell-grid">
-          <div class="row-text" v-for="(label) in labels" :key="label">{{label}}</div>
+          <div class="row-text"></div>
         </div>
       </el-col>
       <el-col :span="8">
@@ -28,17 +28,6 @@
               <el-option
                 option
                 v-for="option in model.typeOptions"
-                :key="option.name"
-                :label="option.name"
-                :value="option.name"
-              ></el-option>
-            </el-select>
-          </div>
-          <div class="row-size" style="width: 30%;">
-            <el-select v-model="model.productDiscount" placeholder="選擇優惠">
-              <el-option
-                option
-                v-for="option in model.typeDiscount "
                 :key="option.name"
                 :label="option.name"
                 :value="option.name"
@@ -89,45 +78,21 @@ const typeOptions = [
     name: "其他"
   }
 ];
-const typeDiscount = [
-  {
-    name: "11/11 光棍大拍賣"
-  },
-  {
-    name: "老闆破產了"
-  },
-  {
-    name: "感謝祭"
-  },
-  {
-    name: "我爽"
-  }
-];
-const labels = [
-  "商品名稱:",
-  "商品價格:",
-  "商品種類:",
-  "圖片網址:",
-  "商品描述:"
-];
 
 export default {
   name: "SellContent",
   data() {
     return {
       model: {
-        Pname: "大蘋果",
-        Price: "99",
+        Pname: "",
+        Price: "",
         ImageSrc:
           "https://www.penghu-nsa.gov.tw/FileDownload/Album/Big/20161012162551758864338.jpg",
-        Source: "我家",
-        inventory: 10,
-        Description: "有毒",
+        Source: "",
+        Description: "",
         Category: "",
-        typeDiscount: typeDiscount,
-        Inventory: 10,
-        typeOptions: typeOptions,
-        labels: labels
+        Inventory: "",
+        typeOptions: typeOptions
       }
     };
   },
@@ -148,8 +113,10 @@ export default {
       };
       let res = await apiHelper.productPublic(data);
       if (res) {
-        alert("successful public the product");
+        alert("Public the product successful");
         this.$router.push("/");
+      } else {
+        alert("Public the product fail");
       }
       console.log(this.model);
     }
@@ -176,12 +143,12 @@ export default {
 .row-text {
   padding: 20px;
   height: 50px;
-  text-align: right;
+  text-align: left;
   line-height: 40px;
 }
 
 .row-button {
   margin-top: 100px;
-  text-align: right;
+  text-align: left;
 }
 </style>

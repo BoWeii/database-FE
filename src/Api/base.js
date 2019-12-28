@@ -14,10 +14,12 @@ async function post(path, data, header) {
 		return resp;
 	} catch (e) {
 		console.log(e)
+		return false
 	}
+
 }
 
-/*async function paramPost(path, data, header) {
+async function paramPost(path, data, header) {
 	try {
 		let resp = await axios({
 			method: "POST",
@@ -29,7 +31,7 @@ async function post(path, data, header) {
 	} catch (e) {
 		console.log("fail in paramPost", e)
 	}
-}*/
+}
 
 async function _put(path, data, header) {
 	try {
@@ -141,6 +143,11 @@ class ApiHelper {
 		}
 		return checkLogin(res);
 	}
+	async register(data) {
+		this.checkHeader()
+		let res = await post("sign-up", data, this.header);
+		return res;
+	}
 	async getUsers(query) {
 		let res;
 		if (query === "") {
@@ -172,26 +179,20 @@ class ApiHelper {
 		return res.data.CartId;
 	}
 	//-------------Product-----------------------------//
-	async productPublic(isStaff, data) {
-		this.checkHeader()
-		if (await isStaff) {
-			let res = await post("sell", data, this.header);
-			return checkPublic(res);
-		}
-	}
-	/*async productPublic(data) {
+
+	async productPublic(data) {
 		this.checkHeader()
 		let result = $.param(data);
 		this.path = "addproduct?" + result;
 		let res = await paramPost(this.path, result.toString(), this.header);
 		if (res) return true;
-	}*/
+	}
 	async productModify(data) {
 		this.checkHeader()
 		let result = $.param(data);
 		this.path = "modifyproduct?" + result;
 		let res = await _put(this.path, result.toString(), this.header);
-		if (res) return true;
+		if (checkPublic(res)) return true;
 	}
 	async getProducts(query) {
 		this.checkHeader()
@@ -246,3 +247,6 @@ export {
 	ApiHelper as
 		default
 };
+
+
+
