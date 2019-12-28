@@ -91,6 +91,7 @@ async function _delete(path, header) {
 	} catch (e) {
 		console.log("fail in delete", e);
 	}
+
 }
 
 /*             others function                   */
@@ -241,6 +242,7 @@ class ApiHelper {
 		console.log("modifyOrderItem:", res);
 		return res;
 	}
+
 }
 export {
 	ApiHelper as

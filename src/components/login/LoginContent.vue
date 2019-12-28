@@ -42,7 +42,7 @@
 
 <script>
 import ApiHelper from "../../Api/base.js";
-let apiHelper = new ApiHelper();
+const apiHelper = new ApiHelper();
 export default {
   name: "login",
   data() {

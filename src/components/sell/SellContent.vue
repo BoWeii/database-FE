@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     async send() {
-      let apiHelper = new ApiHelper();
+      const apiHelper = new ApiHelper();
       let data = {
         StaffUserName: this.$store.getters.username,
         Description: this.model.Description,
