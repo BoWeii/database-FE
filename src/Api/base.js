@@ -1,10 +1,9 @@
 const baseURL = "https://jamfly.ninja/api/";
-import $ from "jquery"
 import axios from "axios";
 /*             base function                   */
 async function post(path, data, header) {
 	try {
-		let resp = await axios({
+		const resp = await axios({
 			method: "POST",
 			url: baseURL + path,
 			data: data,
@@ -16,14 +15,15 @@ async function post(path, data, header) {
 		console.log(e)
 		return false
 	}
-
 }
 
 async function paramPost(path, data, header) {
 	try {
-		let resp = await axios({
+
+		const resp = await axios({
 			method: "POST",
-			url: baseURL + path + data,
+			url: baseURL + path,
+			params: data,
 			headers: header
 		});
 		console.log("in post", resp);
@@ -35,10 +35,11 @@ async function paramPost(path, data, header) {
 
 async function _put(path, data, header) {
 	try {
-		console.log("in put", baseURL + path + data)
-		let resp = await axios({
+		console.log("in put", baseURL + path)
+		const resp = await axios({
 			method: "PUT",
-			url: baseURL + path + data,
+			url: baseURL + path,
+			params: data,
 			headers: header
 		});
 		console.log("in put", resp);
@@ -46,6 +47,7 @@ async function _put(path, data, header) {
 	} catch (e) {
 		console.log("fail in put", e)
 	}
+
 }
 
 async function get(path, header) {
@@ -94,7 +96,7 @@ async function _delete(path, header) {
 /*             others function                   */
 function checkLogin(resp) {
 	try {
-		if (resp.status == 200) {
+		if (resp.status === 200) {
 			localStorage.setItem("token", resp.data.token);
 			alert("Login successfull");
 			return true;
@@ -106,6 +108,7 @@ function checkLogin(resp) {
 		}
 		return false;
 	}
+
 }
 
 function checkPublic(resp) {
@@ -179,19 +182,16 @@ class ApiHelper {
 		return res.data.CartId;
 	}
 	//-------------Product-----------------------------//
-
 	async productPublic(data) {
 		this.checkHeader()
-		let result = $.param(data);
-		this.path = "addproduct?" + result;
-		let res = await paramPost(this.path, result.toString(), this.header);
+		this.path = "addproduct?";
+		let res = await paramPost(this.path, data, this.header);
 		if (res) return true;
 	}
 	async productModify(data) {
 		this.checkHeader()
-		let result = $.param(data);
-		this.path = "modifyproduct?" + result;
-		let res = await _put(this.path, result.toString(), this.header);
+		this.path = "modifyproduct?";
+		let res = await _put(this.path, data, this.header);
 		if (checkPublic(res)) return true;
 	}
 	async getProducts(query) {
@@ -241,7 +241,6 @@ class ApiHelper {
 		console.log("modifyOrderItem:", res);
 		return res;
 	}
-
 }
 export {
 	ApiHelper as

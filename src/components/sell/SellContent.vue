@@ -111,7 +111,7 @@ export default {
         OnSaleDate: "1999-01-11",
         ImageSrc: this.model.ImageSrc
       };
-      let res = await apiHelper.productPublic(data);
+      const res = await apiHelper.productPublic(data);
       if (res) {
         alert("Public the product successful");
         this.$router.push("/");
