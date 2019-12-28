@@ -93,7 +93,6 @@
 			},
 			async getOrderItemsFromBackEnd() {
 				let res = await apiHelper.getOrderItemsByCartId(this.$store.getters.cartId);
-				res = JSON.parse(res);
 				console.log("Result: ", res[0]);
 				if (res) {
 					this.orderItems = res;

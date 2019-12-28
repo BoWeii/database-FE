@@ -7,7 +7,7 @@
 					<div style="padding: 12px;">
 						<div class="shpo-list-card-content">
 							<div class="shpo-list-card-text">
-								<h3 style="margin: 0px;">{{product.PName}}</h3>
+								<h3 style="margin: 0px;">{{product.Pname}}</h3>
 								<h4 style="margin: 3px;">{{product.Price}}</h4>
 							</div>
 							<div class="shpo-list-card-button">

@@ -31,24 +31,7 @@
 	import ShopListProductsInRow from './ShopListProductsInRow.vue';
 	import ShopListHeader from './ShopListHeader'
 	import ApiHelper from '../../Api/base.js';
-	const productInfo = [
-		{
-			"PName": "Banana",
-			"Price": "Test",
-			"ImageSrc": "https://5.imimg.com/data5/LM/DU/MY-22954806/apple-fruit-500x500.jpg"
-		},
-		{
-			"PName": "Apple",
-			"Price": "Test",
-			"ImageSrc": "https://www.insideedition.com/sites/default/files/images/2019-07/073119-banana-1280x720-recovered.jpg"
-		},
-		{
-			"PName": "Watermelon",
-			"Price": "Test",
-			"ImageSrc": "https://images.unsplash.com/photo-1563114773-84221bd62daa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjF9&auto=format&fit=crop&w=1350&q=80"
-		}
-	]
-	const productsInList = [productInfo, productInfo, productInfo]
+
 	const apiHelper = new ApiHelper();
 	export default {
 		name: "ShopContent",
@@ -61,7 +44,7 @@
 		data: () => {
 			return {
 				products: "",
-				productsInList: productsInList,
+				productsInList: [],
 				isLoading: false,
 				quantityInList: 0
 			}
@@ -86,7 +69,7 @@
 				let list = this.$refs.list;
 				console.log("Scroll: ", list.scrollTop, list.offsetHeight, list.scrollHeight)
 				if (this.isLoading) return;
-				if (list.scrollTop + list.offsetHeight >= list.scrollHeight && productsInList.length < 6) {
+				if (list.scrollTop + list.offsetHeight >= list.scrollHeight && this.productInList.length < 6) {
 					this.addPorductsToList();
 					this.isLoading = false;
 				}
@@ -94,6 +77,9 @@
 		},
 		async mounted(){
 			await this.getProductFromBackend();
+			for(let i=0; i<3; i++){
+				this.addPorductsToList();				
+			}
 		}
 	}
 </script>

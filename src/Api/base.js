@@ -244,7 +244,32 @@ class ApiHelper {
 		console.log("modifyOrderItem:", res);
 		return res;
 	}
+	//---------------User----------------------//
+	async getUsers(query) {
+		let res;
+		if (query === "") {
+			res = await get("users", this.header);
+		} else {
+			res = await get("user" + query, this.header);
+		}
+		console.log("get Users:", res.data);
+		return res.data;
+	}
 
+	async deleteUser(data) {
+		this.checkHeader()
+		const res = await deleteRequest("user", data, this.header);
+		console.log("modifyOrderItem:", res);
+		return res;
+	}
+	
+	//------------------Buy----------------------------//
+	async getOrderByUserName(username) {
+		let res;
+		res = await get("getorder?username=" + username, this.header);
+		console.log("get Users:", res.data);
+		return res.data;
+	}
 }
 export {
 	ApiHelper as

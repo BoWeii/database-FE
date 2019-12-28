@@ -34,23 +34,10 @@
 </template>
 
 <script>
-	const paymentItems = {
-		"items": [{
-			"Pname": "Gold apple",
-			"Price": 100,
-			"Quantity": 1,
-			"DiscountType": "Shipping",
-			"DiscountNumber": 0
-		}, {
-			"Pname": "Pupu apple",
-			"Price": 1,
-			"Quantity": 20,
-			"DiscountType": "Special",
-			"DiscountNumber": 30
-		}]
-	}
-
-	import PaymentItem from './PaymentItem.vue'
+	import PaymentItem from './PaymentItem.vue';
+	import ApiHelper from '../../Api/base.js';
+	
+	const apiHelper = new ApiHelper();
 	export default {
 		name: "PaymentContent",
 		components: {
@@ -58,7 +45,7 @@
 		},
 		data: () => {
 			return {
-				paymentItems: paymentItems.items,
+				paymentItems: "",
 				total: 0
 			}
 		},
@@ -70,6 +57,7 @@
 			}
 		},
 		mounted() {
+			this.paymentItems = apiHelper.getOrderByUserName(this.$store.getters.username);
 			this.CountTotal();
 		}
 	}
