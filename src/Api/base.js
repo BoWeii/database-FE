@@ -34,7 +34,6 @@ async function paramPost(path, data, header) {
 
 async function put(path, data, header) {
 	try {
-		console.log("in put", baseURL + path)
 		const resp = await axios({
 			method: "PUT",
 			url: baseURL + path,
@@ -62,7 +61,6 @@ async function get(path, header) {
 		console.log("fail in get", e);
 	}
 }
-
 
 async function _delete(path, header) {
 	try {
@@ -180,11 +178,23 @@ class ApiHelper {
 		let res = await put(this.path, data, this.header);
 		if (checkPublic(res)) return true;
 	}
+	
 	async getProductById(id) {
 		this.checkHeader()
 		const res = await get("queryproduct?ProductId=" + id, this.header);
-		console.log("getProducts:", res.data.items);
-		return res.data.items;
+		console.log("get Products:", res.data.items);
+		return  JSON.parse(res.data.items);
+	}
+	
+	async getProductByPname(pname) {
+		this.checkHeader()
+		let query = "?Pname=" + pname;
+		if(pname === undefined){
+			query = "";
+		}
+		const res = await get("queryproduct" + query, this.header);
+		console.log("get Products:", res.data.items);
+		return JSON.parse(res.data.items);
 	}
 	async getProductByName(staffUserName) {
 		this.checkHeader()
@@ -210,8 +220,8 @@ class ApiHelper {
 	async getOrderItemsByCartId(id) {
 		this.checkHeader()
 		const res = await get("getorderitemsincart?CartId=" + id, this.header);
-		console.log("get OrderItems:", res.data);
-		return res.data.items;
+		console.log("get OrderItems:", res.data.items);
+		return JSON.parse(res.data.items);
 	}
 	
 	async addOrderItem(data){
@@ -230,7 +240,7 @@ class ApiHelper {
 
 	async modifyOrderItem(data) {
 		this.checkHeader()
-		const res = await put("modifyorderitemquantity", data, this.header);
+		const res = await put("modifyorderitemquantity?ProductId=1000&CartId=1&Quantity=4", data, this.header);
 		console.log("modifyOrderItem:", res);
 		return res;
 	}

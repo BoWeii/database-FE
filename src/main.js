@@ -6,12 +6,10 @@ import "element-ui/lib/theme-chalk/index.css";
 import App from "./components/App.vue";
 import { routes } from "./routes/routes.js";
 import store from "./vuex/Store.vue";
-import QueryString from 'query-string';
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueRouter);
 Vue.use(VueResource);
-Vue.use(QueryString);
 const router = new VueRouter({
   routes
 });

@@ -14,7 +14,7 @@
 				<div class="shop-content-grid-content">
 					<ShopListHeader :end="quantityInList" :total="products.length"></ShopListHeader>
 					<div v-for="(productInList, index) in productsInList" :key="index">
-						<ShopListProductsInRow :products-info="productInList"></ShopListProductsInRow>
+						<ShopListProductsInRow :products="productInList"></ShopListProductsInRow>
 					</div>
 				</div>
 			</el-col>
@@ -74,20 +74,18 @@
 				while(this.quantityInList < this.products.length && count < 3){
 					productInfo.push(this.products[this.quantityInList]);
 					count += 1;
-					this.quantityInList += 1;
+					this.quantityInList += 1;				
 				}
+				this.productsInList.push(productInfo);
 			},
 			async getProductFromBackend() {
-				this.isLoading = true;
-				this.products  = await apiHelper.getProducts({
-					"p_name": this.$route.query.p_name,
-					"s_username": ""
-				})
+				this.isLoading = false;
+				this.products  = await apiHelper.getProductByPname(this.$route.query.p_name);	
 			},
-			handleScroll() {
-				const list = this.$refs.list;
+			handleScroll() {				
+				let list = this.$refs.list;
+				console.log("Scroll: ", list.scrollTop, list.offsetHeight, list.scrollHeight)
 				if (this.isLoading) return;
-
 				if (list.scrollTop + list.offsetHeight >= list.scrollHeight && productsInList.length < 6) {
 					this.addPorductsToList();
 					this.isLoading = false;

@@ -99,10 +99,10 @@
                     <a>Blog</a>
                   </el-menu-item>
                   <el-menu-item index="4">
-                    <a>Shop</a>
+                    <a @click="goToShop">Shop</a>
                   </el-menu-item>
                   <el-menu-item index="5">
-                    <a>Purchase</a>
+                    <a @click="goToCart">Purchase</a>
                   </el-menu-item>
                 </el-menu>
               </div>
@@ -159,7 +159,17 @@ export default {
           p_name: this.input
         }
       });
-    }
+    },
+	goToShop(){
+		this.$router.push({
+			name: "shop"
+		})
+	},
+	goToCart(){
+		this.$router.push({
+			name: "cart"
+		})
+	}
   },
   mounted() {
     this.model.mail = this.$store.getters.username;

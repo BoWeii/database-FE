@@ -75,6 +75,7 @@
 			},
 			async changeQuantity(quantity, index) {
 				this.orderItems[index].Quantity = quantity;
+				console.log("Quantity: ",quantity);
 				await apiHelper.modifyOrderItem({
 					"ProductId": this.orderItems[index].ProductId,
 					"CartId": this.$store.getters.cartId,
@@ -91,9 +92,11 @@
 				this.$root.reload();
 			},
 			async getOrderItemsFromBackEnd() {
-				const res = await apiHelper.getOrderItemsByCartId(this.$store.getters.cartId);
+				let res = await apiHelper.getOrderItemsByCartId(this.$store.getters.cartId);
+				res = JSON.parse(res);
+				console.log("Result: ", res[0]);
 				if (res) {
-					this.orderItems = res.items;
+					this.orderItems = res;
 					if (this.orderItems === undefined)
 						this.noProducts = true;
 				} else {

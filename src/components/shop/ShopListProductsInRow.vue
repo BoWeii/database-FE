@@ -1,14 +1,14 @@
 <template>
 	<div id="shop-list-products-In-row">
 		<el-row :gutter="20">
-			<el-col :span="7" v-for="(productInfo, index) in productsInfo" :key="index" :offset="index >= 0 ? 1 : 0">
+			<el-col :span="7" v-for="(product, index) in products" :key="index" :offset="index >= 0 ? 1 : 0">
 				<el-card :body-style="{ padding: '0px' }">
-					<img :src="productInfo.ImageSrc" class="shpo-list-card-image" @click="goToProduct(productInfo.ProductId)">
+					<img :src="product.ImageSrc" class="shpo-list-card-image" @click="goToProduct(product.ProductId)">
 					<div style="padding: 12px;">
 						<div class="shpo-list-card-content">
 							<div class="shpo-list-card-text">
-								<h3 style="margin: 0px;">{{productInfo.PName}}</h3>
-								<h4 style="margin: 3px;">{{productInfo.Price}}</h4>
+								<h3 style="margin: 0px;">{{product.PName}}</h3>
+								<h4 style="margin: 3px;">{{product.Price}}</h4>
 							</div>
 							<div class="shpo-list-card-button">
 								<el-button v-bind:icon="iconNameList[index]" @mouseover.native="changeIconOfButton(index)" @mouseout.native="changeIconOfButton(index)" plain></el-button>
@@ -29,7 +29,7 @@
 	export default {
 		name: 'ShopListProductsInRow',
 		props: {
-			productsInfo: Object,
+			products: Array,
 		},
 		data: () => {
 			return {
@@ -41,8 +41,6 @@
 			changeIconOfButton(index) {
 				if (this.iconNameList[index] === iconNameShopingCart) {
 					this.iconNameList[index] = iconNameGoods;
-					console.log(iconNameGoods);
-					console.log(this.productsInfo);
 				} else {
 					this.iconNameList[index] = iconNameShopingCart;
 					console.log(iconNameShopingCart);
