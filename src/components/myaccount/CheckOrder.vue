@@ -40,7 +40,7 @@
 import ApiHelper from "../../Api/base.js";
 const apiHelper = new ApiHelper();
 export default {
-  name: "TransactionLog",
+  name: "check-order",
   data() {
     return {
       model: {
@@ -49,7 +49,7 @@ export default {
     };
   },
   async mounted() {
-    const res = await apiHelper.getTransactionLog(this.$store.getters.username);
+    const res = await apiHelper.getStaffOrder(this.$store.getters.username);
     this.model.jsons = JSON.parse(res.items);
     console.log("in translog", this.model.jsons);
   }

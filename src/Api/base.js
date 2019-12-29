@@ -186,6 +186,13 @@ class ApiHelper {
 		console.log("in getTransactionLog ", res.data);
 		return res.data;
 	}
+	async getStaffOrder(name) {
+		this.checkHeader()
+		this.path = "getstafforder?UserName=" + name;
+		const res = await get(this.path, this.header);
+		console.log("in getStaffOrder ", res.data);
+		return res.data;
+	}
 	//-------------Product-----------------------------//
 	async productPublish(data) {
 		this.checkHeader()
