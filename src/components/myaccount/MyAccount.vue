@@ -12,6 +12,7 @@
         <div class="tab" @click="sibarValue='change-password'">Change password</div>
         <div class="tab" @click="sibarValue='manage-product'">Manage product</div>
         <div class="tab" @click="sibarValue='Checkorder'">Check order</div>
+        <div class="tab" @click="sibarValue='AddDiscount'">Add discount</div>
         <div class="tab" @click="sell">Public product</div>
         <el-button
           style="justify-content: flex-start;display:flex;"
@@ -37,6 +38,7 @@ import transactionLog from "./TransationLog.vue";
 import ChangePassword from "./ChangePassword.vue";
 import ManageProduct from "./ManageProduct.vue";
 import Checkorder from "./CheckOrder.vue";
+import AddDiscount from "./AddDiscount.vue";
 export default {
   name: "MyAccount",
   components: {
@@ -46,7 +48,8 @@ export default {
     transactionLog,
     ChangePassword,
     ManageProduct,
-    Checkorder
+    Checkorder,
+    AddDiscount
   },
   data() {
     return {

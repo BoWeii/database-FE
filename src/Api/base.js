@@ -129,7 +129,7 @@ class ApiHelper {
 		this.path = "";
 	}
 	async checkHeader() {
-		if (await localStorage.getItem("token")) {
+		if (localStorage.getItem("token")) {
 			this.header = {
 				Authorization: "Bearer" + " " + localStorage.getItem("token")
 			};
@@ -286,6 +286,14 @@ class ApiHelper {
 		res = await get("getorder?CartId=" + cartId, this.header);
 		console.log("get Buy:", res.data.items, cartId);
 		return JSON.parse(res.data.items);
+	}
+	//------------------discount----------------------------//
+	async sendDiscount(data, name) {
+		this.checkHeader()
+		console.log("in sendDis", data);
+		this.path = "auth/" + name + "/discount-policies"
+		let res = await post(this.path, data, this.header);
+		return res;
 	}
 }
 export {

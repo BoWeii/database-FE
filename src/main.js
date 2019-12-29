@@ -15,6 +15,7 @@ const router = new VueRouter({
 });
 router.beforeEach(async (to, from, next) => {
   let token = localStorage.getItem("token");
+  console.log("token=", token);
   await store.dispatch("setUser");
   if (token) {
     console.log("in be");
