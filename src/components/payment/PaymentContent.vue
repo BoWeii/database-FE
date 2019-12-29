@@ -27,9 +27,28 @@
 				total: 0
 			}
 		},
-		methods: {},
+		methods: {
+			splitProducts(products) {
+				let array = [];
+				let order = [];
+				let date = products[0].DateTime;
+				let i;
+				while ( i = 0, i < products.length, i++) {
+					if (date === products[i].DateTime) {
+						order.push(products[i]);
+					} else {
+						array.push(order);
+						order = [];
+						date = products[i].DateTime;
+					}
+				}
+				return array;
+			},
+		},
 		async mounted() {
 			this.paymentItems = await apiHelper.getBuyByUserName(this.$store.getters.username);
+			this.paymentItems = this.splitProducts(this.paymentItems);
+			console.log("SplitProducts: ", this.paymentItems);
 		}
 	}
 </script>

@@ -95,16 +95,18 @@
 			},
 			async sendOrder() {
 				const res = apiHelper.addBuy(this.$store.getters.cartId);
-				if(res.status === 200)
+				if (res.status === 200)
 					alert("成功!")
-				this.$router.push('home');
+				this.$router.push({
+					name: 'home'
+				});
 			},
 			async getOrderItemsFromBackEnd() {
-				let res = await apiHelper.getOrderItemsByCartId(this.$store.getters.cartId);				
+				let res = await apiHelper.getOrderItemsByCartId(this.$store.getters.cartId);
 				if (res) {
 					this.orderItems = res;
 					console.log("Result: ", res);
-					if (this.orderItems.length === 0){
+					if (this.orderItems.length === 0) {
 						this.noProducts = true;
 					} else {
 						this.noProducts = false;
@@ -116,6 +118,22 @@
 			await this.getOrderItemsFromBackEnd();
 			this.calcTotalPrice()
 		},
+		splitProducts(products) {
+			let array = [];
+			let order = [];
+			let date = products[0].DateTime;
+			let i;
+			while ( i = 0, i < products.length, i++) {
+				if (date === products[i].DateTime) {
+					order.push(products[i]);
+				} else {
+					array.push(order);
+					order = [];
+					date = products[i].DateTime;
+				}
+			}
+			return array;
+		}
 	}
 </script>
 
