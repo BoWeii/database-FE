@@ -85,23 +85,23 @@
 				this.calcTotalPrice()
 			},
 			async clickDelete(index) {
-				console.log("ProductId: ", this.orderItems[index], "index:", index);
+				console.log("ProductId: ", this.orderItems[index].ProductId, "index:", index);
 				await apiHelper.deleteOrderItem({
 					"ProductId": this.orderItems[index].ProductId,
 					"CartId": this.$store.getters.cartId
 				});
 				delete this.orderItems[index];
-				this.$root.reload();
+				location.reload();
 			},
 			async sendOrder() {
 				apiHelper.addBuy(this.$store.getters.cartId);
 			},
 			async getOrderItemsFromBackEnd() {
-				let res = await apiHelper.getOrderItemsByCartId(this.$store.getters.cartId);
-				console.log("Result: ", res[0]);
+				let res = await apiHelper.getOrderItemsByCartId(this.$store.getters.cartId);				
 				if (res) {
 					this.orderItems = res;
-					if (this.orderItems === undefined)
+					console.log("Result: ", res);
+					if (this.orderItems === [])
 						this.noProducts = true;
 				} else {
 					console.log('getOrderItemsFromBackEnd Error');
