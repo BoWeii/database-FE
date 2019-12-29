@@ -281,10 +281,10 @@ class ApiHelper {
 		return res;
 	}
 
-	async getBuyByUserName(username) {
+	async getBuyByUserName(cartId) {
 		let res;
-		res = await get("getorder?username=" + username, this.header);
-		console.log("get Buy:", res.data.items, username);
+		res = await get("getorder?CartId=" + cartId, this.header);
+		console.log("get Buy:", res.data.items, cartId);
 		return JSON.parse(res.data.items);
 	}
 }

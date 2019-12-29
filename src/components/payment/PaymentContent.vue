@@ -32,8 +32,9 @@
 				let array = [];
 				let order = [];
 				let date = products[0].DateTime;
-				let i;
-				while ( i = 0, i < products.length, i++) {
+				let i = 0;
+				products.push({"DateTime":""})
+				while (i<products.length) {
 					if (date === products[i].DateTime) {
 						order.push(products[i]);
 					} else {
@@ -41,14 +42,14 @@
 						order = [];
 						date = products[i].DateTime;
 					}
+					i++;
 				}
 				return array;
 			},
 		},
 		async mounted() {
-			this.paymentItems = await apiHelper.getBuyByUserName(this.$store.getters.username);
-			this.paymentItems = this.splitProducts(this.paymentItems);
-			console.log("SplitProducts: ", this.paymentItems);
+			const res = await apiHelper.getBuyByUserName(this.$store.getters.cartId);
+			this.paymentItems = this.splitProducts(res)[0];			
 		}
 	}
 </script>
