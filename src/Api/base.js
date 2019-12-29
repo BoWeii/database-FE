@@ -33,7 +33,7 @@ async function paramPost(path, data, header) {
 	}
 }
 
-async function _put(path, data, header) {
+async function put(path, data, header) {
 	try {
 		console.log("in put", baseURL + path)
 		const resp = await axios({
@@ -64,20 +64,6 @@ async function get(path, header) {
 	}
 }
 
-async function put(path, data, header) {
-	try {
-		const resp = await axios({
-			method: "Post",
-			url: baseURL + path,
-			data: data,
-			headers: header
-		});
-		console.log("in put:", resp);
-		return resp;
-	} catch (e) {
-		console.log("fail in put", e);
-	}
-}
 
 async function _delete(path, header) {
 	try {
@@ -192,7 +178,7 @@ class ApiHelper {
 	async productModify(data) {
 		this.checkHeader()
 		this.path = "modifyproduct?";
-		let res = await _put(this.path, data, this.header);
+		let res = await put(this.path, data, this.header);
 		if (checkPublic(res)) return true;
 	}
 	async getProducts(query) {
