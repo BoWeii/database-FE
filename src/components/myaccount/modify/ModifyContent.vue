@@ -1,5 +1,5 @@
 <template>
-  <div id="sell-content">
+  <div id="ModifyContent">
     <el-row :gutter="20">
       <el-col :span="3">
         <div class="sell-grid"></div>
@@ -12,19 +12,16 @@
       <el-col :span="8">
         <el-form class="sell-grid" v-model="model" @submit.native.prevent="send">
           <div class="row-size">
-            <el-input placeholder="請輸入商品名稱" v-model="model.Pname" maxlength="10" show-word-limit />
-          </div>
-          <div class="row-size">
-            <el-input placeholder="請輸入產地來源" v-model="model.Source" maxlength="10" show-word-limit />
+            <el-input placeholder="請輸入商品名稱" v-model="model.jsons[0].Pname" show-word-limit />
           </div>
           <div class="row-size" style="width: 30%;">
-            <el-input placeholder="請輸入商品價錢" v-model="model.Price" />
+            <el-input placeholder="請輸入商品價錢" v-model="model.jsons[0].Price" />
           </div>
           <div class="row-size">
-            <el-input placeholder="請輸入商品庫存數量" v-model="model.Inventory" />
+            <el-input placeholder="請輸入商品庫存數量" v-model="model.jsons[0].Inventory" />
           </div>
           <div class="row-size" style="width: 30%;">
-            <el-select value-key="name" v-model="model.Category" placeholder="選擇商品種類">
+            <el-select v-model="model.jsons[0].Category" placeholder="選擇商品種類">
               <el-option
                 option
                 v-for="option in model.typeOptions"
@@ -35,14 +32,14 @@
             </el-select>
           </div>
           <div class="row-size">
-            <el-input placeholder="輸入圖片Url" v-model="model.ImageSrc">
+            <el-input placeholder="輸入圖片Url" v-model="model.jsons[0].ImageSrc">
               <template slot="prepend">Http://</template>
             </el-input>
           </div>
           <div class="row-size">
             <el-input
               placeholder="請簡單描述"
-              v-model="model.Description"
+              v-model="model.jsons[0].Description"
               type="textarea"
               maxlength="50"
               :rows="4"
@@ -63,7 +60,6 @@
 </template>
 
 <script>
-import ApiHelper from "../../Api/base.js";
 const typeOptions = [
   {
     name: "西瓜"
@@ -79,47 +75,43 @@ const typeOptions = [
   }
 ];
 
+import ApiHelper from "../../../Api/base.js";
+const apiHelper = new ApiHelper();
 export default {
-  name: "SellContent",
+  name: "ModifyContent",
   data() {
     return {
       model: {
-        Pname: "",
-        Price: "",
-        ImageSrc:
-          "https://www.penghu-nsa.gov.tw/FileDownload/Album/Big/20161012162551758864338.jpg",
-        Source: "",
-        Description: "",
-        Category: "",
-        Inventory: "",
+        jsons: "",
         typeOptions: typeOptions
       }
     };
   },
   methods: {
     async send() {
-      const apiHelper = new ApiHelper();
+      let apiHelper = new ApiHelper();
       let data = {
-        StaffUserName: this.$store.getters.username,
-        Description: this.model.Description,
-        Pname: this.model.Pname,
-        Category: this.model.Category,
-        Source: this.model.Source,
-        Price: this.model.Price,
-        Inventory: this.model.Inventory,
-        SoldQuantity: "11",
-        OnSaleDate: "1999-01-11",
-        ImageSrc: this.model.ImageSrc
+        ProductId: this.$route.params.id,
+        StaffUserName: this.model.jsons[0].StaffUserName,
+        Description: this.model.jsons[0].Description,
+        Pname: this.model.jsons[0].Pname,
+        Category: this.model.jsons[0].Category,
+        Source: this.model.jsons[0].Source,
+        Price: this.model.jsons[0].Price,
+        Inventory: this.model.jsons[0].Inventory,
+        OnSaleDate: this.model.jsons[0].OnSaleDate,
+        ImageSrc: this.model.jsons[0].ImageSrc
       };
-      const res = await apiHelper.productPublic(data);
+      let res = apiHelper.productModify(data);
       if (res) {
-        alert("Public the product successful");
+        //alert("Modify the product successful");
         this.$router.push("/");
-      } else {
-        alert("Public the product fail");
       }
-      console.log(this.model);
     }
+  },
+  async mounted() {
+    const res = await apiHelper.getProductByID(this.$route.params.id);
+    this.model.jsons = JSON.parse(res.items);
   }
 };
 </script>
@@ -143,12 +135,12 @@ export default {
 .row-text {
   padding: 20px;
   height: 50px;
-  text-align: left;
+  text-align: right;
   line-height: 40px;
 }
 
 .row-button {
   margin-top: 100px;
-  text-align: left;
+  text-align: right;
 }
 </style>

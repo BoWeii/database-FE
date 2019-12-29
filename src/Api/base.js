@@ -1,24 +1,53 @@
-const baseURL = "http://104.199.190.234:80/";
+const baseURL = "https://jamfly.ninja/api/";
 import axios from "axios";
 /*             base function                   */
 async function post(path, data, header) {
 	try {
-		console.log("header=", header);
 		const resp = await axios({
 			method: "POST",
 			url: baseURL + path,
 			data: data,
 			headers: header
 		});
-		localStorage.setItem("email", data.mail);
 		console.log("in post", resp);
 		return resp;
 	} catch (e) {
-		if (e.response.status === 400) alert("password is wrong!");
-		else {
-			alert("email wrong!");
-		}
+		console.log(e)
+		return false
 	}
+}
+
+async function paramPost(path, data, header) {
+	try {
+
+		const resp = await axios({
+			method: "POST",
+			url: baseURL + path,
+			params: data,
+			headers: header
+		});
+		console.log("in post", resp);
+		return resp;
+	} catch (e) {
+		console.log("fail in paramPost", e)
+	}
+}
+
+async function put(path, data, header) {
+	try {
+		console.log("in put", baseURL + path)
+		const resp = await axios({
+			method: "PUT",
+			url: baseURL + path,
+			params: data,
+			headers: header
+		});
+		console.log("in put", resp);
+		return resp;
+	} catch (e) {
+		console.log("fail in put", e)
+	}
+
 }
 
 async function get(path, header) {
@@ -35,49 +64,42 @@ async function get(path, header) {
 	}
 }
 
-async function put(path, data, header) {
-	try {
-		const resp = await axios({
-			method: "Post",
-			url: baseURL + path,
-			data: data,
-			headers: header
-		});
-		console.log("in put:", resp);
-		return resp;
-	} catch (e) {
-		console.log("fail in put", e);
-	}
-}
 
-async function deleteRequest(path, data, header) {
+async function _delete(path, header) {
 	try {
-		const resp = await axios({
-			method: "Delete",
+		let resp = await axios({
+			method: "DELETE",
 			url: baseURL + path,
 			headers: header
 		});
-		console.log("in delete:", resp);
+		console.log("in delete :", resp);
 		return resp;
 	} catch (e) {
 		console.log("fail in delete", e);
 	}
+
 }
+
 /*             others function                   */
 function checkLogin(resp) {
 	try {
-		if (resp.status == 200) {
+		if (resp.status === 200) {
 			localStorage.setItem("token", resp.data.token);
 			alert("Login successfull");
 			return true;
 		}
 	} catch (e) {
-		console.log("false in checkPublic : ", e.response.data);
+		if (e.response.status === 400) alert("password is wrong!");
+		else {
+			alert("email wrong!");
+		}
 		return false;
 	}
+
 }
 
 function checkPublic(resp) {
+
 	try {
 		if (resp.status === 200) {
 			alert("Publish successfull");
@@ -95,7 +117,6 @@ class ApiHelper {
 		this.header = "";
 		this.path = "";
 	}
-
 	async checkHeader() {
 		if (await localStorage.getItem("token")) {
 			this.header = {
@@ -103,40 +124,87 @@ class ApiHelper {
 			};
 		}
 	}
-
+	//---------------User----------------------//
 	async login(data) {
 		this.checkHeader()
-		const res = await post("login", data, this.header);
+		let res = await post("login", data, this.header);
+		if (res) {
+			localStorage.setItem("email", data.mail);
+		}
 		return checkLogin(res);
 	}
-
+	async register(data) {
+		this.checkHeader()
+		let res = await post("sign-up", data, this.header);
+		return res;
+	}
+	async getUsers(query) {
+		let res;
+		if (query === "") {
+			res = await get("users", this.header);
+		} else {
+			res = await get("user" + query, this.header);
+		}
+		console.log("get Users:", res.data);
+		return res.data;
+	}
+	async deleteUser(data) {
+		this.checkHeader()
+		const res = await _delete("user", data, this.header);
+		console.log("modifyOrderItem:", res);
+		return res;
+	}
 	async getUserName(email) {
 		this.checkHeader()
 		this.path = "user?Mail=" + email;
-		const res = await get(this.path, this.header);
+		let res = await get(this.path, this.header);
 		console.log("in getUserName: ", res.data.userName);
 		return res.data.userName;
 	}
-
 	async getCartId(userName) {
 		this.checkHeader()
 		this.path = "getcartidwithusername?UserName=" + userName;
-		const res = await get(this.path, this.header);
+		let res = await get(this.path, this.header);
 		console.log("in getCartid ", res.data.CartId);
 		return res.data.CartId;
 	}
 	//-------------Product-----------------------------//
-	async publishProduct(isStaff, data) {
+	async productPublic(data) {
 		this.checkHeader()
-		if (await isStaff) {
-			const res = await post("sell", data, this.header);
-			return checkPublic(res);
-		}
+		this.path = "addproduct?";
+		let res = await paramPost(this.path, data, this.header);
+		if (res) return true;
+	}
+	async productModify(data) {
+		this.checkHeader()
+		this.path = "modifyproduct?";
+		let res = await put(this.path, data, this.header);
+		if (checkPublic(res)) return true;
 	}
 	async getProducts(query) {
 		this.checkHeader()
 		const res = await get("queryproduct" + query, this.header);
 		console.log("getProducts:", res.data);
+		return res.data;
+	}
+	async getProductByName(staffUserName) {
+		this.checkHeader()
+		this.path = "queryproduct?StaffUserName=" + staffUserName
+		let res = await get(this.path, this.header);
+		console.log("in getProductByName ", res.data);
+		return res.data;
+	}
+	async deleteProduct(p_id) {
+		this.checkHeader()
+		this.path = "deleteproduct?ProductId=" + p_id
+		let res = await _delete(this.path, this.header);
+		console.log("in delete ", res.data);
+	}
+	async getProductByID(p_id) {
+		this.checkHeader()
+		this.path = "queryproduct?ProductId=" + p_id;
+		let res = await get(this.path, this.header);
+		console.log("in getProductByID", res.data);
 		return res.data;
 	}
 	//---------------Cart---------------------------/
@@ -161,26 +229,11 @@ class ApiHelper {
 		return res;
 	}
 
-	//---------------User----------------------//
-	async getUsers(query) {
-		let res;
-		if (query === "") {
-			res = await get("users", this.header);
-		} else {
-			res = await get("user" + query, this.header);
-		}
-		console.log("get Users:", res.data);
-		return res.data;
-	}
-	
-	async deleteUser(data){
-		this.checkHeader()
-		const res = await deleteRequest("user", data, this.header);
-		console.log("modifyOrderItem:", res);
-		return res;
-	}
 }
 export {
 	ApiHelper as
-	default
+		default
 };
+
+
+

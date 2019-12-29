@@ -9,13 +9,13 @@ const store = new Vuex.Store({
     token: "",
     email: "not_login",
     username: "no_user",
-    cartId:"no_cartId",
+    cartId: "no_cartId"
   },
   getters: {
     token: state => state.token,
     email: state => state.email,
     username: state => state.username,
-    cartId:state => state.cartId,
+    cartId: state => state.cartId
   },
   mutations: {
     async setUser(state) {
@@ -25,7 +25,7 @@ const store = new Vuex.Store({
       state.username = await apiHelper.getUserName(
         localStorage.getItem("email")
       );
-      state.cartId=await apiHelper.getCartId(state.username);
+      state.cartId = await apiHelper.getCartId(state.username);
       //console.log("in store setUser:", state.username);
     }
   },

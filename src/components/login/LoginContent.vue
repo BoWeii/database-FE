@@ -42,7 +42,7 @@
 
 <script>
 import ApiHelper from "../../Api/base.js";
-let apiHelper = new ApiHelper();
+const apiHelper = new ApiHelper();
 export default {
   name: "login",
   data() {
@@ -61,7 +61,7 @@ export default {
     async login() {
       let data = { mail: this.model.mail, password: this.model.password };
       if (await apiHelper.login(data)) {
-        this.$store.dispatch("setUser");
+        await this.$store.dispatch("setUser");
         this.$router.push("/");
       }
     }

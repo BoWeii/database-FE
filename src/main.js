@@ -16,16 +16,16 @@ const router = new VueRouter({
 });
 router.beforeEach((to, from, next) => {
   let token = localStorage.getItem("token");
+  store.dispatch("setUser");
   if (token) {
     console.log("in be");
-    store.dispatch("setUser");
     next();
-    /*if (to.name === "login") {
+    if (to.name === "login" || to.name === "register") {
       alert("請先登出");
       next({
         path: "/"
       });
-    }*/
+    }
   } else {
     if (to.meta.isLogin) {
       alert("請先登入");

@@ -36,7 +36,9 @@
       </tr>
 
     </table>
-			<el-button v-on:click="new_discount" type='primary'>new discount</el-button>
+			<el-button type='primary'>season</el-button>
+            <el-button type='primary'>shipping</el-button>
+            <el-button type='primary'>full</el-button>
 		</div>
 	</div>
 </template>
@@ -44,43 +46,6 @@
 <script>
 	export default {
 	name: "DiscountContent.vue",
-	data() {
-		return {
-			member:[
-			{
-				discount:'10%',
-				discount_kind:'sason',
-				start_date:'2019.10.10',
-				end_date:'2019.10.10'
-			},
-			{
-				discount:'10%',
-				discount_kind:'sason',
-				start_date:'2019.10.10',
-				end_date:'2019.10.10'
-			},
-			{
-				discount:'10%',
-				discount_kind:'sason',
-				start_date:'2019.10.10',
-				end_date:'2019.10.10'
-			},
-			{
-				discount:'10%',
-				discount_kind:'sason',
-				start_date:'2019.10.10',
-				end_date:'2019.10.10'
-			},
-			{
-				discount:'10%',
-				discount_kind:'sason',
-				start_date:'2019.10.10',
-				end_date:'2019.10.10'
-			}
-			]
-		}
-	}
-	
 	};
 </script>
 

@@ -1,19 +1,26 @@
 <template>
   <div id="register" class="login">
     <h1 style="justify-content: flex-start;display:flex;">Register</h1>
-    <el-form class="form" :model="model" ref="form" @submit.native.prevent="login">
+    <el-form class="form" :model="model" ref="form" @submit.native.prevent="register">
       <el-form-item prop="email" style="margin-bottom:0px;">
         <label style="margin:0px; justify-content: flex-start;display:flex;">Email</label>
         <el-input
           style="border: 1px solid #323232 !important;    border-radius: 5px;"
-          v-model="model.email"
+          v-model="model.mail"
         ></el-input>
       </el-form-item>
       <el-form-item prop="username" style="margin-bottom:0px;">
         <label style="margin:0px; justify-content: flex-start;display:flex;">Username</label>
         <el-input
           style="border: 1px solid #323232 !important;    border-radius: 5px;"
-          v-model="model.username"
+          v-model="model.userName"
+        ></el-input>
+      </el-form-item>
+      <el-form-item prop="username" style="margin-bottom:0px;">
+        <label style="margin:0px; justify-content: flex-start;display:flex;">Nickname</label>
+        <el-input
+          style="border: 1px solid #323232 !important;    border-radius: 5px;"
+          v-model="model.nickname"
         ></el-input>
       </el-form-item>
       <el-form-item prop="password">
@@ -41,19 +48,24 @@
 </template>
 
 <script>
+import ApiHelper from "../../Api/base.js";
+const apiHelper = new ApiHelper();
 export default {
   name: "register",
   data() {
     return {
-      validCredentials: {
-        username: "lightscope",
-        password: "lightscope",
-        email: "lightscope"
-      },
       model: {
-        username: "",
+        mail: "",
+        userName: "",
         password: "",
-        email: ""
+        nickname: "",
+        fname: "test",
+        lname: "test",
+        phone: "0912345678",
+        location: "sea",
+        money: "1000.00",
+        introduction: "Programming geek.",
+        staffFlag: "1"
       },
       loading: false
     };
@@ -65,23 +77,23 @@ export default {
       });
     },
 
-    async login() {
-      let valid = await this.$refs.form.validate();
-      if (!valid) {
-        return;
-      }
-
-      this.loading = true;
-      await this.simulateLogin();
-      this.loading = false;
-      if (
-        //確認database身分有無重複(此處待修正)
-        this.model.username === this.validCredentials.username &&
-        this.model.password === this.validCredentials.password
-      ) {
-        this.$message.success("Login successfull");
-      } else {
-        this.$message.error("Username or password is invalid");
+    async register() {
+      let data = {
+        mail: this.model.mail,
+        password: this.model.password,
+        userName: this.model.userName,
+        nickname: this.model.nickname,
+        fname: this.model.fname,
+        lname: this.model.lname,
+        phone: this.model.phone,
+        location: this.model.location,
+        money: this.model.money,
+        introduction: this.model.introduction,
+        staffFlag: this.model.staffFlag
+      };
+      if (await apiHelper.register(data)) {
+        alert("successful register");
+        this.$router.push("/login");
       }
     }
   }
