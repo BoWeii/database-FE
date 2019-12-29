@@ -36,20 +36,24 @@
 				products.push({"DateTime":""})
 				while (i<products.length) {
 					if (date === products[i].DateTime) {
+						console.log('push: ', i, date);
 						order.push(products[i]);
 					} else {
 						array.push(order);
 						order = [];
+						order.push(products[i])
 						date = products[i].DateTime;
 					}
 					i++;
 				}
+				console.log('Array: ', array);
 				return array;
 			},
 		},
 		async mounted() {
-			const res = await apiHelper.getBuyByUserName(this.$store.getters.cartId);
-			this.paymentItems = this.splitProducts(res)[0];			
+			let res = await apiHelper.getBuyByUserName(this.$store.getters.cartId);
+			res= this.splitProducts(res);
+			this.paymentItems = res[res.length-1];
 		}
 	}
 </script>

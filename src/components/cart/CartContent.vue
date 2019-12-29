@@ -115,7 +115,7 @@
 			}
 		},
 		async created() {
-			await this.getOrderItemPrice()();
+			await this.getOrderItemsFromBackEnd()();
 			this.calcTotalPrice()
 		},
 	}
