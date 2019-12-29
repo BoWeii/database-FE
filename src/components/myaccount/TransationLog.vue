@@ -1,7 +1,7 @@
 <template>
   <div id="Manage" class="manage" style="text-align-center;">
     <h2 style="font-size:30px;">Transaction log</h2>
-    <div class="manage-column" v-for="(item, index) in model.jsons.items" :key="index">
+    <div class="manage-column" v-for="(item, index) in model.jsons" :key="index">
       <label class="prfile-lab">
         <h3>DateTime</h3>
         <h5>{{item.DateTime}}</h5>
@@ -14,12 +14,16 @@
         <h3>Price</h3>
         <h5>{{item.Price}}</h5>
       </label>
+      <label class="prfile-lab">
+        <h3>State</h3>
+        <h5>Preparing</h5>
+      </label>
     </div>
   </div>
 </template>
 
 <script>
-const jsons = {
+/*const jsons = {
   items: [
     {
       DateTime: "2019-12-24 14:44:00",
@@ -32,16 +36,21 @@ const jsons = {
       Price: 100
     }
   ]
-};
-
+};*/
+import ApiHelper from "../../Api/base.js";
+const apiHelper = new ApiHelper();
 export default {
   name: "TransactionLog",
   data() {
     return {
       model: {
-        jsons: jsons
+        jsons: ""
       }
     };
+  },
+  async mounted() {
+    const res = await apiHelper.getTransactionLog(this.$store.getters.username);
+    this.model.jsons = JSON.parse(res.items);
   }
 };
 </script>
