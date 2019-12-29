@@ -9,10 +9,7 @@
 			<h2>{{paymentItem.Price}}</h2>
 		</el-col>
 		<el-col :span="4" class="right-align row-height">
-			<h2>{{paymentItem.DiscountNumber}}</h2>
-		</el-col>
-		<el-col :span="4" class="right-align row-height">
-			<h2>{{paymentItem.Quantity}}</h2>
+			<h2>{{paymentItem.DateTime}}</h2>
 		</el-col>
 	</div>
 </template>

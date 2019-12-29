@@ -19,18 +19,18 @@ async function post(path, data, header) {
 
 async function paramPost(path, data, header) {
   try {
-
-    let resp = await axios({
-      method: "POST",
-      url: baseURL + path + data,
-      headers: header
-    });
-    console.log("in post", resp);
-    return resp;
-  } catch (e) {
-    console.log(e)
-  }
-}	
+		const resp = await axios({
+			method: "POST",
+			url: baseURL + path,
+			params: data,
+			headers: header
+		});
+		console.log("in post", resp);
+		return resp;
+	} catch (e) {
+		console.log("fail in paramPost", e)
+	}
+}
 
 async function put(path, data, header) {
 	try {
@@ -233,41 +233,30 @@ class ApiHelper {
 	
 	async deleteOderItem(data) {
 		this.checkHeader()
-		const res = await post("deleteorderitemincart", data, this.header);
+		console.log("DeleteItem:", data);
+		const res = await paramPost("deleteorderitemincart?", data, this.header);
 		console.log("deleteOderItem:", res);
 		return res;
 	}
 
 	async modifyOrderItem(data) {
 		this.checkHeader()
-		const res = await put("modifyorderitemquantity?ProductId=1000&CartId=1&Quantity=4", data, this.header);
+		const res = await put("modifyorderitemquantity?", data, this.header);
 		console.log("modifyOrderItem:", res);
 		return res;
 	}
-	//---------------User----------------------//
-	async getUsers(query) {
+	//------------------Buy----------------------------//
+	async addBuy(cartId) {
 		let res;
-		if (query === "") {
-			res = await get("users", this.header);
-		} else {
-			res = await get("user" + query, this.header);
-		}
-		console.log("get Users:", res.data);
-		return res.data;
-	}
-
-	async deleteUser(data) {
-		this.checkHeader()
-		const res = await deleteRequest("user", data, this.header);
-		console.log("modifyOrderItem:", res);
+		res = await get("buy", this.header);
+		console.log("add Buy:", cartId);
 		return res;
 	}
 	
-	//------------------Buy----------------------------//
-	async getOrderByUserName(username) {
+	async getBuyByUserName(username) {
 		let res;
 		res = await get("getorder?username=" + username, this.header);
-		console.log("get Users:", res.data);
+		console.log("get Buy:", res.data);
 		return res.data;
 	}
 }

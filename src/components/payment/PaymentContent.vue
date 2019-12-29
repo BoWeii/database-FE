@@ -11,10 +11,7 @@
 					<h2>Price</h2>
 				</el-col>
 				<el-col :span="4" class="right-align row-height">
-					<h2>DiscountPrice</h2>
-				</el-col>
-				<el-col :span="4" class="right-align row-height">
-					<h2>Quantity</h2>
+					<h2>DateTime</h2>
 				</el-col>
 		
 			</div>
@@ -57,7 +54,7 @@
 			}
 		},
 		mounted() {
-			this.paymentItems = apiHelper.getOrderByUserName(this.$store.getters.username);
+			this.paymentItems = apiHelper.getBuyByUserName(this.$store.getters.username);
 			this.CountTotal();
 		}
 	}

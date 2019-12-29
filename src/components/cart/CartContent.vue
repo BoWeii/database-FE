@@ -19,12 +19,13 @@
 					</el-col>
 				</div>
 				<div v-for="(orderItem, index) in orderItems" :key="index">
-					<OrderItem @click-delete="clickDelete(index)" @change-quantity="changeQuantity" :order="index" :name="orderItem.Pname" :price="orderItem.Price" :quantity="orderItem.Quantity" :discountType="orderItem.DiscountType" :discountNumber="orderItem.DiscountNumber"></OrderItem>
+					<OrderItem @click-delete="clickDelete" @change-quantity="changeQuantity" :order="index" :name="orderItem.Pname" :price="orderItem.Price" :quantity="orderItem.Quantity" :discountType="orderItem.DiscountType" :discountNumber="orderItem.DiscountNumber"></OrderItem>
 				</div>
 				<div>
 					<el-col :span="20" class="total-price-horizontal">
 						<h2>Total price : &nbsp;</h2>
 						<h2 v-text="totalPrice"></h2>
+						<el-button type="info" :plain="true" class='send-button' @click="sendOrder">send</el-button>
 					</el-col>
 				</div>
 			</div>
@@ -75,7 +76,7 @@
 			},
 			async changeQuantity(quantity, index) {
 				this.orderItems[index].Quantity = quantity;
-				console.log("Quantity: ",quantity);
+				console.log("Quantity: ", quantity, "index:", index);
 				await apiHelper.modifyOrderItem({
 					"ProductId": this.orderItems[index].ProductId,
 					"CartId": this.$store.getters.cartId,
@@ -84,12 +85,23 @@
 				this.calcTotalPrice()
 			},
 			async clickDelete(index) {
-				await apiHelper.dmeleteOderItem({
+				console.log("ProductId: ", this.orderItems[index], "index:", index);
+				await apiHelper.deleteOrderItem({
 					"ProductId": this.orderItems[index].ProductId,
 					"CartId": this.$store.getters.cartId
 				});
 				delete this.orderItems[index];
 				this.$root.reload();
+			},
+			async sendOrder() {
+				const res = apiHelper.addBuy(this.$store.getters.cartId);
+				if (res) {
+					this.$router.push({
+						name: "payment"
+					})
+				} else {
+					this.$message("錯誤!清重新登入後再試");
+				}
 			},
 			async getOrderItemsFromBackEnd() {
 				let res = await apiHelper.getOrderItemsByCartId(this.$store.getters.cartId);
@@ -126,5 +138,10 @@
 	.total-price-horizontal {
 		display: flex;
 		justify-content: flex-end;
+	}
+
+	.send-button {
+		font-size: 20px;
+		margin-left: 30px;
 	}
 </style>
