@@ -94,19 +94,22 @@
 				location.reload();
 			},
 			async sendOrder() {
-				apiHelper.addBuy(this.$store.getters.cartId);
+				const res = apiHelper.addBuy(this.$store.getters.cartId);
+				if(res.status === 200)
+					alert("成功!")
+				this.$router.push('home');
 			},
 			async getOrderItemsFromBackEnd() {
 				let res = await apiHelper.getOrderItemsByCartId(this.$store.getters.cartId);				
 				if (res) {
 					this.orderItems = res;
 					console.log("Result: ", res);
-					if (this.orderItems === [])
+					if (this.orderItems.length === 0){
 						this.noProducts = true;
-				} else {
-					console.log('getOrderItemsFromBackEnd Error');
+					} else {
+						this.noProducts = false;
+					}
 				}
-
 			}
 		},
 		async created() {
