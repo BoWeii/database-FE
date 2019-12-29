@@ -150,6 +150,7 @@ export default {
     async logOut() {
       alert("already log out ");
       localStorage.clear();
+      location.reload();
     },
     search() {
       this.$router.push({
@@ -159,6 +160,10 @@ export default {
         }
       });
     }
+  },
+  mounted() {
+    this.model.mail = this.$store.getters.username;
+    console.log("in header", this.model.mail);
   }
 };
 </script>
