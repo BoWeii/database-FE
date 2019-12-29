@@ -49,7 +49,7 @@ export default {
     };
   },
   async mounted() {
-    const res = await apiHelper.getTransactionLog(this.$store.getters.username);
+    const res = await apiHelper.getTransactionLog(this.$store.getters.cartId);
     this.model.jsons = JSON.parse(res.items);
     console.log("in translog", this.model.jsons);
   }

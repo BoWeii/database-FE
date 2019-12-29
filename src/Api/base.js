@@ -181,7 +181,7 @@ class ApiHelper {
 	}
 	async getTransactionLog(name) {
 		this.checkHeader()
-		this.path = "getorder?username=" + name;
+		this.path = "getorder?CartId=" + name;
 		const res = await get(this.path, this.header);
 		console.log("in getTransactionLog ", res.data);
 		return res.data;

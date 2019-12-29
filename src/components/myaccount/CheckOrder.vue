@@ -1,18 +1,22 @@
 <template>
   <div id="Manage" class="manage" style="text-align-center;">
-    <h2 style="font-size:30px;">Transaction log</h2>
+    <h2 style="font-size:30px;">Check order</h2>
     <div class="manage-column" v-for="(item, index) in model.jsons" :key="index">
       <label class="prfile-lab">
         <h3>DateTime</h3>
         <h5>{{item.DateTime}}</h5>
       </label>
       <label class="prfile-lab">
-        <h3>Pname</h3>
+        <h3>Customer</h3>
+        <h5>{{item.CustomerUserName}}</h5>
+      </label>
+      <label class="prfile-lab">
+        <h3>Product</h3>
         <h5>{{item.Pname}}</h5>
       </label>
       <label class="prfile-lab">
-        <h3>Price</h3>
-        <h5>{{item.Price}}</h5>
+        <h3>Quantity</h3>
+        <h5>{{item.Quantity}}</h5>
       </label>
       <label class="prfile-lab">
         <h3>State</h3>
