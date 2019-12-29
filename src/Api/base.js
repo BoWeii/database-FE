@@ -226,16 +226,16 @@ class ApiHelper {
 	
 	async addOrderItem(data){
 		this.checkHeader();
-		const res = await post("addorderitemtocart", data, this.header);
+		const res = await paramPost("addorderitemtocart", data, this.header);
 		console.log("add OrderItems:", res);
 		return res;
 	}
 	
-	async deleteOderItem(data) {
+	async deleteOrderItem(data) {
 		this.checkHeader()
 		console.log("DeleteItem:", data);
 		const res = await paramPost("deleteorderitemincart?", data, this.header);
-		console.log("deleteOderItem:", res);
+		console.log("deleteOrderItem:", res);
 		return res;
 	}
 

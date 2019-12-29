@@ -48,52 +48,51 @@
 									<a>Sign up</a>
 								</el-menu-item>
 								<el-menu-item index="2">
-									<a @click="goToLogin">Login</a>
+									<a  @click="goToLogin">Login</a>
 								</el-menu-item>
 							</el-menu>
 						</div>
-						<!-- </div> -->
-						<div class="line"></div>
-						<div class="header-wrap-bottom">
-							<el-col :span="8" class>
-								<div class="header-wrap-bottom-logo">
-									<img src="../../icon/logo.png" />
+					</div>
+					<div class="line"></div>
+					<div class="header-wrap-bottom">
+						<el-col :span="8" class>
+							<div class="header-wrap-bottom-logo">
+								<img src="../../icon/logo.png" />
+							</div>
+						</el-col>
+						<el-col :span="9">
+							<div class="header-wrap-bottom-navList">
+								<el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#f4f3f1" text-color="#050804">
+									<el-menu-item index="1">
+										<a>Home</a>
+									</el-menu-item>
+									<el-submenu index="2">
+										<template slot="title">Portfolio</template>
+										<el-menu-item>Portfolio with filter</el-menu-item>
+										<el-menu-item>Portfolio without filter</el-menu-item>
+									</el-submenu>
+									<el-menu-item index="3">
+										<a>Blog</a>
+									</el-menu-item>
+									<el-menu-item index="4">
+										<a @click="goToShop">Shop</a>
+									</el-menu-item>
+									<el-menu-item index="5">
+										<a @click="goToCart">Purchase</a>
+									</el-menu-item>
+								</el-menu>
+							</div>
+						</el-col>
+						<el-col :span="7" class>
+							<div class="header-wrap-bottom-search">
+								<div class="header-wrap-bottom-search-input">
+									<el-input v-model="input" placeholder="enter searchterm & hit enter"></el-input>
 								</div>
-							</el-col>
-							<el-col :span="9">
-								<div class="header-wrap-bottom-navList">
-									<el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#f4f3f1" text-color="#050804">
-										<el-menu-item index="1">
-											<a>Home</a>
-										</el-menu-item>
-										<el-submenu index="2">
-											<template slot="title">Portfolio</template>
-											<el-menu-item>Portfolio with filter</el-menu-item>
-											<el-menu-item>Portfolio without filter</el-menu-item>
-										</el-submenu>
-										<el-menu-item index="3">
-											<a>Blog</a>
-										</el-menu-item>
-										<el-menu-item index="4">
-											<a @click="goToShop">Shop</a>
-										</el-menu-item>
-										<el-menu-item index="5">
-											<a @click="goToCart">Purchase</a>
-										</el-menu-item>
-									</el-menu>
+								<div class="header-wrap-bottom-search-button">
+									<el-button icon="el-icon-search" @click="search()"></el-button>
 								</div>
-							</el-col>
-							<el-col :span="7" class>
-								<div class="header-wrap-bottom-search">
-									<div class="header-wrap-bottom-search-input">
-										<el-input v-model="input" placeholder="enter searchterm & hit enter"></el-input>
-									</div>
-									<div class="header-wrap-bottom-search-button">
-										<el-button icon="el-icon-search" @click="search()"></el-button>
-									</div>
-								</div>
-							</el-col>
-						</div>
+							</div>
+						</el-col>
 					</div>
 				</div>
 			</el-col>
