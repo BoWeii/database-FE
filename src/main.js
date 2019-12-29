@@ -13,12 +13,12 @@ Vue.use(VueResource);
 const router = new VueRouter({
   routes
 });
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   let token = localStorage.getItem("token");
-  store.dispatch("setUser");
+  await store.dispatch("setUser");
   if (token) {
     console.log("in be");
-    next();
+    await next();
     if (to.name === "login" || to.name === "register") {
       alert("請先登出");
       next({

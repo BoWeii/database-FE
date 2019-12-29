@@ -18,7 +18,7 @@ async function post(path, data, header) {
 }
 
 async function paramPost(path, data, header) {
-  try {
+	try {
 		const resp = await axios({
 			method: "POST",
 			url: baseURL + path,
@@ -76,7 +76,7 @@ async function _delete(path, header) {
 	}
 }
 
-async function paramsDelete(path, data,header) {
+async function paramsDelete(path, data, header) {
 	try {
 		let resp = await axios({
 			method: "DELETE",
@@ -179,6 +179,13 @@ class ApiHelper {
 		console.log("in getCartid ", res.data.CartId);
 		return res.data.CartId;
 	}
+	async getTransactionLog(name) {
+		this.checkHeader()
+		this.path = "getorder?username=" + name;
+		const res = await get(this.path, this.header);
+		console.log("in getTransactionLog ", res.data);
+		return res.data;
+	}
 	//-------------Product-----------------------------//
 	async productPublish(data) {
 		this.checkHeader()
@@ -192,18 +199,18 @@ class ApiHelper {
 		let res = await put(this.path, data, this.header);
 		if (checkPublish(res)) return true;
 	}
-	
+
 	async getProductById(id) {
 		this.checkHeader()
 		const res = await get("queryproduct?ProductId=" + id, this.header);
 		console.log("get Products:", res.data.items);
-		return  JSON.parse(res.data.items);
+		return JSON.parse(res.data.items);
 	}
-	
+
 	async getProductByPname(pname) {
 		this.checkHeader()
 		let query = "?Pname=" + pname;
-		if(pname === undefined){
+		if (pname === undefined) {
 			query = "";
 		}
 		const res = await get("queryproduct" + query, this.header);
@@ -237,14 +244,14 @@ class ApiHelper {
 		console.log("get OrderItems:", res.data.items);
 		return JSON.parse(res.data.items);
 	}
-	
-	async addOrderItem(data){
+
+	async addOrderItem(data) {
 		this.checkHeader();
 		const res = await paramPost("addorderitemtocart?", data, this.header);
 		console.log("add OrderItems:", res);
 		return res;
 	}
-	
+
 	async deleteOrderItem(data) {
 		this.checkHeader()
 		console.log("DeleteItem:", data);
@@ -262,14 +269,14 @@ class ApiHelper {
 	//------------------Buy----------------------------//
 	async addBuy(cartId) {
 		let res;
-		res = await get("buy?CartId="+cartId, this.header);
+		res = await get("buy?CartId=" + cartId, this.header);
 		console.log("add Buy:", res);
 		return res;
 	}
-	
+
 	async getBuyByUserName(username) {
 		let res;
-		res = await get("getorder?username="+ username , this.header);
+		res = await get("getorder?username=" + username, this.header);
 		console.log("get Buy:", res.data.items, username);
 		return JSON.parse(res.data.items);
 	}
