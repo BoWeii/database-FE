@@ -94,14 +94,7 @@
 				this.$root.reload();
 			},
 			async sendOrder() {
-				const res = apiHelper.addBuy(this.$store.getters.cartId);
-				if (res) {
-					this.$router.push({
-						name: "payment"
-					})
-				} else {
-					this.$message("錯誤!清重新登入後再試");
-				}
+				apiHelper.addBuy(this.$store.getters.cartId);
 			},
 			async getOrderItemsFromBackEnd() {
 				let res = await apiHelper.getOrderItemsByCartId(this.$store.getters.cartId);

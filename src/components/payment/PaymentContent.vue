@@ -55,6 +55,7 @@
 		},
 		mounted() {
 			this.paymentItems = apiHelper.getBuyByUserName(this.$store.getters.username);
+			console.log("THIS payment:", this.paymentItems);
 			this.CountTotal();
 		}
 	}

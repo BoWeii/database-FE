@@ -74,7 +74,21 @@ async function _delete(path, header) {
 	} catch (e) {
 		console.log("fail in delete", e);
 	}
+}
 
+async function paramsDelete(path, data,header) {
+	try {
+		let resp = await axios({
+			method: "DELETE",
+			url: baseURL + path,
+			params: data,
+			headers: header
+		});
+		console.log("in delete :", resp);
+		return resp;
+	} catch (e) {
+		console.log("fail in delete", e);
+	}
 }
 
 /*             others function                   */
@@ -95,7 +109,7 @@ function checkLogin(resp) {
 
 }
 
-function checkPublic(resp) {
+function checkPublish(resp) {
 
 	try {
 		if (resp.status === 200) {
@@ -166,7 +180,7 @@ class ApiHelper {
 		return res.data.CartId;
 	}
 	//-------------Product-----------------------------//
-	async productPublic(data) {
+	async productPublish(data) {
 		this.checkHeader()
 		this.path = "addproduct?";
 		let res = await paramPost(this.path, data, this.header);
@@ -176,7 +190,7 @@ class ApiHelper {
 		this.checkHeader()
 		this.path = "modifyproduct?";
 		let res = await put(this.path, data, this.header);
-		if (checkPublic(res)) return true;
+		if (checkPublish(res)) return true;
 	}
 	
 	async getProductById(id) {
@@ -226,7 +240,7 @@ class ApiHelper {
 	
 	async addOrderItem(data){
 		this.checkHeader();
-		const res = await paramPost("addorderitemtocart", data, this.header);
+		const res = await paramPost("addorderitemtocart?", data, this.header);
 		console.log("add OrderItems:", res);
 		return res;
 	}
@@ -234,7 +248,7 @@ class ApiHelper {
 	async deleteOrderItem(data) {
 		this.checkHeader()
 		console.log("DeleteItem:", data);
-		const res = await paramPost("deleteorderitemincart?", data, this.header);
+		const res = await paramsDelete("deleteorderitemincart?", data, this.header);
 		console.log("deleteOrderItem:", res);
 		return res;
 	}
@@ -248,8 +262,8 @@ class ApiHelper {
 	//------------------Buy----------------------------//
 	async addBuy(cartId) {
 		let res;
-		res = await get("buy", this.header);
-		console.log("add Buy:", cartId);
+		res = await get("buy?CartId="+cartId, this.header);
+		console.log("add Buy:", res);
 		return res;
 	}
 	
@@ -257,7 +271,7 @@ class ApiHelper {
 		let res;
 		res = await get("getorder?username=" + username, this.header);
 		console.log("get Buy:", res.data);
-		return res.data;
+		return JSON.parse(res.data);
 	}
 }
 export {
