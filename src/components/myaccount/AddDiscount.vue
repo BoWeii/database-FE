@@ -28,12 +28,12 @@
       </div>
       <div class="dis-row" style>
         <label class="prfile-lab">Min-price</label>
-        <el-input placeholder="請輸入免運門檻金額" v-model="model.price" maxlength="10" show-word-limit />
+        <el-input placeholder="e.g. 100.00" v-model="model.price" maxlength="10" show-word-limit />
       </div>
       <div class="dis-row" style>
         <label class="prfile-lab">BeginDate</label>
         <el-input
-          placeholder="請輸入優惠開始日期 ex:2019-01-01"
+          placeholder="優惠開始日期YYYY-MM-DD"
           v-model="model.begin"
           maxlength="10"
           show-word-limit
@@ -42,7 +42,7 @@
       <div class="dis-row" style>
         <label class="prfile-lab">EndDate</label>
         <el-input
-          placeholder="請輸入優惠截止日期 ex:2019-01-01"
+          placeholder="優惠截止日期YYYY-MM-DD"
           v-model="model.end"
           maxlength="10"
           show-word-limit
@@ -50,7 +50,7 @@
       </div>
       <div class="dis-row" style>
         <label class="prfile-lab">EventRate</label>
-        <el-input placeholder="請輸入折扣率" v-model="model.rate" maxlength="10" show-word-limit />
+        <el-input placeholder="折扣率 0.00 ~ 1.00" v-model="model.rate" maxlength="10" show-word-limit />
       </div>
       <div class="dis-row" style>
         <label class="prfile-lab">ProductId</label>
