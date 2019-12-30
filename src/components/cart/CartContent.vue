@@ -8,14 +8,17 @@
       </div>
       <div v-else>
         <div vertical-align="center" class="row-height">
-          <el-col :span="14" class="row-height">
+          <el-col :span="7" class="row-height">
             <h2>Name</h2>
           </el-col>
           <el-col :span="3" class="right-align row-height">
-            <h2>Quantity</h2>
-          </el-col>
-          <el-col :span="3" class="right-align row-height">
             <h2>Price</h2>
+          </el-col>
+          <el-col :span="6" class="right-align row-height">
+            <h2>Discount Number</h2>
+          </el-col>
+          <el-col :span="4" class="right-align row-height">
+            <h2>Quantity</h2>
           </el-col>
         </div>
         <div v-for="(orderItem, index) in orderItems" :key="index">

@@ -129,7 +129,7 @@
 
 <script>
 //import store from "../vuex/Store.vue";
-import store from "../../vuex/Store.vue";
+//import store from "../../vuex/Store.vue";
 export default {
   name: "Header",
   props: {
@@ -190,17 +190,12 @@ export default {
       this.$router.push({
         name: "home"
       });
-    },
-    async setUser() {
-      this.$el.mail = this.$store.getters.username;
     }
   },
-  async mounted() {
-    this.setUser();
-  },
+
   computed: {
     mail() {
-      return store.state.username;
+      return this.$store.state.username;
     }
   }
 };
