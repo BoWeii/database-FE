@@ -12,7 +12,9 @@ async function post(path, data, header) {
 		console.log("in post", resp);
 		return resp;
 	} catch (e) {
-		console.log(e)
+    if( e.response ){
+      console.log(e.response.data); // => the response payload 
+  }
 		return false
 	}
 }
