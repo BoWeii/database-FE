@@ -50,7 +50,12 @@
       </div>
       <div class="dis-row" style>
         <label class="prfile-lab">EventRate</label>
-        <el-input placeholder="折扣率 0.00 ~ 1.00" v-model="model.rate" maxlength="10" show-word-limit />
+        <el-input
+          placeholder="折扣率 0.00 ~ 1.00"
+          v-model="model.rate"
+          maxlength="10"
+          show-word-limit
+        />
       </div>
       <div class="dis-row" style>
         <label class="prfile-lab">ProductId</label>
@@ -112,6 +117,7 @@ export default {
         seasoningsEndDate: this.model.end,
         specialEventBeginDate: this.model.begin,
         specialEventEndDate: this.model.end,
+        specialEventRate: this.model.rate,
         specialEventProductIds: this.model.p_id.split(",")
       };
       if (await apiHelper.sendDiscount(data, this.$store.getters.username)) {
