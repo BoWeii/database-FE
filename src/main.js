@@ -15,10 +15,18 @@ const router = new VueRouter({
 });
 router.beforeEach(async (to, from, next) => {
   let token = localStorage.getItem("token");
-  console.log("token=", token);
-  await store.dispatch("setUser");
+  /*
   if (token) {
-    console.log("in be");
+    await store.dispatch('setUser')
+    next()
+  }
+  if (!token) {
+    alert('no token')
+  }*/
+  
+  console.log(store.getters.username)
+  if (token) {
+    await store.dispatch("setUser");
     await next();
     if (to.name === "login" || to.name === "register") {
       alert("請先登出");
@@ -42,5 +50,8 @@ new Vue({
   el: "#app",
   router: router,
   store: store,
-  render: h => h(App)
+  render: h => h(App),
+  mounted: async function () {
+    await store.dispatch('setUser')
+  }
 });

@@ -1,82 +1,140 @@
 <template>
-  <div id="payment-content">
-    <div class="payment-cotent-text">
-      <el-table :data="paymentItems" style="width: 100%">
-        <el-table-column prop="DateTime" label="日期"></el-table-column>
-        <el-table-column prop="Pname" label="姓名"></el-table-column>
-        <el-table-column prop="Price" label="價格"></el-table-column>
-      </el-table>
-      <div></div>
-    </div>
-  </div>
+	<div id="product-content">
+		<el-row :gutter="20">
+			<el-col :span="3">
+				<div class='product-sell-grid'></div>
+			</el-col>
+			<el-col :span="9">
+				<div class='product-sell-grid'>
+					<img :src="productInfo.ImageSrc" width="50%" style="margin-top: 100px;">
+				</div>
+			</el-col>
+			<el-col :span="2">
+				<div class='product-sell-grid'>
+					<div class='row-text' v-for="(label) in labels" :key="label">{{label}}</div>
+				</div>
+			</el-col>
+			<el-col :span="4">
+				<div class='product-sell-grid'>
+					<div class="row-size">
+						<h3>{{productInfo.Pname}}</h3>
+					</div>
+					<div class="row-size">
+						<h3>{{productInfo.Category}}</h3>
+					</div>
+					<div class="row-size">
+						<h3>{{productInfo.Source}}</h3>
+					</div>
+					<div class="row-size">
+						<h3>{{priceText}}</h3>
+					</div>
+					<div class="row-size">
+						<el-input-number v-model="quantity" :min="1" :max="productInfo.Inventory"></el-input-number>
+					</div>
+					<div class="row-size">
+						<h3>{{inventoryText}}</h3>
+					</div>
+					<div class="row-size">
+						<h3>{{productInfo.OnSaleDate}}</h3>
+					</div>
+					<div class="row-size">
+						<h3>{{productInfo.Description}}</h3>
+					</div>
+				</div>
+			</el-col>
+		</el-row>
+		<div class="row-button">
+			<el-button type="primary" :plain="true" @click="orderProduct">
+				加入購物車
+			</el-button>
+		</div>
+	</div>
 </template>
 
 <script>
-import ApiHelper from "../../Api/base.js";
+	import ApiHelper from "../../Api/base.js";
+	const labels = ["Name:", "Category:", "Source:", "Price:", "Quantity", "Inventory:", "OnSaleDate:", "Description:"];
+	const apiHelper = new ApiHelper();
+	export default {
+		name: "ProductContent",
+		data: () => {
+			return {
+				productInfo: '',
+				priceText: "",
+				inventoryText: "",
+				quantity: 1,
+				isOrder: false,
+				labels: labels,
+			}
+		},
+		methods: {
+			async orderProduct() {
+				if (this.isOrder) {
+					this.$message('商品已存在於訂單');
+				} else {
+					const res = await apiHelper.addOrderItem({
+						"ProductId": this.$route.params.id,
+						"CartId": this.$store.getters.cartId,
+						"Quantity": this.quantity
+					});
+					if (res) {
+						this.$message('成功將商品加入購物車')
+					} else {
+						this.$message("錯誤!清重新登入後再試");
+					}
+				}
+			},
+			async getProductFromBackEnd() {
+				console.log(this.$route.params.id);
+				let res = await apiHelper.getProductById(this.$route.params.id);
+				this.productInfo = res[0];
+				console.log("this.productInfo :", this.productInfo);
+			},
+			getText() {
+				if (this.productInfo.discountType === "") {
+					this.priceText = this.productInfo.Price;
+				} else {
+					this.priceText = this.productInfo + "( 優惠:" + this.productInfo.SpecialEventDiscountPolicyCode + ")"
+				}
 
-const apiHelper = new ApiHelper();
-export default {
-  name: "PaymentContent",
-  data: () => {
-    return {
-      paymentItems: "",
-      total: 0
-    };
-  },
-  methods: {
-    splitProducts(products) {
-      let array = [];
-      let order = [];
-      let date = products[0].DateTime;
-      let i = 0;
-      products.push({ DateTime: "" });
-      while (i < products.length) {
-        if (date === products[i].DateTime) {
-          console.log("push: ", i, date);
-          order.push(products[i]);
-        } else {
-          array.push(order);
-          order = [];
-          order.push(products[i]);
-          date = products[i].DateTime;
-        }
-        i++;
-      }
-      console.log("Array: ", array);
-      return array;
-    }
-  },
-  async mounted() {
-    let res = await apiHelper.getBuyByUserName(this.$store.getters.cartId);
-    console.log("in pay", res);
-    res = this.splitProducts(res);
-    this.paymentItems = res[res.length - 1];
-  }
-};
+				this.inventoryText = this.productInfo.Inventory + "( 已售: " + this.productInfo.SoldQuantity + ")"
+			},
+		},
+		async mounted() {
+			await this.getProductFromBackEnd();
+			this.getText();
+		}
+	}
 </script>
 
 <style>
-#payment-content {
-  height: 700px;
-  padding: 10px 0px;
-  text-align: left;
-}
+	#sell-content {
+		font-family: "微软雅黑";
+		padding: 30px;
+	}
 
-.payment-cotent-text {
-  padding: 50px 100px;
-}
+	.product-sell-grid {
+		height: 700px;
+		background-color: white;
+	}
 
-.total-price-horizontal {
-  margin-top: 100px;
-  text-align: left;
-  display: flex;
-  justify-content: flex-end;
-}
+	.row-size {
+		height: 50px;
+		padding: 20px 0px;
+		line-height: 2px;
+		width: 100%
+	}
 
-.total-price-left {
-  margin-top: 100px;
-  text-align: right;
-  font-size: 25px;
-  line-height: 0px;
-}
+	.row-text {
+		padding: 20px;
+		height: 50px;
+		text-align: right;
+		line-height: 60px;
+		font-size: 23px;
+	}
+
+	.row-button {
+		width: 53%;
+		margin-top: 100px;
+	}
 </style>

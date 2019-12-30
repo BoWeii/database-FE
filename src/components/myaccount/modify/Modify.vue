@@ -12,6 +12,7 @@
 import Header from "../../header/Header.vue";
 import Footer from "../../footer/Footer.vue";
 import ModifyContent from "./ModifyContent.vue";
+
 export default {
   name: "Modify",
   components: {

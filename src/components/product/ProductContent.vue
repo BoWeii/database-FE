@@ -114,7 +114,7 @@
 	}
 
 	.product-sell-grid {
-		height: 700px;
+		height: 100px;
 		background-color: white;
 	}
 

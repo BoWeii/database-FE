@@ -50,7 +50,7 @@
                   <a>Char</a>
                 </el-menu-item>
                 <el-menu-item index="3">
-                  <a>{{model.mail}}</a>
+                  <a>{{mail}}</a>
                 </el-menu-item>
               </el-menu>
             </div>
@@ -129,6 +129,7 @@
 
 <script>
 //import store from "../vuex/Store.vue";
+//import store from "../../vuex/Store.vue";
 export default {
   name: "Header",
   props: {
@@ -191,9 +192,11 @@ export default {
       });
     }
   },
-  mounted() {
-    this.model.mail = this.$store.getters.username;
-    console.log("in header", this.model.mail);
+
+  computed: {
+    mail() {
+      return this.$store.state.username;
+    }
   }
 };
 </script>

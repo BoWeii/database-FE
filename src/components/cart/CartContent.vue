@@ -1,4 +1,5 @@
 <template>
+
 	<div id="cart-content">
 		<div class="cart-cotent-text">
 			<div v-if="noProducts">
