@@ -91,7 +91,7 @@
 				console.log("this.productInfo :", this.productInfo);
 			},
 			getText() {
-				if (this.productInfo.SpecialEventDiscountPolicyCode === null) {
+				if (this.productInfo.discountType === "") {
 					this.priceText = this.productInfo.Price;
 				} else {
 					this.priceText = this.productInfo + "( 優惠:" + this.productInfo.SpecialEventDiscountPolicyCode + ")"
