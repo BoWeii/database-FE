@@ -277,7 +277,7 @@ class ApiHelper {
 		console.log("modifyOrderItem:", res);
 		return res;
 	}
-	//------------------Buy----------------------------//
+	//--------------------Buy----------------------------//
 	async addBuy(cartId) {
 		let res;
 		res = await get("buy?CartId=" + cartId, this.header);
@@ -298,6 +298,14 @@ class ApiHelper {
 		this.path = "auth/" + name + "/discount-policies"
 		let res = await post(this.path, data, this.header);
 		return res;
+	}
+	
+	async getDiscountByCode(code) {
+		this.checkHeader()
+		this.path = "discount-policies/" + code;
+		let res = await get(this.path, this.header);
+		console.log("get Dis", res.data);
+		return res.data;
 	}
 }
 export {

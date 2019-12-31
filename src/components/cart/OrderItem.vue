@@ -7,10 +7,10 @@
 			<h2>{{price}}</h2>
 		</el-col>
 		<el-col :span="6" class="right-align row-height">
-			<h2>{{discountNumber}}</h2>
+			<h2>{{discountPrice}}</h2>
 		</el-col>
 		<el-col :span="4" class="right-align row-height">
-			<el-input-number @change="ChangeQuantity" v-model="quantity" height="100%" class="ui-vertical-align"></el-input-number>
+			<el-input-number @change="ChangeQuantity" v-model="quantity" height="100%" class="ui-vertical-align" :min="0"></el-input-number>
 		</el-col>
 		<el-col :span="4" class="right-align row-height">
 			<el-button @click="ClickDelete" type="danger" height="100%" class="ui-vertical-align">Delete</el-button>
@@ -26,8 +26,12 @@
 			name: String,
 			price: Number,
 			quantity: Number,
-			discountType: String,
-			discountNumber: Number
+			discountPrice: Number
+		},
+		data: () =>{
+			return{
+				quantity: this.quantity
+			}
 		},
 		methods: {
 			ChangeQuantity() {
@@ -35,8 +39,8 @@
 			},
 			ClickDelete() {
 				this.$emit('click-delete', this.order)
-			}
-		}
+			},
+		},
 	}
 </script>
 

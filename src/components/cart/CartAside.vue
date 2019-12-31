@@ -17,7 +17,7 @@
 
 <style>
 	#cart-aside{
-		height: 500px;
+		height: 700px;
 		background-color: white;
 		text-align: left;
 		padding:10px 0px;

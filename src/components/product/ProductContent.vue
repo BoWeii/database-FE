@@ -97,14 +97,16 @@
 				this.productInfo = res[0];
 				console.log("this.productInfo :", this.productInfo);
 			},
-			getText() {
+			async getText() {
 				if (this.productInfo.SpecialEventDiscountPolicyCode === null) {
 					this.priceText = this.productInfo.Price;
 				} else {
+					const res = await apiHelper.getDiscountByCode(this.productInfo.SpecialEventDiscountPolicyCode);
+					console.log("GET text: ", res.specialEventRate);
 					this.priceText =
 						this.productInfo.Price +
-						"( 優惠:" +
-						this.productInfo.SpecialEventDiscountPolicyCode +
+						"( 優惠價:" +
+						res.specialEventRate * this.productInfo.Price+
 						")";
 				}
 
