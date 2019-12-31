@@ -102,7 +102,7 @@
 					this.priceText = this.productInfo.Price;
 				} else {
 					this.priceText =
-						this.productInfo +
+						this.productInfo.Price +
 						"( 優惠:" +
 						this.productInfo.SpecialEventDiscountPolicyCode +
 						")";

@@ -103,11 +103,13 @@
 				location.reload();
 			},
 			async sendOrder() {
-				const res = apiHelper.addBuy(this.$store.getters.cartId);
-				if (res) alert("成功!");
-				this.$router.push({
-					name: "payment"
-				});
+				const res = await apiHelper.addBuy(this.$store.getters.cartId);
+				if (res) {
+					alert("成功!");
+					this.$router.push({
+						name: "payment"
+					});
+				}
 			},
 			async getOrderItemsFromBackEnd() {
 				let res = await apiHelper.getOrderItemsByCartId(

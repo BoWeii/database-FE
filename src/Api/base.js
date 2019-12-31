@@ -60,7 +60,9 @@ async function get(path, header) {
 		console.log("in get :", resp);
 		return resp;
 	} catch (e) {
-		console.log("fail in get", e);
+		if( e.response ){
+			console.log(e.response.data); // => the response payload 
+		}
 	}
 }
 
