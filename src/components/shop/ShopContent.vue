@@ -1,5 +1,6 @@
 <template>
 	<div class="shop-content" ref='list' @scroll="handleScroll">
+		<title>Shop</title>
 		<el-row :gutter="20">
 			<el-col :span="4">
 				<div class="shop-content-grid-content"></div>

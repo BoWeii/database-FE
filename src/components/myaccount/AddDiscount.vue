@@ -1,5 +1,6 @@
 <template>
 	<div id="Manage" class="manage" style="text-align-center;">
+		<title>Modify</title>
 		<h2 style="font-size:30px;">Transaction log</h2>
 		<div class="dis-column">
 			<div class="dis-row" style>

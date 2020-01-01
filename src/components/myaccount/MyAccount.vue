@@ -1,5 +1,6 @@
 <template>
   <div id="MyAccount" class>
+	<title>ManageAccount</title>
     <el-header height="180px">
       <Header />
     </el-header>
@@ -13,7 +14,7 @@
         <div class="tab" @click="sibarValue='manage-product'">Manage product</div>
         <div class="tab" @click="sibarValue='Checkorder'">Check order</div>
         <div class="tab" @click="sibarValue='AddDiscount'">Add discount</div>
-        <div class="tab" @click="sell">Public product</div>
+        <div class="tab" @click="sell">Publish product</div>
         <el-button
           style="justify-content: flex-start;display:flex;"
           type="primary"

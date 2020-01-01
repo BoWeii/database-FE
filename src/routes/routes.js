@@ -24,7 +24,8 @@ export const routes = [{
 	component: Shop,
 	meta: {
 		isLogin: false,
-		fail: "/"
+		fail: "/",
+		title: "shop"
 	},
 },
 {

@@ -1,5 +1,6 @@
 <template>
 	<div id="Manage" class="manage" style="text-align-center;">
+		<title>TransactionLog</title>
 		<h2 style="font-size:30px;">Transaction log</h2>
 		<div class="manage-column" v-for="(order, index) in model.jsons" :key="index">
 			<label class="prfile-lab">

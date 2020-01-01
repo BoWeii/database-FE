@@ -1,5 +1,6 @@
 <template>
   <div id="Modify">
+	<title>Modify</title>
     <Header />
     <div class="Modify-body">
       <ModifyContent />

@@ -1,5 +1,6 @@
 <template>
 	<div id='Payment'>
+		<title>Payment</title>
 		<Header/>
 		<div class="payment-body">
 			<PaymentContent/>			

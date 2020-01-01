@@ -1,5 +1,6 @@
 <template>
   <div id="ChangePassword" class="ChangePassword">
+	<title>ChangePassword</title>
     <el-form>
       <h2 style="font-size:30px;">ChangePassword</h2>
       <div class="ChangePassword-column">

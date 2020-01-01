@@ -1,5 +1,6 @@
 <template>
   <div id="Register">
+	<title>Register</title>
     <el-container>
       <el-header height="180px">
         <Header />
