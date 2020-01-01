@@ -12,10 +12,17 @@
 			</el-col>
 			<el-col :span="12">
 				<div class="shop-content-grid-content">
-					<ShopListHeader :end="quantityInList" :total="products.length"></ShopListHeader>
-					<div v-for="(productInList, index) in productsInList" :key="index">
-						<ShopListProductsInRow :products="productInList"></ShopListProductsInRow>
+					<div v-if="isEmpty">
+						<h1>We don't find anything you searched</h1>
+						<h5>---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h5>
 					</div>
+					<div v-else>
+						<ShopListHeader :end="quantityInList" :total="products.length"></ShopListHeader>
+						<div v-for="(productInList, index) in productsInList" :key="index" >
+							<ShopListProductsInRow :products="productInList"></ShopListProductsInRow>
+						</div>
+					</div>
+
 				</div>
 			</el-col>
 			<el-col :span="4">
@@ -46,7 +53,8 @@
 				products: "",
 				productsInList: [],
 				isLoading: false,
-				quantityInList: 0
+				quantityInList: 0,
+				isEmpty: false
 			}
 		},
 		methods: {
@@ -54,18 +62,21 @@
 				this.isLoading = true;
 				let count = 0;
 				let productInfo = []
-				while(this.quantityInList < this.products.length && count < 3){
+				while (this.quantityInList < this.products.length && count < 3) {
 					productInfo.push(this.products[this.quantityInList]);
 					count += 1;
-					this.quantityInList += 1;				
+					this.quantityInList += 1;
 				}
 				this.productsInList.push(productInfo);
 			},
 			async getProductFromBackend() {
 				this.isLoading = false;
-				this.products  = await apiHelper.getProductByPname(this.$route.query.p_name);	
+				this.products = await apiHelper.getProductByPname(this.$route.query.p_name);
+				if(this.products.length === 0) {
+					this.isEmpty = true;
+				}
 			},
-			handleScroll() {				
+			handleScroll() {
 				let list = this.$refs.list;
 				console.log("Scroll: ", list.scrollTop, list.offsetHeight, list.scrollHeight)
 				if (this.isLoading) return;
@@ -75,10 +86,10 @@
 				}
 			}
 		},
-		async mounted(){
+		async created() {
 			await this.getProductFromBackend();
-			for(let i=0; i<3; i++){
-				this.addPorductsToList();				
+			for (let i = 0; i < 3; i++) {
+				this.addPorductsToList();
 			}
 		}
 	}

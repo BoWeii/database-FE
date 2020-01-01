@@ -26,8 +26,11 @@
 					<OrderItem @click-delete="clickDelete" @change-quantity="changeQuantity" :order="index" :name="orderItem.Pname" :price="orderItem.Price" :quantity="orderItem.Quantity" :discountType="orderItem.DiscountType" :discountPrice="orderItem.DiscountPrice"></OrderItem>
 				</div>
 				<div>
-					<el-col>
+					<el-col  :span="10">
 						<el-input v-model="discountCode" placeholder="enter the discount code" @change="calcTotalPrice"></el-input>
+					</el-col>
+					<el-col :span="10">
+						<h2>Shipping: {{shipping}}</h2>
 					</el-col>
 					<el-col :span="20" class="total-price-horizontal">
 						<h2>Total price : &nbsp;</h2>

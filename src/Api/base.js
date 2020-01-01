@@ -157,6 +157,7 @@ class ApiHelper {
 		let res;
 		if (query === "") {
 			res = await get("users", this.header);
+
 		} else {
 			res = await get("user" + query, this.header);
 		}
