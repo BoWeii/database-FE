@@ -72,7 +72,7 @@
 								<el-row>
 									<el-col :span="1" class="home-item-container-productCards-grid-content"></el-col>
 									<el-col :span="4" class="home-item-container-productCards-grid-content" v-for="(product, index) in productLastest" :key="index" :offset="index > 0?2:0">
-										<el-card :body-style="{ padding: '0px', width:'215px', height:'285px', margin:'0px'}">
+										<el-card :body-style="{ padding: '0px', width:'215px', height:'245px', margin:'0px'}">
 											<img :src="product.ImageSrc" width="100%">
 											<div style="display: flex">
 												<div class="home-item-container-productCards-content">
@@ -109,7 +109,7 @@
 								<el-row>
 									<el-col :span="1" class="home-item-container-productCards-grid-content"></el-col>
 									<el-col :span="4" class="home-item-container-productCards-grid-content" v-for="(product, index) in productOld" :key="index" :offset="index > 0?2:0">
-										<el-card :body-style="{ padding: '0px', width:'215px', height:'285px', margin:'0px'}">
+										<el-card :body-style="{ padding: '0px', width:'215px', height:'245px', margin:'0px'}">
 											<img :src="product.ImageSrc" width="100%">
 											<div style="display: flex">
 												<div class="home-item-container-productCards-content">
@@ -300,7 +300,7 @@
 
 	.home-item-container-productCards-button {
 		margin-top: 15px;
-		margin-left: 95px;
+		margin-left: 90px;
 	}
 
 	.description-title {
