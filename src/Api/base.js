@@ -12,10 +12,10 @@ async function post(path, data, header) {
 		console.log("in post", resp);
 		return resp;
 	} catch (e) {
-    if( e.response ){
-      console.log(e.response.data); // => the response payload 
-  }
-		return false
+		if (e.response) {
+			console.log(e.response.data); // => the response payload 
+		}
+		return e
 	}
 }
 
@@ -49,7 +49,21 @@ async function put(path, data, header) {
 	}
 
 }
+async function dataput(path, data, header) {
+	try {
+		const resp = await axios({
+			method: "PUT",
+			url: baseURL + path,
+			data: data,
+			headers: header
+		});
+		console.log("in put", resp);
+		return resp;
+	} catch (e) {
+		console.log("fail in put", e)
+	}
 
+}
 async function get(path, header) {
 	try {
 		const resp = await axios({
@@ -60,7 +74,7 @@ async function get(path, header) {
 		console.log("in get :", resp);
 		return resp;
 	} catch (e) {
-		if( e.response ){
+		if (e.response) {
 			console.log(e.response.data); // => the response payload 
 		}
 	}
@@ -97,19 +111,20 @@ async function paramsDelete(path, data, header) {
 
 /*             others function                   */
 function checkLogin(resp) {
-	try {
-		if (resp.status === 200) {
-			localStorage.setItem("token", resp.data.token);
-			alert("Login successfull");
-			return true;
-		}
-	} catch (e) {
-		if (e.response.status === 400) alert("password is wrong!");
-		else {
-			alert("email wrong!");
-		}
-		return false;
+
+	if (resp.status === 200) {
+		localStorage.setItem("token", resp.data.token);
+		alert("Login successfull");
+		return true;
 	}
+
+	console.log("in login", resp.response);
+	if (resp.response.status === 400) alert("password is wrong!");
+	else {
+		alert("email wrong!");
+	}
+	return false;
+
 
 }
 
@@ -197,6 +212,13 @@ class ApiHelper {
 		const res = await get(this.path, this.header);
 		console.log("in getStaffOrder ", res.data);
 		return res.data;
+	}
+	async changePsd(data, name) {
+		this.checkHeader()
+		this.path = "auth/users/" + name;
+		const res = await dataput(this.path, data, this.header);
+		console.log("in change", res);
+		return res
 	}
 	//-------------Product-----------------------------//
 	async productPublish(data) {
@@ -300,7 +322,7 @@ class ApiHelper {
 		let res = await post(this.path, data, this.header);
 		return res;
 	}
-	
+
 	async getDiscountByCode(code) {
 		this.checkHeader()
 		this.path = "discount-policies/" + code;
