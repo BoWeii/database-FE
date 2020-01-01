@@ -98,7 +98,7 @@
 					Price: this.model.Price,
 					Inventory: this.model.Inventory,
 					SoldQuantity: "0",
-					OnSaleDate: "1999-01-11",
+					OnSaleDate: Date.now(),
 					ImageSrc: this.model.ImageSrc
 				};
 				const res = await apiHelper.productPublish(data);

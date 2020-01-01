@@ -32,7 +32,6 @@
 					<div class='delete-button-row' v-for="(index) in users.length" :key='index'>
 						<el-button icon='el-icon-delete' type='danger' @click="deleteUser(index)"></el-button>
 					</div>
-
 				</div>
 			</el-col>
 		</el-row>
@@ -55,7 +54,6 @@
 			async getUsersFromBackEnd() {
 				const query = "";
 				this.users = await apiHelper.getUsers(query);
-				this.users = [this.users[0], this.users[0], this.users[0], this.users[0], this.users[0]];
 			},
 			async deleteUser(index) {
 				const res = await apiHelper.deleteUser({
