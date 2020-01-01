@@ -64,20 +64,20 @@
 					<el-col :span='16' class="home-item-grid-content">
 						<div style="margin-bottom: 50px;">
 							<div class="home-item-container-split">
-								<h3 style="margin-right: 15px ;">--------------------------------------------------------------------------------------</h3>
-								<h3>MUSLI</h3>
-								<h3 style="margin-left: 15x ;">--------------------------------------------------------------------------------</h3>
+								<h3 style="margin-right: 15px ;">------------------------------------------------------------------------------------------------</h3>
+								<h3>LASTEST</h3>
+								<h3 style="margin-left: 15x ;">-------------------------------------------------------------------------------------------</h3>
 							</div>
 							<div class="home-item-container-content">
 								<el-row>
 									<el-col :span="1" class="home-item-container-productCards-grid-content"></el-col>
-									<el-col :span="4" class="home-item-container-productCards-grid-content" v-for="(o, index) in 4" :key="o" :offset="index > 0?2:0">
+									<el-col :span="4" class="home-item-container-productCards-grid-content" v-for="(product, index) in productLastest" :key="index" :offset="index > 0?2:0">
 										<el-card :body-style="{ padding: '0px', width:'215px', height:'285px', margin:'0px'}">
-											<img src="../../icon/blueberry.jpg" width="100%">
+											<img :src="product.ImageSrc" width="100%">
 											<div style="display: flex">
 												<div class="home-item-container-productCards-content">
-													<h3 class="description-title">Apple</h3>
-													<h5 class="description-content">Exotic Fruits, Fruit</h5>
+													<h3 class="description-title">{{product.Pname}}</h3>
+													<h5 class="description-content">{{product.Price}}</h5>
 												</div>
 												<div class="home-item-container-productCards-button">
 													<el-button type="success" v-bind:icon="iconNameLists[index]" @mouseover.native="ChangeIconOfButton(index)" @mouseout.native="ChangeIconOfButton(index)" plain></el-button>
@@ -101,20 +101,20 @@
 					<el-col :span='16' class="home-item-grid-content">
 						<div style="margin-bottom: 50px;">
 							<div class="home-item-container-split">
-								<h3 style="margin-right: 15px ;">-------------------------------------------------------------------------------</h3>
-								<h3>SPECIAL OFFER</h3>
-								<h3 style="margin-left: 15x ;">-----------------------------------------------------------------------------</h3>
+								<h3 style="margin-right: 15px ;">-----------------------------------------------------------------------------------------------</h3>
+								<h3>ODLEST</h3>
+								<h3 style="margin-left: 15x ;">-------------------------------------------------------------------------------------------</h3>
 							</div>
 							<div class="home-item-container-content">
 								<el-row>
 									<el-col :span="1" class="home-item-container-productCards-grid-content"></el-col>
-									<el-col :span="4" class="home-item-container-productCards-grid-content" v-for="(o, index) in 4" :key="o" :offset="index > 0?2:0">
+									<el-col :span="4" class="home-item-container-productCards-grid-content" v-for="(product, index) in productOld" :key="index" :offset="index > 0?2:0">
 										<el-card :body-style="{ padding: '0px', width:'215px', height:'285px', margin:'0px'}">
-											<img src="../../icon/blueberry.jpg" width="100%">
+											<img :src="product.ImageSrc" width="100%">
 											<div style="display: flex">
 												<div class="home-item-container-productCards-content">
-													<h3 class="description-title">Apple</h3>
-													<h5 class="description-content">Exotic Fruits, Fruit</h5>
+													<h3 class="description-title">{{product.Pname}}</h3>
+													<h5 class="description-content">{{product.Price}}</h5>
 												</div>
 												<div class="home-item-container-productCards-button">
 													<el-button type="success" v-bind:icon="iconNameLists[index]" @mouseover.native="ChangeIconOfButton(index)" @mouseout.native="ChangeIconOfButton(index)" plain></el-button>
@@ -139,7 +139,7 @@
 					<el-col :span='16' class='home-item-content'>
 						<div style="margin-bottom: 50px;">
 							<div class="home-item-container-split">
-								<h3>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h3>
+								<h3>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h3>
 							</div>
 							<div class="home-item-container-content-picture">
 								<div margin-right="15px"><img src='../../icon/organic_juices.jpg' width="85%"></div>
@@ -159,22 +159,12 @@
 <script>
 	const iconNameGoods = "el-icon-goods";
 	const iconNameShopingCart = "el-icon-shopping-cart-1";
-	let iconNameLists = [iconNameGoods, iconNameGoods, iconNameGoods, iconNameGoods];
-
-	const fruits = [{
-			"name": "Orange",
-			"evaulation": "It is fresh and delicious!!"
-		},
-		{
-			"name": "Guava",
-			"evaulation": "It is amazing and sweet~~"
-		}
-	];
-	const colors = [{
-		"lightGreen": "#CAF5BF"
-	}, {
-		"darkOrange": "#EFA123"
-	}];
+	const carouseInfo = [{"name": "Orange", "description": "This is very juicy!!!"},
+						{"name": "Gruava", "description": "This is very hard!!!"}]
+	const colors = {lightGreen : {"background-color": "#90ee90 "} , darkOrange : {"background-color": "#FF8C00"}}
+	
+	import ApiHelper from '../../Api/base.js';
+	let apiHelper = new ApiHelper();
 	export default {
 		name: 'HomeContent',
 		props: {
@@ -182,24 +172,23 @@
 		},
 		data: () => {
 			return {
-				carouselContent: fruits[0].evaulation,
-				carouselTitle: fruits[0].name,
-				carouselBackgorundcolor: colors.lightGreen,
-				iconNameLists: iconNameLists
+				productLastest: "",
+				productOld: "",
+				iconNameLists:[iconNameGoods, iconNameGoods, iconNameGoods, iconNameGoods]
 			}
 		},
 		methods: {
 			UpdateCarouselText(){
-				if (this.carouselTitle === fruits[0].name) {
-					this.carouselTitle = fruits[1].name;
+				if (this.carouselTitle === carouseInfo[0].name) {
+					this.carouselTitle = carouseInfo[1].name;
 				} else {
-					this.carouselTitle = fruits[0].name;
+					this.carouselTitle = carouseInfo[0].name;
 				}
 
-				if (this.carouselContent === fruits[0].evaulation) {
-					this.carouselContent = fruits[1].evaulation;
+				if (this.carouselContent === carouseInfo[0].evaulation) {
+					this.carouselContent = carouseInfo[1].evaulation;
 				} else {
-					this.carouselContent = fruits[0].evaulation;
+					this.carouselContent = carouseInfo[0].evaulation;
 				}
 				if (this.carouselBackgorundcolor === colors.lightGreen) {
 					this.carouselBackgorundcolor = colors.darkOrange;
@@ -217,6 +206,11 @@
 					console.log(iconNameShopingCart);
 				}
 			}
+		},
+		async mounted(){
+			let productsAll = await apiHelper.getProductByPname(this.$route.query.p_name);
+			this.productLastest = [ productsAll[productsAll.length-1], productsAll[productsAll.length-1],productsAll[productsAll.length-1],productsAll[productsAll.length-1]]
+			this.productOld = [productsAll[0], productsAll[1], productsAll[2], productsAll[3]]
 		}
 	}
 </script>
@@ -306,7 +300,7 @@
 
 	.home-item-container-productCards-button {
 		margin-top: 15px;
-		margin-left: 20px;
+		margin-left: 95px;
 	}
 
 	.description-title {
