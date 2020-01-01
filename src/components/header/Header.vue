@@ -126,13 +126,16 @@
 				localStorage.clear();
 				location.reload();
 			},
-			search() {
-				this.$router.push({
+			async search() {
+				await this.$router.push({
 					name: "shop",
 					query: {
 						p_name: this.input
 					},
 				})
+				if(this.$router.currentRoute.name === 'shop'){
+					location.reload()
+				}
 			},
 			goToShop() {
 				this.$router.push({
