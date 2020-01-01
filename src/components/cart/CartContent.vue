@@ -30,7 +30,7 @@
 						<el-input v-model="discountCode" placeholder="enter the discount code" @change="calcTotalPrice"></el-input>
 					</el-col>
 					<el-col :span="10">
-						<h2>Shipping: {{shipping}}</h2>
+						<h2>Shipping: {{ship}}</h2>
 					</el-col>
 					<el-col :span="20" class="total-price-horizontal">
 						<h2>Total price : &nbsp;</h2>

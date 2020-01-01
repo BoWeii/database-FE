@@ -56,9 +56,8 @@
 				this.users = await apiHelper.getUsers(query);
 			},
 			async deleteUser(index) {
-				const res = await apiHelper.deleteUser({
-					"userName": this.users[index].userName
-				});
+				console.log("res: ", this.users[index-1].userName, index)
+				const res = await apiHelper.deleteUser(this.users[index-1].userName);				
 				if(res){
 					await this.getUsersFromBackEnd();
 				}
@@ -66,6 +65,7 @@
 		},
 		async mounted() {
 			await this.getUsersFromBackEnd();
+			console.log("THIS USERS: ", this.users)
 		}
 	}
 </script>

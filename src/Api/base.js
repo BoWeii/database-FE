@@ -89,8 +89,10 @@ async function _delete(path, header) {
 		});
 		console.log("in delete :", resp);
 		return resp;
-	} catch (e) {
-		console.log("fail in delete", e);
+	} catch(error) {
+		if( error.response ){
+			console.log(error.response.data); // => the response payload 
+		}
 	}
 }
 
@@ -181,8 +183,8 @@ class ApiHelper {
 	}
 	async deleteUser(data) {
 		this.checkHeader()
-		const res = await _delete("user", data, this.header);
-		console.log("modifyOrderItem:", res);
+		const res = await _delete("users/"+data, this.header);
+		console.log("Delete user:", res);
 		return res;
 	}
 	async getUserName(email) {
