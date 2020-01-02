@@ -8,7 +8,7 @@ import Sell from "../components/sell/Sell.vue";
 import Myaccount from "../components/myaccount/MyAccount.vue";
 import Modify from "../components/myaccount/modify/Modify.vue";
 import ManageUser from '../components/manage_user/ManageUser.vue';
-import Order from '../components/order/Order.vue';
+import Payment from '../components/payment/Payment.vue';
 export const routes = [{
 	path: "/",
 	name: "home",
@@ -24,8 +24,9 @@ export const routes = [{
 	component: Shop,
 	meta: {
 		isLogin: false,
-		fail: "/"
-	}
+		fail: "/",
+		title: "shop"
+	},
 },
 {
 	path: "/login",
@@ -46,7 +47,7 @@ export const routes = [{
 	}
 },
 {
-	path: "/cart/:cartid",
+	path: "/cart",
 	name: "cart",
 	component: Cart,
 	meta: {
@@ -82,18 +83,9 @@ export const routes = [{
 	}
 },
 {
-	path: "/order",
-	name: "order",
-	component: Order,
-	meta: {
-		isLogin: false,
-		fail: "/"
-	}
-},
-{
-	path: "/sell",
-	name: "sell",
-	component: Sell,
+	path: "/payment",
+	name: "payment",
+	component: Payment,
 	meta: {
 		isLogin: false,
 		fail: "/"
@@ -107,7 +99,6 @@ export const routes = [{
 		isLogin: true,
 		fail: "/"
 	}
-
 },
 {
 	path: "/modify/:id",
@@ -116,7 +107,6 @@ export const routes = [{
 	meta: {
 		isLogin: true,
 		fail: "/"
-	}
+	},
 }
-
 ];

@@ -20,8 +20,8 @@
 	export default {
 		name: "ShopListHeader",
 		props:{
-			end: String,
-			total: String
+			end: Number,
+			total: Number
 		},
 		data: () => {
 			return {

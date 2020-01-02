@@ -36,7 +36,7 @@
 
 <style>
 	.cart-grid{
-		height: 500px;
+		height: 700px;
 		background-color: white;
 		padding:10px 0px;
 	}

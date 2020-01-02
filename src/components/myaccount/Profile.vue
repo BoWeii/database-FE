@@ -1,5 +1,6 @@
 <template>
   <div id="Profile" class="profile">
+	<title>Profile</title>
     <el-form>
       <h2 style="font-size:30px;">Profile</h2>
       <div class="profile-column">

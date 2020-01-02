@@ -1,5 +1,6 @@
 <template>
 	<div class="shop-content" ref='list' @scroll="handleScroll">
+		<title>Shop</title>
 		<el-row :gutter="20">
 			<el-col :span="4">
 				<div class="shop-content-grid-content"></div>
@@ -12,10 +13,17 @@
 			</el-col>
 			<el-col :span="12">
 				<div class="shop-content-grid-content">
-					<ShopListHeader :end="quantityInList" :total="products.length"></ShopListHeader>
-					<div v-for="(productInList, index) in productsInList" :key="index">
-						<ShopListProductsInRow :products-info="productInList"></ShopListProductsInRow>
+					<div v-if="isEmpty">
+						<h1>We don't find anything you searched</h1>
+						<h5>---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h5>
 					</div>
+					<div v-else>
+						<ShopListHeader :end="quantityInList" :total="products.length"></ShopListHeader>
+						<div v-for="(productInList, index) in productsInList" :key="index" >
+							<ShopListProductsInRow :products="productInList"></ShopListProductsInRow>
+						</div>
+					</div>
+
 				</div>
 			</el-col>
 			<el-col :span="4">
@@ -31,24 +39,7 @@
 	import ShopListProductsInRow from './ShopListProductsInRow.vue';
 	import ShopListHeader from './ShopListHeader'
 	import ApiHelper from '../../Api/base.js';
-	const productInfo = [
-		{
-			"PName": "Banana",
-			"Price": "Test",
-			"ImageSrc": "https://5.imimg.com/data5/LM/DU/MY-22954806/apple-fruit-500x500.jpg"
-		},
-		{
-			"PName": "Apple",
-			"Price": "Test",
-			"ImageSrc": "https://www.insideedition.com/sites/default/files/images/2019-07/073119-banana-1280x720-recovered.jpg"
-		},
-		{
-			"PName": "Watermelon",
-			"Price": "Test",
-			"ImageSrc": "https://images.unsplash.com/photo-1563114773-84221bd62daa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjF9&auto=format&fit=crop&w=1350&q=80"
-		}
-	]
-	const productsInList = [productInfo, productInfo, productInfo]
+
 	const apiHelper = new ApiHelper();
 	export default {
 		name: "ShopContent",
@@ -61,9 +52,10 @@
 		data: () => {
 			return {
 				products: "",
-				productsInList: productsInList,
+				productsInList: [],
 				isLoading: false,
-				quantityInList: 0
+				quantityInList: 0,
+				isEmpty: false
 			}
 		},
 		methods: {
@@ -71,31 +63,35 @@
 				this.isLoading = true;
 				let count = 0;
 				let productInfo = []
-				while(this.quantityInList < this.products.length && count < 3){
+				while (this.quantityInList < this.products.length && count < 3) {
 					productInfo.push(this.products[this.quantityInList]);
 					count += 1;
 					this.quantityInList += 1;
 				}
+				this.productsInList.push(productInfo);
 			},
 			async getProductFromBackend() {
-				this.isLoading = true;
-				this.products  = await apiHelper.getProducts({
-					"p_name": this.$route.query.p_name,
-					"s_username": ""
-				})
+				this.isLoading = false;
+				this.products = await apiHelper.getProductByPname(this.$route.query.p_name);
+				if(this.products.length === 0) {
+					this.isEmpty = true;
+				}
 			},
 			handleScroll() {
-				const list = this.$refs.list;
+				let list = this.$refs.list;
+				console.log("Scroll: ", list.scrollTop, list.offsetHeight, list.scrollHeight)
 				if (this.isLoading) return;
-
-				if (list.scrollTop + list.offsetHeight >= list.scrollHeight && productsInList.length < 6) {
+				if (list.scrollTop + list.offsetHeight >= list.scrollHeight && this.productInList.length < 6) {
 					this.addPorductsToList();
 					this.isLoading = false;
 				}
 			}
 		},
-		async mounted(){
+		async created() {
 			await this.getProductFromBackend();
+			for (let i = 0; i < 3; i++) {
+				this.addPorductsToList();
+			}
 		}
 	}
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div id="Manage" class="manage" style="text-align-center;">
+	<title>ManageProducts</title>
     <h2 style="font-size:30px;">Your public</h2>
-
     <div class="manage-column" v-for="(item, index) in model.jsons" :key="index">
       <label class="prfile-lab">
         <h3>Product</h3>

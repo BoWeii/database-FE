@@ -1,5 +1,6 @@
 <template>
   <div id="Modify">
+	<title>Modify</title>
     <Header />
     <div class="Modify-body">
       <ModifyContent />
@@ -12,6 +13,7 @@
 import Header from "../../header/Header.vue";
 import Footer from "../../footer/Footer.vue";
 import ModifyContent from "./ModifyContent.vue";
+
 export default {
   name: "Modify",
   components: {

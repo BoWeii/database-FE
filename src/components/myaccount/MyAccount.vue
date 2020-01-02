@@ -1,5 +1,6 @@
 <template>
   <div id="MyAccount" class>
+	<title>ManageAccount</title>
     <el-header height="180px">
       <Header />
     </el-header>
@@ -11,6 +12,9 @@
         <div class="tab" @click="sibarValue='transactionLog'">Transaction log</div>
         <div class="tab" @click="sibarValue='change-password'">Change password</div>
         <div class="tab" @click="sibarValue='manage-product'">Manage product</div>
+        <div class="tab" @click="sibarValue='Checkorder'">Check order</div>
+        <div class="tab" @click="sibarValue='AddDiscount'">Add discount</div>
+        <div class="tab" @click="sell">Publish product</div>
         <el-button
           style="justify-content: flex-start;display:flex;"
           type="primary"
@@ -34,6 +38,8 @@ import Profile from "./Profile.vue";
 import transactionLog from "./TransationLog.vue";
 import ChangePassword from "./ChangePassword.vue";
 import ManageProduct from "./ManageProduct.vue";
+import Checkorder from "./CheckOrder.vue";
+import AddDiscount from "./AddDiscount.vue";
 export default {
   name: "MyAccount",
   components: {
@@ -42,7 +48,9 @@ export default {
     Profile,
     transactionLog,
     ChangePassword,
-    ManageProduct
+    ManageProduct,
+    Checkorder,
+    AddDiscount
   },
   data() {
     return {
@@ -57,6 +65,9 @@ export default {
       alert("already log out ");
       localStorage.clear();
       location.reload();
+    },
+    async sell() {
+      this.$router.push("sell");
     }
   }
 };

@@ -105,7 +105,7 @@ export default {
       let res = apiHelper.productModify(data);
       if (res) {
         //alert("Modify the product successful");
-        this.$router.push("/");
+        this.$router.back(-1);
       }
     }
   },

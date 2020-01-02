@@ -1,5 +1,6 @@
 <template>
   <div id="ChangePassword" class="ChangePassword">
+	<title>ChangePassword</title>
     <el-form>
       <h2 style="font-size:30px;">ChangePassword</h2>
       <div class="ChangePassword-column">
@@ -15,7 +16,7 @@
         :loading="loading"
         style="align-items: center;"
         type="primary"
-        native-type="submit"
+        @click="send"
         block
       >save</el-button>
     </el-form>
@@ -23,15 +24,29 @@
 </template>
 
 <script>
+import ApiHelper from "../../Api/base.js";
 export default {
   name: "ChangePassword",
   data() {
     return {
       model: {
-        neewpassword1: "",
-        newpassword12: ""
+        newpassword1: "",
+        newpassword2: ""
       }
     };
+  },
+  methods: {
+    async send() {
+      if (this.model.newpassword1 != this.model.newpassword2) {
+        console.log(this.model.newpassword1, this.model.newpassword2);
+        alert("密碼輸入不相同");
+      } else {
+        const apiHelper = new ApiHelper();
+        const data = { password: this.model.newpassword1 };
+        if (apiHelper.changePsd(data, this.$store.getters.username))
+          alert("change successful ");
+      }
+    }
   }
 };
 </script>

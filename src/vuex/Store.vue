@@ -19,11 +19,12 @@ const store = new Vuex.Store({
   },
   mutations: {
     async setUser(state) {
+      console.log('setting user~~~~~~~~~~~~~~~~~~`')
       let apiHelper = new ApiHelper();
       state.token = localStorage.getItem("token");
       state.email = localStorage.getItem("email");
       state.username = await apiHelper.getUserName(
-        localStorage.getItem("email")
+        state.email
       );
       state.cartId = await apiHelper.getCartId(state.username);
       //console.log("in store setUser:", state.username);

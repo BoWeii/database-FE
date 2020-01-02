@@ -1,5 +1,6 @@
 <template>
 	<div id="sell">
+		<title>Publish Product</title>
 		<Header/>
 		<div class="sell-body">
 			<SellContent/>
