@@ -24,11 +24,11 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Result
-![image](https://github.com/BoWeii/database-FE/blob/master/pic1.jpg)
-![image](https://github.com/BoWeii/database-FE/blob/master/pic2.jpg)
-![image](https://github.com/BoWeii/database-FE/blob/master/pic3.jpg)
-![image](https://github.com/BoWeii/database-FE/blob/master/pic4.jpg)
-![image](https://github.com/BoWeii/database-FE/blob/master/pic5.jpg)
-![image](https://github.com/BoWeii/database-FE/blob/master/pic6.jpg)
-![image](https://github.com/BoWeii/database-FE/blob/master/pic7.jpg)
-![image](https://github.com/BoWeii/database-FE/blob/master/pic8.jpg)
+![image](https://github.com/BoWeii/database-FE/blob/master/picture/pic1.jpg)
+![image](https://github.com/BoWeii/database-FE/blob/master/picture/pic2.jpg)
+![image](https://github.com/BoWeii/database-FE/blob/master/picture/pic3.jpg)
+![image](https://github.com/BoWeii/database-FE/blob/master/picture/pic4.jpg)
+![image](https://github.com/BoWeii/database-FE/blob/master/picture/pic5.jpg)
+![image](https://github.com/BoWeii/database-FE/blob/master/picture/pic6.jpg)
+![image](https://github.com/BoWeii/database-FE/blob/master/picture/pic7.jpg)
+![image](https://github.com/BoWeii/database-FE/blob/master/picture/pic8.jpg)
