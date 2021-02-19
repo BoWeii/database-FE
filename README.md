@@ -23,7 +23,7 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-### R
+### Result
 ![image](https://github.com/BoWeii/database-FE/blob/master/pic1.jpg)
 ![image](https://github.com/BoWeii/database-FE/blob/master/pic2.jpg)
 ![image](https://github.com/BoWeii/database-FE/blob/master/pic3.jpg)
